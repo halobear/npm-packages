@@ -1,0 +1,54 @@
+{
+  "name": "@halobear/vue-feedback",
+  "version": "1.0.0",
+  "description": "vue toast loading",
+  "keywords": [
+    "vue",
+    "feeback"
+  ],
+  "scripts": {
+    "dev": "yarn serve",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build:lib": "vue build index.js -t lib -d lib  -n vue-feedback",
+    "lint": "vue-cli-service lint",
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --commit-path '.'"
+  },
+  "author": "luzhongkuan <luzhongk@126.com>",
+  "homepage": "https://github.com/kuan1/luzhongk/tree/master/packages/vue-feedback",
+  "license": "ISC",
+  "main": "lib/vue-feedback.umd.min.js",
+  "module": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kuan1/luzhongk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kuan1/luzhongk/issues"
+  },
+  "dependencies": {
+    "core-js": "^3.3.2",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.7.0",
+    "@vue/cli-plugin-eslint": "^3.7.0",
+    "@vue/cli-service": "^3.7.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "gitHead": "a1b93494b053f2da8216bbcacff520da22f93779"
+}

@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "baseUrl": ".",
+    "paths": {
+      "@packages/*": [
+        "packages/*"
+      ]
+    }
+  },
+  "allowSyntheticDefaultImports": true,
+  "include": [
+    "./docs/**/*",
+    "./packages/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
