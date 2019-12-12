@@ -15,7 +15,7 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --commit-path '.'"
   },
   "author": "luzhongkuan <luzhongk@126.com>",
-  "homepage": "https://github.com/kuan1/luzhongk/tree/master/packages/vue-debug",
+  "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-debug",
   "license": "ISC",
   "main": "lib/bear-vue.umd.min.js",
   "module": "index.js",
@@ -31,10 +31,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kuan1/luzhongk.git"
+    "url": "git+https://github.com/halobear/npm-packages.git"
   },
   "bugs": {
-    "url": "https://github.com/kuan1/luzhongk/issues"
+    "url": "https://github.com/halobear/npm-packages/issues"
   },
   "dependencies": {
     "@halobear/vue-debug": "^1.0.0",
