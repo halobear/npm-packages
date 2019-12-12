@@ -17,8 +17,6 @@
 import "kuan-css";
 import { toast, loading } from "@halobear/vue-feedback";
 
-console.log(2134);
-
 export default {
   name: "feedback",
   data() {

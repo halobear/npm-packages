@@ -3,7 +3,7 @@ const { mapPackage } = require("./mapPackage");
 
 const isDev = process.env.NODE_ENV === "development";
 
-const base = isDev ? "/" : "/luzhongk/";
+const base = isDev ? "/" : "/npm-packages/";
 
 const alias = {
   ...mapPackage(),
@@ -11,8 +11,8 @@ const alias = {
 };
 
 module.exports = {
-  title: "luzhongk",
-  description: "vue组件和工具集合-卢忠宽",
+  title: "halobear-npm包管理",
+  description: "vue组件和工具集合-halobear",
   base,
   head: [["link", { rel: "stylesheet", href: `/style.css` }]],
   themeConfig: {
@@ -28,7 +28,7 @@ module.exports = {
       //     { text: '转盘抽奖', link: '/views/lottery' }
       //   ]
       // },
-      { text: "Github", link: "https://github.com/kuan1/luzhongk" }
+      { text: "Github", link: "https://github.com/halobear/npm-packages" }
     ]
   },
   configureWebpack: {
