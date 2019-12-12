@@ -1,18 +1,18 @@
 ### 安装
 
 ```bash
-yarn add @luzhongk/vue
+yarn add @halobear/vue
 ```
 
 ### 工具类
 
-- [@luzhongk/vue-feedback](./vue-feedback)
-- [@luzhongk/vue-request](./vue-request)
+- [@halobear/vue-feedback](./vue-feedback)
+- [@halobear/vue-request](./vue-request)
 
 ### vue 组件
 
-- [@luzhongk/vue-qrcode](./vue-qrcode)
-- [@luzhongk/vue-dialog](./vue-dialog)
-- [@luzhongk/vue-debug](./vue-debug)
-- [@luzhongk/vue-drawer](./vue-drawer)
-- [@luzhongk/vue-shape](./vue-shape)
+- [@halobear/vue-qrcode](./vue-qrcode)
+- [@halobear/vue-dialog](./vue-dialog)
+- [@halobear/vue-debug](./vue-debug)
+- [@halobear/vue-drawer](./vue-drawer)
+- [@halobear/vue-shape](./vue-shape)

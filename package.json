@@ -2,6 +2,7 @@
   "name": "halobear",
   "private": true,
   "scripts": {
+    "predev": "sh ./link.sh",
     "dev": "cross-env NODE_ENV=development vuepress dev docs",
     "build": "cross-env NODE_ENV=production vuepress build docs",
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d docs/.vuepress/dist",
@@ -19,7 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "core-js": "^3.3.2",
-    "kuan-css": "^1.0.5",
+    "kuan-css": "^2.0.1",
     "qrcode": "^1.4.2",
     "vconsole": "^3.3.4",
     "vue": "^2.6.10"

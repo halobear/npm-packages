@@ -1,23 +1,23 @@
-## @luzhongk/vue-debug
+## @halobear/vue-debug
 
 > 一个简单的 vue 调试组件，使用 vconsole
 
 ## 安装
 
 ```bash
-yarn add @luzhongk/vue-debug
+yarn add @halobear/vue-debug
 ```
 
 ## 使用
 
 ```js
-import VueDebug from '@luzhongk/vue-debug'
+import VueDebug from "@halobear/vue-debug";
 
 export default {
   components: {
     VueDebug
   }
-}
+};
 ```
 
 ```html

@@ -1,24 +1,23 @@
+## @halobear/vue-qrcode
 
-## @luzhongk/vue-qrcode
-
-> qrcode的vue组件
+> qrcode 的 vue 组件
 
 ## 安装
 
 ```bash
-yarn add @luzhongk/vue-qrcode
+yarn add @halobear/vue-qrcode
 ```
 
 ## 使用
 
 ```js
-import Qrcode from '@luzhongk/vue-qrcode'
+import Qrcode from "@halobear/vue-qrcode";
 
 export default {
   components: {
     Qrcode
   }
-}
+};
 ```
 
 ```html
@@ -26,6 +25,5 @@ export default {
   <qrcode :width="100" :height="100" />
 </div>
 ```
-
 
 ## [示例](./demo)

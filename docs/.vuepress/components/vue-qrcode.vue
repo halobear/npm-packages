@@ -1,6 +1,6 @@
 <template>
   <div class="test-container">
-    <h2 class="title">@luzhongk/vue-qrcode</h2>
+    <h2 class="title">@halobear/vue-qrcode</h2>
     <mycode :url="url" />
     <div class="split-line"></div>
     <input class="k-input" type="text" v-model="url" />

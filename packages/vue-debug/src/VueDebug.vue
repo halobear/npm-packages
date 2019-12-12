@@ -5,17 +5,23 @@
         @click="changeConsole"
         :class="vconsole ? 'k-btn-danger' : ''"
         class="k-btn"
-      >{{!vconsole ? '显示' : '隐藏'}}vconsole</button>
-      <button @click="clearStorage" class="k-btn k-btn-danger">清空localStorage</button>
-      <button @click="clearCookie" class="k-btn k-btn-danger">清空cookie</button>
+      >
+        {{ !vconsole ? "显示" : "隐藏" }}vconsole
+      </button>
+      <button @click="clearStorage" class="k-btn k-btn-danger">
+        清空localStorage
+      </button>
+      <button @click="clearCookie" class="k-btn k-btn-danger">
+        清空cookie
+      </button>
       <button @click="toHome" class="k-btn k-btn-primary">返回首页</button>
     </div>
   </div>
 </template>
 
 <script>
-import vconsole from "./utils/vconsole";
 import "kuan-css/index.css";
+import vconsole from "./utils/vconsole";
 
 export default {
   data() {

@@ -1,17 +1,17 @@
-## @luzhongk/vue-dialog
+## @halobear/vue-dialog
 
 > 一个简单 vue 弹窗
 
 ## 安装
 
 ```bash
-yarn add @luzhongk/vue-dialog
+yarn add @halobear/vue-dialog
 ```
 
 ## 使用
 
 ```js
-import VueDialog from '@luzhongk/vue-dialog'
+import VueDialog from "@halobear/vue-dialog";
 
 export default {
   components: {
@@ -20,9 +20,9 @@ export default {
   data() {
     return {
       visible: false
-    }
+    };
   }
-}
+};
 ```
 
 ```html

@@ -1,11 +1,11 @@
-## @luzhongk/vue-shape
+## @halobear/vue-shape
 
 > 编辑素材形状尺寸
 
 ## 安装
 
 ```bash
-yarn add @luzhongk/vue-shape
+yarn add @halobear/vue-shape
 ```
 
 ## 使用
@@ -13,7 +13,7 @@ yarn add @luzhongk/vue-shape
 ```html
 <template>
   <div class="test-container">
-    <h2 class="title">@luzhongk/vue-shape</h2>
+    <h2 class="title">@halobear/vue-shape</h2>
     <div class="shape-outer">
       <vue-shape
         :x="data.x"
@@ -28,7 +28,7 @@ yarn add @luzhongk/vue-shape
 </template>
 
 <script>
-  import VueShape from "@luzhongk/vue-shape";
+  import VueShape from "@halobear/vue-shape";
 
   export default {
     components: {

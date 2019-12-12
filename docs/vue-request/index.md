@@ -1,17 +1,17 @@
-## @luzhongk/vue-request
+## @halobear/vue-request
 
 > axios 在 vue 中使用, 添加 loading、根据幻熊自动提示错误
 
 ## 安装
 
 ```bash
-yarn add @luzhongk/vue-request
+yarn add @halobear/vue-request
 ```
 
 ## 使用
 
 ```js
-import { createApi, encrypt } from '@luzhongk/vue-request'
+import { createApi, encrypt } from "@halobear/vue-request";
 
 const request = createApi({
   /* 自定义loading */
@@ -35,24 +35,24 @@ const request = createApi({
 
   // 动态设置 headers
   setHeaders(config) {
-    const { params = {}, data = {} } = config
-    const key = ''
-    const token = ''
-    const now = Date.parse(new Date()) / 1000
+    const { params = {}, data = {} } = config;
+    const key = "";
+    const token = "";
+    const now = Date.parse(new Date()) / 1000;
     const headers = {
-      'X-Halo-App': 'oa-dkp',
-      'X-Http-Request-Halo-Time': now,
-      'X-Http-Request-Halo-Sign': encrypt(
+      "X-Halo-App": "oa-dkp",
+      "X-Http-Request-Halo-Time": now,
+      "X-Http-Request-Halo-Sign": encrypt(
         { ...params, ...data, time: now },
         key
       )
-    }
+    };
     if (token) {
-      headers.Authorization = `Bearer ${token}`
+      headers.Authorization = `Bearer ${token}`;
     }
-    return headers
+    return headers;
   }
-})
+});
 ```
 
 ## [示例](./demo)

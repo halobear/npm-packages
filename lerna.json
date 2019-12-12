@@ -3,6 +3,7 @@
   "packages": ["packages/*"],
   "command": {
     "publish": {
+      "ignoreChanges": ["docs", "*.md"],
       "message": "chore(release): publish"
     },
     "bootstrap": {

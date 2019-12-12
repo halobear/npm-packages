@@ -1,6 +1,6 @@
 <template>
   <div class="test-container">
-    <h2 class="title">@luzhongk/vue-feedback</h2>
+    <h2 class="title">@halobear/vue-feedback</h2>
     <button @click="showLoading" class="k-btn k-btn-primary">loading</button>
     <div class="split-line"></div>
     <input

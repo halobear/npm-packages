@@ -10,14 +10,14 @@
     "dev": "yarn serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:lib": "vue build index.js -t lib -d lib  -n vue-debug",
+    "build:lib": "vue build index.js -t lib -d lib  -n bear-vue",
     "lint": "vue-cli-service lint",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --commit-path '.'"
   },
   "author": "luzhongkuan <luzhongk@126.com>",
   "homepage": "https://github.com/kuan1/luzhongk/tree/master/packages/vue-debug",
   "license": "ISC",
-  "main": "lib/vue-debug.umd.min.js",
+  "main": "lib/bear-vue.umd.min.js",
   "module": "index.js",
   "directories": {
     "lib": "lib"
@@ -37,6 +37,12 @@
     "url": "https://github.com/kuan1/luzhongk/issues"
   },
   "dependencies": {
+    "@halobear/vue-debug": "^1.0.0",
+    "@halobear/vue-dialog": "^1.0.0",
+    "@halobear/vue-feedback": "^1.0.0",
+    "@halobear/vue-qrcode": "^1.0.0",
+    "@halobear/vue-request": "^1.0.0",
+    "@halobear/vue-shape": "^1.0.0",
     "core-js": "^3.3.2",
     "kuan-css": "^2.0.1",
     "vconsole": "^3.3.4",
@@ -52,6 +58,5 @@
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "vue-template-compiler": "^2.5.21"
-  },
-  "gitHead": "a1b93494b053f2da8216bbcacff520da22f93779"
+  }
 }
