@@ -1,12 +1,12 @@
 const path = require("path");
-const { resolve } = require("./mapPackage");
+const { mapPackage } = require("./mapPackage");
 
 const isDev = process.env.NODE_ENV === "development";
 
 const base = isDev ? "/" : "/luzhongk/";
 
 const alias = {
-  "@packages": resolve("packages"),
+  ...mapPackage(),
   assets: path.resolve(__dirname, "..", "assets")
 };
 

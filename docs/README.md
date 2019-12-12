@@ -14,5 +14,4 @@ yarn add @halobear/vue
 - [@halobear/vue-qrcode](./vue-qrcode)
 - [@halobear/vue-dialog](./vue-dialog)
 - [@halobear/vue-debug](./vue-debug)
-- [@halobear/vue-drawer](./vue-drawer)
 - [@halobear/vue-shape](./vue-shape)

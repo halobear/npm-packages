@@ -3,17 +3,10 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "@packages/*": [
-        "packages/*"
-      ]
+      "@packages/*": ["packages/*"]
     }
   },
   "allowSyntheticDefaultImports": true,
-  "include": [
-    "./docs/**/*",
-    "./packages/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./docs/**/*", "./packages/**/*", "docs"],
+  "exclude": ["node_modules"]
 }

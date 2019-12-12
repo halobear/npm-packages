@@ -18,7 +18,7 @@
 
 <script>
 import "kuan-css";
-import { VueDialog } from "@packages/vue/index";
+import VueDialog from "@halobear/vue-dialog";
 
 export default {
   components: {

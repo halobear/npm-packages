@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { VueShape } from "@packages/vue/index";
+import VueShape from "@halobear/vue-shape";
 
 export default {
   components: {

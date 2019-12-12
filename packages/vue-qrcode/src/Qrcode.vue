@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import QRcode from "qrcode";
+
 export default {
   name: "qrcode",
   props: {
@@ -44,7 +46,6 @@ export default {
     generateCode() {
       if (!this.url) return;
       const { canvas } = this.$refs;
-      const QRcode = require("qrcode");
       QRcode.toCanvas(
         canvas,
         this.url,

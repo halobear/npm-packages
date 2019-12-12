@@ -1,18 +1,18 @@
 <template>
   <div class="test-container">
     <h2 class="title">@halobear/vue-qrcode</h2>
-    <mycode :url="url" />
+    <vue-qrcode :url="url" />
     <div class="split-line"></div>
     <input class="k-input" type="text" v-model="url" />
   </div>
 </template>
 
 <script>
-import Mycode from "@packages/vue-qrcode";
+import VueQrcode from "@halobear/vue-qrcode";
 
 export default {
   components: {
-    Mycode
+    VueQrcode
   },
   data() {
     return {

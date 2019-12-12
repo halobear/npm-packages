@@ -431,18 +431,22 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"220e0494-vue-loader-template"}!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Qrcode.vue?vue&type=template&id=5380cc87&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7f1eac68-vue-loader-template"}!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Qrcode.vue?vue&type=template&id=e19956dc&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('canvas',{ref:"canvas",style:({ height: _vm.h, width: _vm.w }),attrs:{"url":_vm.url}})}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/Qrcode.vue?vue&type=template&id=5380cc87&
+// CONCATENATED MODULE: ./src/Qrcode.vue?vue&type=template&id=e19956dc&
 
 // EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es6.regexp.to-string.js
 var es6_regexp_to_string = __webpack_require__("734f");
 
 // EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es6.number.constructor.js
 var es6_number_constructor = __webpack_require__("36d7");
+
+// EXTERNAL MODULE: ./node_modules/qrcode/lib/browser.js
+var browser = __webpack_require__("d055");
+var browser_default = /*#__PURE__*/__webpack_require__.n(browser);
 
 // CONCATENATED MODULE: ./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib??ref--12-1!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/Qrcode.vue?vue&type=script&lang=js&
 
@@ -453,6 +457,7 @@ var es6_number_constructor = __webpack_require__("36d7");
 //
 //
 //
+
 /* harmony default export */ var Qrcodevue_type_script_lang_js_ = ({
   name: "qrcode",
   props: {
@@ -498,10 +503,7 @@ var es6_number_constructor = __webpack_require__("36d7");
     generateCode: function generateCode() {
       if (!this.url) return;
       var canvas = this.$refs.canvas;
-
-      var QRcode = __webpack_require__("d055");
-
-      QRcode.toCanvas(canvas, this.url, {
+      browser_default.a.toCanvas(canvas, this.url, {
         width: this.width,
         height: this.height,
         margin: "1"

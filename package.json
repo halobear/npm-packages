@@ -2,7 +2,6 @@
   "name": "halobear",
   "private": true,
   "scripts": {
-    "predev": "sh ./link.sh",
     "dev": "cross-env NODE_ENV=development vuepress dev docs",
     "build": "cross-env NODE_ENV=production vuepress build docs",
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d docs/.vuepress/dist",

@@ -1,16 +1,15 @@
 <template>
   <div class="test-container">
-    <vue-debug/>
+    <vue-debug />
   </div>
 </template>
 
 <script>
-import { VueDebug } from '@packages/vue/index'
+import VueDebug from "@halobear/vue-debug";
 
 export default {
   components: {
     VueDebug
   }
-}
+};
 </script>
-
