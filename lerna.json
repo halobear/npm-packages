@@ -1,14 +1,21 @@
 {
   "version": "1.0.0",
-  "packages": ["packages/*"],
+  "packages": [
+    "packages/*"
+  ],
   "command": {
     "publish": {
-      "ignoreChanges": ["docs", "*.md"],
+      "ignoreChanges": [
+        "docs",
+        "*.md"
+      ],
       "message": "chore(release): publish"
     },
     "bootstrap": {
       "ignore": "ignore/*",
-      "npmClientArgs": ["--no-package-lock"]
+      "npmClientArgs": [
+        "--no-package-lock"
+      ]
     }
   }
 }
