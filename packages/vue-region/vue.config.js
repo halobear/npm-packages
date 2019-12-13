@@ -25,9 +25,7 @@ module.exports = {
     },
     externals: {
       vue: { commonjs: "vue", commonjs2: "vue", root: "Vue" },
-      axios: "axios",
-      "js-sha256": "js-sha256",
-      "@halobear/vue-feedback": "@halobear/vue-feedback"
+      axios: "axios"
     }
   },
   productionSourceMap: false
