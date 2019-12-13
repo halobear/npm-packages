@@ -1,11 +1,16 @@
 <template>
   <div>
-    <h2>城市选择组件</h2>
+    <vue-select />
   </div>
 </template>
 
 <script>
-export default {};
+import VueSelect from './components/VueSelect'
+export default {
+  components: {
+    VueSelect
+  }
+};
 </script>
 
 <style>

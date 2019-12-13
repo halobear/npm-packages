@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="test-container">
     <test></test>
   </div>
 </template>
@@ -14,5 +14,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+.test-container {
+  background-color: #ccc;
+  min-height: 50vh;
+}
 </style>
