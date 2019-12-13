@@ -12,7 +12,11 @@ module.exports = {
       symlinks: false // 使用npm link
     },
     entry: {
-      app: "./src/test"
+      app: "./index.js"
+    },
+    externals: {
+      vue: { commonjs: "vue", commonjs2: "vue", root: "Vue" },
+      axios: "axios"
     }
   },
   productionSourceMap: false

@@ -12,7 +12,7 @@ module.exports = {
       symlinks: false // 使用npm link
     },
     entry: {
-      app: "./src/test"
+      app: "./src/test.js"
     }
   },
   productionSourceMap: false
