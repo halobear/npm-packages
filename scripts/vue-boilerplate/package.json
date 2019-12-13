@@ -1,5 +1,5 @@
 {
-  "name": "@luzhongk/vue-template",
+  "name": "@halobear/vue-boilerplate",
   "version": "0.0.4",
   "description": "编辑素材形状尺寸",
   "keywords": [
@@ -9,14 +9,14 @@
     "dev": "yarn serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:lib": "vue build index.js -t lib -d lib -n vue-template",
+    "build:lib": "vue build index.js -t lib -d lib -n vue-boilerplate",
     "lint": "vue-cli-service lint",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --commit-path '.'"
   },
   "author": "luzhongkuan <luzhongk@126.com>",
-  "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-template",
+  "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-boilerplate",
   "license": "ISC",
-  "main": "lib/vue-template.umd.min.js",
+  "main": "lib/vue-boilerplate.umd.min.js",
   "directories": {
     "lib": "lib"
   },

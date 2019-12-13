@@ -1,17 +1,17 @@
-## @luzhongk/vue-template
+## @halobear/vue-boilerplate
 
 > axios 在 vue 中使用, 添加 loading、根据幻熊自动提示错误
 
 ## 安装
 
 ```bash
-yarn add @luzhongk/vue-template
+yarn add @halobear/vue-boilerplate
 ```
 
 ## 使用
 
 ```js
-import { createApi, encrypt } from "@luzhongk/vue-template";
+import { createApi, encrypt } from "@halobear/vue-boilerplate";
 
 const request = createApi({
   /* 自定义loading */
@@ -55,4 +55,4 @@ const request = createApi({
 });
 ```
 
-## [示例](https://www.kuan1.top/luzhongk/vue-template/demo.html)
+## [示例](https://halobear.github.io/npm-packages/vue-boilerplate/demo.html)

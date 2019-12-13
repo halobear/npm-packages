@@ -1,4 +1,4 @@
-import { loading } from '@luzhongk/vue-feedback'
+import { loading } from '@halobear/vue-feedback'
 
 export default {
   num: 0,

@@ -17,4 +17,4 @@ loading.show();
 loading.hide();
 ```
 
-## [示例](https://www.kuan1.top/luzhongk/vue-feedback/demo.html)
+## [示例](https://halobear.github.io/npm-packages/vue-feedback/demo.html)

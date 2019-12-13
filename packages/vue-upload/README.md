@@ -1,17 +1,17 @@
-## @luzhongk/vue-upload
+## @halobear/vue-upload
 
 > axios 在 vue 中使用, 添加 loading、根据幻熊自动提示错误
 
 ## 安装
 
 ```bash
-yarn add @luzhongk/vue-upload
+yarn add @halobear/vue-upload
 ```
 
 ## 使用
 
 ```js
-import { createApi, encrypt } from "@luzhongk/vue-upload";
+import { createApi, encrypt } from "@halobear/vue-upload";
 
 const request = createApi({
   /* 自定义loading */
@@ -55,4 +55,4 @@ const request = createApi({
 });
 ```
 
-## [示例](https://www.kuan1.top/luzhongk/vue-upload/demo.html)
+## [示例](https://halobear.github.io/npm-packages/vue-upload/demo.html)

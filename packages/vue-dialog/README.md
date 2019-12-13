@@ -31,4 +31,4 @@ export default {
 </div>
 ```
 
-## [示例](https://www.kuan1.top/luzhongk/vue-dialog/demo.html)
+## [示例](https://halobear.github.io/npm-packages/vue-dialog/demo.html)

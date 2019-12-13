@@ -6,7 +6,7 @@ const { input } = require("./utils/feedback");
 
 function getJson(name = "插件名字", description = "插件描述") {
   return {
-    name: `@luzhongk/${name}`,
+    name: `@halobear/${name}`,
     version: "0.0.4",
     description,
     keywords: ["vue"],

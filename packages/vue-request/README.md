@@ -55,4 +55,4 @@ const request = createApi({
 });
 ```
 
-## [示例](https://www.kuan1.top/luzhongk/vue-request/demo.html)
+## [示例](https://halobear.github.io/npm-packages/vue-request/demo.html)

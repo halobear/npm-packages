@@ -62,4 +62,4 @@ yarn add @halobear/vue-shape
 </style>
 ```
 
-## [示例](https://www.kuan1.top/luzhongk/vue-shape/demo.html)
+## [示例](https://halobear.github.io/npm-packages/vue-shape/demo.html)

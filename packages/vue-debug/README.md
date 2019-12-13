@@ -26,4 +26,4 @@ export default {
 </div>
 ```
 
-## [示例](https://www.kuan1.top/luzhongk/vue-debug/demo.html)
+## [示例](https://halobear.github.io/npm-packages/vue-debug/demo.html)
