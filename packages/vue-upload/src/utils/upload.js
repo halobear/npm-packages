@@ -46,6 +46,7 @@ async function upload({
  * @param {Number} size 文件大小限制20M
  * @param {Number} width 限制文件宽度
  * @param {Number} height 限制文件高度
+ * @param {String} accept 文件类型
  * @param {Function} fetchToken 返回token promise
  * @param {Function} onProgress 上传进度
  * @return: Promise
@@ -58,11 +59,12 @@ export default async ({
   width,
   height,
   needMD5 = true,
-  fetchToken = () => {},
+  accept = 'image/*',
+  fetchToken = () => { },
   onProgress
 } = {}) => {
   // 获取文件列表
-  const fileList = await uploader.getFiles({ multiple: limit > 1, needMD5 });
+  const fileList = await uploader.getFiles({ multiple: limit > 1, needMD5, accept });
   // 获取token
   formData.token = await fetchToken();
   // 限制文件大小

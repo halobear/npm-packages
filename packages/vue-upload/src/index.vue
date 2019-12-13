@@ -1,11 +1,6 @@
 <template>
-  <draggable
-    class="vue-upload-container"
-    draggable=".image-card"
-    :value="value"
-    @input="changeValue"
-  >
-    <image-card v-for="(item, key) in value" :key="key" :data="item" @remove="remove(key)" />
+  <draggable class="vue-upload-container" :class="{'file-upload-container': accept !== 'image/*'}" draggable=".image-card" :value="value" @input="changeValue">
+    <image-card v-for="(item, key) in value" :key="key" :accept="accept" :data="item" @remove="remove(key)" />
     <upload-card v-if="dataValue.length < limit" :progress="progress" @click="upload" />
   </draggable>
 </template>
@@ -58,6 +53,10 @@ export default {
       type: Number,
       default: 0
     },
+    accept: {
+      type: String,
+      default: 'image/*'
+    },
     needMD5: {
       type: Boolean,
       default: true // 是否获取文件MD5
@@ -99,7 +98,8 @@ export default {
         fetchToken: this.fetchToken,
         onProgress: this.onProgress,
         width: this.width,
-        height: this.height
+        height: this.height,
+        accept: this.accept
       });
       this.changeValue([...this.dataValue, ...res]);
     }
@@ -112,5 +112,8 @@ export default {
 .vue-upload-container {
   display: flex;
   flex-wrap: wrap;
+}
+.file-upload-container {
+  display: block;
 }
 </style>
