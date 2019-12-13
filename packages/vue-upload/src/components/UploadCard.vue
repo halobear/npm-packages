@@ -2,11 +2,23 @@
   <div @click="$emit('click')" class="upload-card">
     <i class="icon-cloud-upload iconfont"></i>
     <span>点击上传</span>
+    <div
+      v-if="progress && progress !== 100"
+      :style="{width: `${progress}%`}"
+      class="upload-progress"
+    ></div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    progress: {
+      type: Number,
+      default: 0
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -36,6 +48,15 @@ export default {};
     font-size: 30px;
     transition: color 1s;
     opacity: 0.8s;
+  }
+  .upload-progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 2px;
+    background-color: #1890ff;
+    transition: width 0.1s;
   }
 }
 </style>

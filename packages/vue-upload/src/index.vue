@@ -4,11 +4,9 @@
     draggable=".image-card"
     :value="value"
     @input="changeValue"
-    @start="dragStart"
-    @end="dragEnd"
   >
     <image-card v-for="(item, key) in value" :key="key" :data="item" @remove="remove(key)" />
-    <upload-card @click="upload" />
+    <upload-card v-if="dataValue.length < limit" :progress="progress" @click="upload" />
   </draggable>
 </template>
 
@@ -39,11 +37,32 @@ export default {
     },
     fetchToken: {
       type: Function
+    },
+    limit: {
+      type: Number,
+      default: 1
+    },
+    size: {
+      type: Number,
+      default: 20 // 限制文件大小20
+    },
+    width: {
+      type: Number,
+      default: 0
+    },
+    height: {
+      type: Number,
+      default: 0
+    },
+    needMD5: {
+      type: Boolean,
+      default: true // 是否获取文件MD5
     }
   },
   data() {
     return {
-      dataValue: this.value || []
+      dataValue: this.value || [],
+      progress: 0
     };
   },
   watch: {
@@ -55,18 +74,13 @@ export default {
     }
   },
   methods: {
-    dragStart() {
-      console.log("start");
-    },
-    dragEnd() {
-      console.log("end");
-    },
     changeValue(value) {
       this.dataValue = value;
       this.$emit("change", value);
     },
     onProgress(progress) {
-      console.log("上传进度", progress);
+      const { loaded, total } = progress;
+      this.progress = Math.floor((loaded * 100) / total);
     },
     remove(index) {
       this.dataValue.splice(index, 1);
@@ -75,7 +89,13 @@ export default {
     async upload() {
       const res = await upload({
         formData: this.params,
-        fetchToken: this.fetchToken
+        size: this.size,
+        limit: this.limit - this.dataValue.length,
+        needMD5: this.needMD5,
+        fetchToken: this.fetchToken,
+        onProgress: this.onProgress,
+        width: this.width,
+        height: this.height
       });
       this.changeValue([...this.dataValue, ...res]);
     }
