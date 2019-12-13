@@ -53,4 +53,4 @@ yarn add @halobear/vue-upload
 </script>
 ```
 
-## [示例](https://halobear.github.io/npm-packages/vue-upload/demo.html)
+## [示例](./demo)

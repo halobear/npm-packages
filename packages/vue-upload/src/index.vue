@@ -28,6 +28,10 @@ export default {
     event: "change"
   },
   props: {
+    action: {
+      type: String,
+      default: "https://upload.qiniup.com"
+    },
     value: {
       type: Array
     },

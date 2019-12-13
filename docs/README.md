@@ -15,3 +15,4 @@ yarn add @halobear/vue
 - [@halobear/vue-dialog](./vue-dialog)
 - [@halobear/vue-debug](./vue-debug)
 - [@halobear/vue-shape](./vue-shape)
+- [@halobear/vue-upload](./vue-upload)

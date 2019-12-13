@@ -4,6 +4,7 @@ import validate from "./validateImageSize";
 
 /**
  * @description: 上传单个文件
+ * @param {String} action 文件上传地址
  * @param {File} file 文件对象
  * @param {String} name 文件md5
  * @param {Object} formData 上传额外参数
@@ -12,11 +13,12 @@ import validate from "./validateImageSize";
  * @return: Promise
  */
 async function upload({
-  file,
+  action = "https://upload.qiniup.com",
   name,
+  file,
   formData = {},
-  needMD5 = true,
-  onProgress
+  onProgress,
+  needMD5 = true
 }) {
   if (name && needMD5) {
     formData.key = name;
@@ -27,7 +29,7 @@ async function upload({
   });
   fd.append("file", file);
   const data = await uploader.upload({
-    url: "https://upload.qiniup.com",
+    url: action,
     data: fd,
     onProgress
   });
@@ -38,7 +40,8 @@ async function upload({
 }
 
 /**
- * @description: 上传单个文件
+ * @description: 上传多个文件
+ * @param {String} action 文件上传地址
  * @param {Object} formData 上传额外参数
  * @param {Number} size 文件大小限制20M
  * @param {Number} width 限制文件宽度
@@ -48,6 +51,7 @@ async function upload({
  * @return: Promise
  */
 export default async ({
+  action,
   formData = {},
   size = 20,
   limit = 1,
@@ -87,7 +91,14 @@ export default async ({
   const resList = await Promise.all(
     filterList.slice(0, limit).map(fileData => {
       const { name, file } = fileData;
-      return upload({ name, file, formData, onProgress, size, needMD5 });
+      return upload({
+        action,
+        name,
+        file,
+        formData,
+        onProgress,
+        needMD5
+      });
     })
   );
   return resList;
