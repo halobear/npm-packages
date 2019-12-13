@@ -7,18 +7,15 @@
     @start="dragStart"
     @end="dragEnd"
   >
-    <image-card
-      v-for="(item, key) in value"
-      :key="key"
-      :data="item"
-      @remove="remove(key)"
-    />
-    <upload-card />
+    <image-card v-for="(item, key) in value" :key="key" :data="item" @remove="remove(key)" />
+    <upload-card @click="upload" />
   </draggable>
 </template>
 
 <script>
 import draggable from "vuedraggable";
+import upload from "./utils/upload";
+
 import ImageCard from "./components/ImageCard";
 import UploadCard from "./components/UploadCard";
 
@@ -35,6 +32,14 @@ export default {
   props: {
     value: {
       type: Array
+    },
+    params: {
+      type: Object,
+      default: () => ({})
+    },
+    fetchToken: {
+      type: Object,
+      default: () => ({ token: "" })
     }
   },
   data() {
@@ -61,9 +66,19 @@ export default {
       this.dataValue = value;
       this.$emit("change", value);
     },
+    onProgress(progress) {
+      console.log("上传进度", progress);
+    },
     remove(index) {
       this.dataValue.splice(index, 1);
       this.changeValue(this.dataValue);
+    },
+    async upload() {
+      const res = await upload({
+        formData: this.params,
+        fetchToken: this.fetchToken
+      });
+      console.log(res);
     }
   }
 };

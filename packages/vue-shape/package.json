@@ -35,7 +35,7 @@
     "url": "https://github.com/halobear/npm-packages/issues"
   },
   "dependencies": {
-    "core-js": "^3.3.2",
+    "core-js": "^2.6.5",
     "vue": "^2.6.10"
   },
   "devDependencies": {

@@ -18,7 +18,7 @@
   "author": "luzhongk@126.com",
   "license": "ISC",
   "dependencies": {
-    "core-js": "^3.3.2",
+    "core-js": "^2.6.5",
     "kuan-css": "^2.0.1",
     "qrcode": "^1.4.2",
     "vconsole": "^3.3.4",

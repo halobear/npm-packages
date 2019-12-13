@@ -43,7 +43,7 @@
     "@halobear/vue-qrcode": "^1.0.0",
     "@halobear/vue-request": "^1.0.0",
     "@halobear/vue-shape": "^1.0.0",
-    "core-js": "^3.3.2",
+    "core-js": "^2.6.5",
     "kuan-css": "^2.0.1",
     "vconsole": "^3.3.4",
     "vue": "^2.6.10"

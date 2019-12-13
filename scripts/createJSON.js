@@ -38,7 +38,7 @@ function getJson(name = "插件名字", description = "插件描述") {
       url: "https://github.com/halobear/npm-packages/issues"
     },
     dependencies: {
-      "core-js": "^3.3.2",
+      "core-js": "^2.6.5",
       vue: "^2.6.10"
     },
     devDependencies: {
