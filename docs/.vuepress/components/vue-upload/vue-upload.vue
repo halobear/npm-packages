@@ -1,5 +1,5 @@
 <template>
-  <ClientOnly class="test-container">
+  <div class="test-container">
     <h2 class="title">@halobear/vue-upload</h2>
     <upload
       v-model="value"
@@ -8,7 +8,7 @@
       :limit="5"
     />
     <p style="padding-top: 20px;">{{ value }}</p>
-  </ClientOnly>
+  </div>
 </template>
 
 <script>

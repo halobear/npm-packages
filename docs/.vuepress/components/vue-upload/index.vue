@@ -1,13 +1,22 @@
 <template>
   <ClientOnly>
-    <vue-upload />
+    <components v-if="is" :is="is"></components>
   </ClientOnly>
 </template>
 
 <script>
-import VueUpload from "./vue-upload";
 export default {
-  VueUpload
+  components: {},
+  data() {
+    return {
+      is: ""
+    };
+  },
+  mounted() {
+    import("./vue-upload").then(module => {
+      this.is = module.default;
+    });
+  }
 };
 </script>
 

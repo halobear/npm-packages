@@ -1,4 +1,4 @@
 ---
 navbar: false
-layout: vue-upload
+layout: vue-upload-index
 ---
