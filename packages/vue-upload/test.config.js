@@ -12,12 +12,7 @@ module.exports = {
       symlinks: false // 使用npm link
     },
     entry: {
-      app: "./index.js"
-    },
-    externals: {
-      vue: { commonjs: "vue", commonjs2: "vue", root: "Vue" },
-      axios: "axios",
-      "js-sha256": "js-sha256"
+      app: "./src/test.js"
     }
   },
   productionSourceMap: false
