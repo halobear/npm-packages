@@ -1,6 +1,6 @@
 ## @halobear/vue-region
 
-> 描述
+> vue 中国城市选择
 
 ## 安装
 

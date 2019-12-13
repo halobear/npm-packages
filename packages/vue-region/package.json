@@ -1,5 +1,5 @@
 {
-  "name": "@halobear/vue-boilerplate",
+  "name": "@halobear/vue-region",
   "version": "0.0.4",
   "description": "编辑素材形状尺寸",
   "keywords": [
@@ -9,14 +9,14 @@
     "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js yarn serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:lib": "vue build index.js -t lib -d lib -n vue-boilerplate",
+    "build:lib": "vue build index.js -t lib -d lib -n vue-region",
     "lint": "vue-cli-service lint",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --commit-path '.'"
   },
   "author": "luzhongkuan <luzhongk@126.com>",
-  "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-boilerplate",
+  "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-region",
   "license": "ISC",
-  "main": "lib/vue-boilerplate.umd.min.js",
+  "main": "lib/vue-region.umd.min.js",
   "directories": {
     "lib": "lib"
   },

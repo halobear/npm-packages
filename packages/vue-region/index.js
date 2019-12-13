@@ -1,7 +1,7 @@
 import VueAmap from "./src/index.vue";
 
 VueAmap.install = Vue => {
-  Vue.component("vue-boilerplate", VueAmap);
+  Vue.component("vue-region", VueAmap);
 };
 
 export default VueAmap;
