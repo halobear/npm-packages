@@ -23,9 +23,9 @@ export default {
       this.$emit("click", this.data);
     },
     preview() {
-      const { url } = this.data;
+      const { url = "" } = this.data;
       if (url) {
-        photoSwipe.preview(url);
+        photoSwipe.preview(url.replace(/-300x300/, "-w750"));
       }
     }
   }

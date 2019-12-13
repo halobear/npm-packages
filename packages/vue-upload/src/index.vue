@@ -38,8 +38,7 @@ export default {
       default: () => ({})
     },
     fetchToken: {
-      type: Object,
-      default: () => ({ token: "" })
+      type: Function
     }
   },
   data() {
@@ -78,7 +77,7 @@ export default {
         formData: this.params,
         fetchToken: this.fetchToken
       });
-      console.log(res);
+      this.changeValue([...this.dataValue, ...res]);
     }
   }
 };

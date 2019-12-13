@@ -1,5 +1,5 @@
 <template>
-  <div @click="$emit('upload')" class="upload-card">
+  <div @click="$emit('click')" class="upload-card">
     <i class="icon-cloud-upload iconfont"></i>
     <span>点击上传</span>
   </div>
