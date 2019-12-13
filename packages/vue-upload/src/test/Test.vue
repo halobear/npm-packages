@@ -1,7 +1,9 @@
 <template>
   <div>
     <upload v-model="value" />
-    {{ value }}
+    <p style="padding-top: 20px;">
+      {{ value }}
+    </p>
   </div>
 </template>
 

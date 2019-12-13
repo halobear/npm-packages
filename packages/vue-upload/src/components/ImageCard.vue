@@ -2,13 +2,15 @@
   <div @click="handleClick" class="image-card">
     <img class="origin-img animated fadeIn" v-if="data.url" :src="data.url" />
     <div class="action-box">
-      <i class="iconfont icon-eye"></i>
-      <i class="iconfont icon-delete"></i>
+      <i @click.stop="preview" class="iconfont icon-eye"></i>
+      <i @click="$emit('remove')" class="iconfont icon-delete"></i>
     </div>
   </div>
 </template>
 
 <script>
+import photoSwipe from "kuan-vue-photoswipe";
+
 export default {
   props: {
     data: {
@@ -19,6 +21,12 @@ export default {
   methods: {
     handleClick() {
       this.$emit("click", this.data);
+    },
+    preview() {
+      const { url } = this.data;
+      if (url) {
+        photoSwipe.preview(url);
+      }
     }
   }
 };
@@ -73,6 +81,7 @@ export default {
   opacity: 0;
   .iconfont {
     padding: 0 5px;
+    cursor: pointer;
   }
 }
 

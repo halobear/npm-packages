@@ -25,6 +25,7 @@ export default {};
   justify-content: center;
   flex-direction: column;
   font-size: 12px;
+  cursor: pointer;
   &:hover {
     border-color: #1890ff;
     .iconfont {
