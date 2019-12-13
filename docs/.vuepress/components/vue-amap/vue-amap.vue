@@ -1,17 +1,17 @@
 <template>
   <div>
-    <test v-model="center" keyword="上海"></test>
+    <vue-map v-model="center" keyword="上海"></vue-map>
 
-    <div class="res">结果：{{center}}</div>
+    <div class="res">结果：{{ center }}</div>
   </div>
 </template>
 
 <script>
-import Test from "../index.vue";
+import VueMap from "@halobear/vue-amap";
 
 export default {
   components: {
-    Test
+    VueMap
   },
   data() {
     return {
@@ -20,6 +20,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>

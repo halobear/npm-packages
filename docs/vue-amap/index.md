@@ -35,4 +35,4 @@ yarn add @halobear/vue-amap
 </script>
 ```
 
-## [示例](https://halobear.github.io/npm-packages/vue-amap/demo.html)
+## [示例](./demo)
