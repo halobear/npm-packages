@@ -2,7 +2,7 @@ import { createScript } from "./tools";
 import { amapKey, BEIJING } from "./constant";
 
 async function init(
-  { el, input, center = BEIJING, city, disabled = false },
+  { el, input, center = BEIJING, city, disabled = false, zoom = 12 },
   callback
 ) {
   // 没有引入地图sdk则初始化地图
@@ -12,7 +12,7 @@ async function init(
   }
   // 初始化地图
   const map = new window.AMap.Map(el, {
-    zoom: 12,
+    zoom,
     center
   });
 

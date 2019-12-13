@@ -36,6 +36,10 @@ export default {
       type: String,
       default: ""
     },
+    zoom: {
+      type: Number,
+      default: 12
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -64,10 +68,10 @@ export default {
   methods: {
     // 初始化地图
     async init() {
-      const { center, disabled } = this;
+      const { center, disabled, zoom } = this;
       const { el, input } = this.$refs;
       const { map, marker } = await amap.init(
-        { el, input, center, disabled },
+        { el, input, center, disabled, zoom },
         this.change
       );
       this.map = map;

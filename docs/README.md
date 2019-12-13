@@ -16,3 +16,4 @@ yarn add @halobear/vue
 - [@halobear/vue-debug](./vue-debug)
 - [@halobear/vue-shape](./vue-shape)
 - [@halobear/vue-upload](./vue-upload)
+- [@halobear/vue-amap](./vue-amap)

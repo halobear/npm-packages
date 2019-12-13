@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="test-container">
+    <h2 class="title">@halobear/vue-amap</h2>
     <vue-map v-model="center" keyword="上海"></vue-map>
 
     <div class="res">结果：{{ center }}</div>
