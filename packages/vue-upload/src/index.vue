@@ -1,6 +1,18 @@
 <template>
-  <draggable class="vue-upload-container" :class="{'file-upload-container': accept !== 'image/*'}" draggable=".image-card" :value="value" @input="changeValue">
-    <image-card v-for="(item, key) in value" :key="key" :accept="accept" :data="item" @remove="remove(key)" />
+  <draggable
+    class="vue-upload-container"
+    :class="{'file-upload-container': accept !== 'image/*'}"
+    draggable=".image-card"
+    :value="value"
+    @input="changeValue"
+  >
+    <image-card
+      v-for="(item, key) in value"
+      :key="key"
+      :accept="accept"
+      :data="item"
+      @remove="remove(key)"
+    />
     <upload-card v-if="dataValue.length < limit" :progress="progress" @click="upload" />
   </draggable>
 </template>
@@ -55,7 +67,7 @@ export default {
     },
     accept: {
       type: String,
-      default: 'image/*'
+      default: "image/*"
     },
     needMD5: {
       type: Boolean,
@@ -91,6 +103,7 @@ export default {
     },
     async upload() {
       const res = await upload({
+        action: this.action,
         formData: this.params,
         size: this.size,
         limit: this.limit - this.dataValue.length,
