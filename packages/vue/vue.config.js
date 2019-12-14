@@ -26,12 +26,15 @@ module.exports = {
     externals: {
       vue: { commonjs: "vue", commonjs2: "vue", root: "Vue" },
       axios: "axios",
+      "@halobear/vue-amap": "@halobear/vue-amap",
       "@halobear/vue-debug": "@halobear/vue-debug",
       "@halobear/vue-dialog": "@halobear/vue-dialog",
       "@halobear/vue-feedback": "@halobear/vue-feedback",
       "@halobear/vue-qrcode": "@halobear/vue-qrcode",
+      "@halobear/vue-region": "@halobear/vue-region",
       "@halobear/vue-request": "@halobear/vue-request",
-      "@halobear/vue-shape": "@halobear/vue-shape"
+      "@halobear/vue-shape": "@halobear/vue-shape",
+      "@halobear/vue-upload": "@halobear/vue-upload"
     }
   },
   productionSourceMap: false
