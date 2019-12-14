@@ -1,6 +1,9 @@
 <template>
   <div class="test-container">
-    <test></test>
+    <test v-model="region" :show-search="false"></test>
+    <p>
+      {{ region }}
+    </p>
   </div>
 </template>
 
@@ -10,6 +13,11 @@ import Test from "../index.vue";
 export default {
   components: {
     Test
+  },
+  data() {
+    return {
+      region: []
+    };
   }
 };
 </script>
