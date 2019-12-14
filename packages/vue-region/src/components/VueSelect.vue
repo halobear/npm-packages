@@ -168,12 +168,12 @@ export default {
   width: 100%;
   left: 0;
   margin-top: 1px;
+  box-shadow: 0 0 5px rgb(204, 204, 204);
 }
 .vue-select .dropdown-select {
   background-color: #fff;
   padding: 5px 0;
-  margin-top: 0;
-  box-shadow: 0 1px 5px rgb(204, 204, 204);
+  margin: 0;
   border-radius: 0 1px 5px 5px;
   display: block;
   max-height: 200px;
@@ -181,6 +181,7 @@ export default {
   overflow-y: auto;
   z-index: 9;
   list-style: none;
+  border-top: none;
   &::-webkit-scrollbar-thumb {
     border-radius: 3px;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
