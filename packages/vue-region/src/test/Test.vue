@@ -1,9 +1,7 @@
 <template>
   <div class="test-container">
-    <test v-model="region" :show-search="false"></test>
-    <p>
-      {{ region }}
-    </p>
+    <test v-model="region" @change="change" :level="2"></test>
+    <p>{{ region_name }}: {{ region.join("、") }}</p>
   </div>
 </template>
 
@@ -16,15 +14,21 @@ export default {
   },
   data() {
     return {
-      region: []
+      region: ["0"],
+      region_name: "全国"
     };
+  },
+  methods: {
+    change(value, name) {
+      this.region_name = name;
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
 .test-container {
-  background-color: #ccc;
+  background-color: #eee;
   min-height: 50vh;
 }
 </style>

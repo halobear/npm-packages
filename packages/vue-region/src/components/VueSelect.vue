@@ -5,11 +5,12 @@
   >
     <div class="select">
       <input
-        :value="text"
         :readonly="!showSearch"
-        :placeholder="placeholder"
-        @focus="active = true"
+        :placeholder="text || placeholder"
+        :value="active ? filterText : text"
+        @focus="show"
         @blur="hide"
+        @input="changeValue"
         class="text"
       />
       <i v-if="options.length" class="iconfont icon-right"></i>
@@ -17,8 +18,9 @@
     <transition-view class="dropdown-outer" :visible="active">
       <ul class="dropdown-select">
         <li
-          v-for="item in options"
+          v-for="item in filterOptions"
           :key="item.value"
+          :class="{ active: item.value == value }"
           @click.stop="select(item.value)"
         >
           {{ item.label }}
@@ -55,7 +57,8 @@ export default {
   },
   data() {
     return {
-      active: false
+      active: false,
+      filterText: ""
     };
   },
   computed: {
@@ -63,34 +66,47 @@ export default {
       const { options = [], value = "" } = this;
       const target = options.find(item => item.value === value);
       return target ? target.label : value;
+    },
+    filterOptions() {
+      const { filterText } = this;
+      if (!filterText) return this.options;
+      return this.options.filter(item => item.label.includes(filterText));
     }
   },
   methods: {
+    changeValue(e) {
+      this.filterText = e.target.value;
+    },
     select(value) {
       this.$emit("input", value);
     },
     hide() {
       setTimeout(() => {
         this.active = false;
-      }, 250);
+      }, 200);
+    },
+    show() {
+      this.active = true;
+      this.filterText = "";
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-@plain-shadow: 0 0 0 1px rgba(24, 144, 255, 0.2);
 @primary-color: #1890ff;
+@plain-color: #e6f7ff;
+@plain-shadow: 0 0 0 1px rgba(24, 144, 255, 0.2);
 
 @import "../styles/iconfont.css";
 .vue-select {
-  width: 150px;
+  max-width: 120px;
   display: inline-block;
   background-color: #fff;
   border-radius: 4px;
   transition: all 0.5s ease;
   position: relative;
-  font-size: 14px;
+  font-size: 12px;
   color: #474747;
   height: 100%;
   text-align: left;
@@ -112,6 +128,7 @@ export default {
     border: none;
     outline: none;
     padding: 8px 0;
+    font-size: 12px;
     background-color: transparent;
   }
 }
@@ -128,12 +145,12 @@ export default {
   box-shadow: 0 0 4px rgb(204, 204, 204);
 }
 .vue-select:active {
-  background-color: #f8f8f8;
+  background-color: #fafafa;
 }
 .vue-select.active:hover,
 .vue-select.active {
   border-radius: 3px 3px 0 0;
-  background-color: #f8f8f8;
+  background-color: #fafafa;
   border-color: @primary-color;
   border-bottom-color: none;
   box-shadow: @plain-shadow;
@@ -165,12 +182,12 @@ export default {
   z-index: 9;
   list-style: none;
   &::-webkit-scrollbar-thumb {
-    border-radius: 10px;
+    border-radius: 3px;
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #f5f5f5;
   }
   &::-webkit-scrollbar {
-    width: 4px;
+    width: 3px;
   }
 }
 .vue-select .dropdown-select li {
@@ -182,11 +199,12 @@ export default {
   text-overflow: ellipsis;
   width: 100%;
   box-sizing: border-box;
-}
-.vue-select .dropdown-select li:hover {
-  background-color: #f2f2f2;
-}
-.vue-select .dropdown-select li:active {
-  background-color: #e2e2e2;
+  &.active {
+    background-color: #f7f7f7;
+  }
+  &:hover,
+  &:active {
+    background-color: @plain-color;
+  }
 }
 </style>
