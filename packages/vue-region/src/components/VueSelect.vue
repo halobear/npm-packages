@@ -111,6 +111,7 @@ export default {
   height: 100%;
   text-align: left;
   border: 1px solid #d9d9d9;
+  line-height: 1.2;
 }
 .vue-select .select {
   cursor: pointer;
