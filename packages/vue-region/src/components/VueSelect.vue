@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="vue-select"
-    :class="{ active: active && options.length, 'show-search': showSearch }"
-  >
+  <div class="vue-select" :class="{ active: active && options.length, 'show-search': showSearch }">
     <div class="select">
       <input
         :readonly="!showSearch"
@@ -22,9 +19,7 @@
           :key="item.value"
           :class="{ active: item.value == value }"
           @click.stop="select(item.value)"
-        >
-          {{ item.label }}
-        </li>
+        >{{ item.label }}</li>
       </ul>
     </transition-view>
   </div>
@@ -106,7 +101,7 @@ export default {
   border-radius: 4px;
   transition: all 0.5s ease;
   position: relative;
-  font-size: 12px;
+  font-size: 14px;
   color: #474747;
   height: 100%;
   text-align: left;
@@ -129,17 +124,15 @@ export default {
     border: none;
     outline: none;
     padding: 8px 0;
-    font-size: 12px;
+    font-size: 14px;
     background-color: transparent;
   }
 }
 .vue-select .select > i {
-  font-size: 13px;
   color: #888;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   float: right;
-  line-height: 15px;
   transform: rotate(90deg);
 }
 .vue-select:hover {
