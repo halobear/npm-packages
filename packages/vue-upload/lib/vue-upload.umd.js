@@ -453,12 +453,12 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"aceb525a-vue-loader-template"}!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/index.vue?vue&type=template&id=2a7b5674&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"aceb525a-vue-loader-template"}!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/index.vue?vue&type=template&id=5066f3ae&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('draggable',{staticClass:"vue-upload-container",class:{'file-upload-container': _vm.accept !== 'image/*'},attrs:{"draggable":".image-card","value":_vm.value},on:{"input":_vm.changeValue}},[_vm._l((_vm.value),function(item,key){return _c('image-card',{key:key,attrs:{"accept":_vm.accept,"data":item},on:{"remove":function($event){return _vm.remove(key)}}})}),(_vm.dataValue.length < _vm.limit)?_c('upload-card',{attrs:{"progress":_vm.progress},on:{"click":_vm.upload}}):_vm._e()],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/index.vue?vue&type=template&id=2a7b5674&
+// CONCATENATED MODULE: ./src/index.vue?vue&type=template&id=5066f3ae&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
 var is_array = __webpack_require__("a745");
@@ -730,7 +730,6 @@ var vue_feedback_ = __webpack_require__("9a71");
 
 /**
  * @description: 上传单个文件
- * @param {String} action 文件上传地址
  * @param {File} file 文件对象
  * @param {String} name 文件md5
  * @param {Object} formData 上传额外参数
@@ -744,7 +743,6 @@ function upload_upload(_x) {
 }
 /**
  * @description: 上传多个文件
- * @param {String} action 文件上传地址
  * @param {Object} formData 上传额外参数
  * @param {Number} size 文件大小限制20M
  * @param {Number} width 限制文件宽度
@@ -760,18 +758,21 @@ function _upload() {
   _upload = _asyncToGenerator(
   /*#__PURE__*/
   regeneratorRuntime.mark(function _callee3(_ref) {
-    var _ref$action, action, name, file, _ref$formData, formData, onProgress, _ref$needMD, needMD5, fd, data;
+    var name, file, _ref$formData, formData, onProgress, _ref$needMD, needMD5, _formData$host, host, _formData$dir, dir, fd, data;
 
     return regeneratorRuntime.wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            _ref$action = _ref.action, action = _ref$action === void 0 ? "https://upload.qiniup.com" : _ref$action, name = _ref.name, file = _ref.file, _ref$formData = _ref.formData, formData = _ref$formData === void 0 ? {} : _ref$formData, onProgress = _ref.onProgress, _ref$needMD = _ref.needMD5, needMD5 = _ref$needMD === void 0 ? true : _ref$needMD;
+            name = _ref.name, file = _ref.file, _ref$formData = _ref.formData, formData = _ref$formData === void 0 ? {} : _ref$formData, onProgress = _ref.onProgress, _ref$needMD = _ref.needMD5, needMD5 = _ref$needMD === void 0 ? true : _ref$needMD;
+            _formData$host = formData.host, host = _formData$host === void 0 ? "https://upload.qiniup.com" : _formData$host, _formData$dir = formData.dir, dir = _formData$dir === void 0 ? "" : _formData$dir;
 
             if (name && needMD5) {
-              formData.key = name;
+              formData.key = "".concat(dir).concat(name);
             }
 
+            delete formData.host;
+            delete formData.dir;
             fd = new FormData();
             Object.entries(formData).forEach(function (_ref6) {
               var _ref7 = _slicedToArray(_ref6, 2),
@@ -781,20 +782,20 @@ function _upload() {
               fd.append(key, value);
             });
             fd.append("file", file);
-            _context3.next = 7;
+            _context3.next = 10;
             return uploader_default.a.upload({
-              url: action,
+              url: host,
               data: fd,
               onProgress: onProgress
             });
 
-          case 7:
+          case 10:
             data = _context3.sent;
             return _context3.abrupt("return", _objectSpread({}, data, {
               url: "".concat(data.base_url).concat(data.path, "-300x300")
             }));
 
-          case 9:
+          case 12:
           case "end":
             return _context3.stop();
         }
@@ -808,7 +809,6 @@ function _upload() {
 /*#__PURE__*/
 regeneratorRuntime.mark(function _callee2() {
   var _ref3,
-      action,
       _ref3$formData,
       formData,
       _ref3$size,
@@ -835,7 +835,7 @@ regeneratorRuntime.mark(function _callee2() {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
-          _ref3 = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : {}, action = _ref3.action, _ref3$formData = _ref3.formData, formData = _ref3$formData === void 0 ? {} : _ref3$formData, _ref3$size = _ref3.size, size = _ref3$size === void 0 ? 20 : _ref3$size, _ref3$limit = _ref3.limit, limit = _ref3$limit === void 0 ? 1 : _ref3$limit, width = _ref3.width, height = _ref3.height, _ref3$needMD = _ref3.needMD5, needMD5 = _ref3$needMD === void 0 ? true : _ref3$needMD, _ref3$accept = _ref3.accept, accept = _ref3$accept === void 0 ? 'image/*' : _ref3$accept, _ref3$fetchToken = _ref3.fetchToken, fetchToken = _ref3$fetchToken === void 0 ? function () {} : _ref3$fetchToken, onProgress = _ref3.onProgress;
+          _ref3 = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : {}, _ref3$formData = _ref3.formData, formData = _ref3$formData === void 0 ? {} : _ref3$formData, _ref3$size = _ref3.size, size = _ref3$size === void 0 ? 20 : _ref3$size, _ref3$limit = _ref3.limit, limit = _ref3$limit === void 0 ? 1 : _ref3$limit, width = _ref3.width, height = _ref3.height, _ref3$needMD = _ref3.needMD5, needMD5 = _ref3$needMD === void 0 ? true : _ref3$needMD, _ref3$accept = _ref3.accept, accept = _ref3$accept === void 0 ? "image/*" : _ref3$accept, _ref3$fetchToken = _ref3.fetchToken, fetchToken = _ref3$fetchToken === void 0 ? function () {} : _ref3$fetchToken, onProgress = _ref3.onProgress;
           _context2.next = 3;
           return uploader_default.a.getFiles({
             multiple: limit > 1,
@@ -920,7 +920,6 @@ regeneratorRuntime.mark(function _callee2() {
             var name = fileData.name,
                 file = fileData.file;
             return upload_upload({
-              action: action,
               name: name,
               file: file,
               formData: formData,
@@ -1194,6 +1193,18 @@ var UploadCard_component = normalizeComponent(
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1209,10 +1220,6 @@ var UploadCard_component = normalizeComponent(
     event: "change"
   },
   props: {
-    action: {
-      type: String,
-      default: "https://upload.qiniup.com"
-    },
     value: {
       type: Array
     },
@@ -1244,7 +1251,7 @@ var UploadCard_component = normalizeComponent(
     },
     accept: {
       type: String,
-      default: 'image/*'
+      default: "image/*"
     },
     needMD5: {
       type: Boolean,
