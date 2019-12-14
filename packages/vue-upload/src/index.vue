@@ -35,10 +35,6 @@ export default {
     event: "change"
   },
   props: {
-    action: {
-      type: String,
-      default: "https://upload.qiniup.com"
-    },
     value: {
       type: Array
     },
@@ -103,7 +99,6 @@ export default {
     },
     async upload() {
       const res = await upload({
-        action: this.action,
         formData: this.params,
         size: this.size,
         limit: this.limit - this.dataValue.length,
