@@ -1,4 +1,30 @@
-# 0.0.0 (2019-12-12)
+# [0.0.0](https://github.com/halobear/npm-packages/compare/v1.0.0...v0.0.0) (2019-12-14)
+
+
+### Bug Fixes
+
+* package.json ([03377eb](https://github.com/halobear/npm-packages/commit/03377eb2e59aec1bf3e0e75608478225eefd03e2))
+* **vue:** package.json ([3bb63df](https://github.com/halobear/npm-packages/commit/3bb63dfe3de2324b9bf3c9f352f086b32af6843a))
+
+
+### Features
+
+* **upload:** 非图片样式 ([5ad34bf](https://github.com/halobear/npm-packages/commit/5ad34bf3d534ace483779e4b6d4d6aa72ebf727a))
+* **vue-region:** 城市选择 ([2aaea56](https://github.com/halobear/npm-packages/commit/2aaea563b5492ff109973959e67d6c79522c412b))
+* **vue-region:** 城市选择todo ([2820751](https://github.com/halobear/npm-packages/commit/28207513ecec496ae33479225ae0e711900b5644))
+* 地图组件完成 ([d6e9a16](https://github.com/halobear/npm-packages/commit/d6e9a16fb5796622808195e6d71483fade710142))
+* **vue-region:** 城市选择开发完成 ([54c2992](https://github.com/halobear/npm-packages/commit/54c29921b1efb058073990a484ac86d19176666a))
+* 上传优化 ([ee3579c](https://github.com/halobear/npm-packages/commit/ee3579c77ef876c19c43cc30a28d127cb95753a6))
+* 地区选择样式 ([548016d](https://github.com/halobear/npm-packages/commit/548016db2f1253bde34e90cec52f2be9d894abab))
+* **vue-region:** 开发书写城市选择组件 ([3bdfd8b](https://github.com/halobear/npm-packages/commit/3bdfd8b95c0b8292d7941fcb034f9233d35d9c48))
+* **vue-upload:** 上传组件样式 ([1513b96](https://github.com/halobear/npm-packages/commit/1513b96ebc10af72da9a35e2a3b3f4fc8b8dd7dd))
+* **vue-upload:** 上传进度、尺寸限制 ([7e7995a](https://github.com/halobear/npm-packages/commit/7e7995ac7f904ee74bbff67baa2f798994d00111))
+* **vue-upload:** 准备开发一个通用上传组件 ([14b78f4](https://github.com/halobear/npm-packages/commit/14b78f4eb49dc7ef6b606e8062492d748dd67502))
+* **vue-upload:** 删除已经选中图片 ([febb58d](https://github.com/halobear/npm-packages/commit/febb58ddd7ffd00e5d5edc8e4180183214fd0e32))
+
+
+
+# [1.0.0](https://github.com/halobear/npm-packages/compare/1c4b10f402b3d601be9a4cf062b99c025b50c5a7...v1.0.0) (2019-12-12)
 
 
 ### Features
