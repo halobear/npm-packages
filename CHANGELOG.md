@@ -1,4 +1,14 @@
-# [0.0.0](https://github.com/halobear/npm-packages/compare/v1.0.1...v0.0.0) (2019-12-14)
+# [0.0.0](https://github.com/halobear/npm-packages/compare/v1.0.2-alpha.0...v0.0.0) (2019-12-14)
+
+
+### Bug Fixes
+
+* **vue-upload:** 上传地址 ([f30361b](https://github.com/halobear/npm-packages/commit/f30361b9199cca7c945e49b92a8309b84e9b1659))
+* vue-upload ([5ae428a](https://github.com/halobear/npm-packages/commit/5ae428afa9027efdd326e237486a06bcab06c593))
+
+
+
+## [1.0.2-alpha.0](https://github.com/halobear/npm-packages/compare/v1.0.1...v1.0.2-alpha.0) (2019-12-14)
 
 
 
