@@ -37,10 +37,12 @@
     "url": "https://github.com/halobear/npm-packages/issues"
   },
   "dependencies": {
+    "@halobear/vue-amap": "^1.0.0",
     "@halobear/vue-debug": "^1.0.0",
     "@halobear/vue-dialog": "^1.0.0",
     "@halobear/vue-feedback": "^1.0.0",
     "@halobear/vue-qrcode": "^1.0.0",
+    "@halobear/vue-region": "^1.0.0",
     "@halobear/vue-request": "^1.0.0",
     "@halobear/vue-shape": "^1.0.0",
     "@halobear/vue-upload": "^1.0.0",
