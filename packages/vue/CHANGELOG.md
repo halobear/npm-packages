@@ -4,6 +4,7 @@
 ### Bug Fixes
 
 * package.json ([03377eb](https://github.com/halobear/npm-packages/commit/03377eb2e59aec1bf3e0e75608478225eefd03e2))
+* **vue:** package.json ([3bb63df](https://github.com/halobear/npm-packages/commit/3bb63dfe3de2324b9bf3c9f352f086b32af6843a))
 
 
 ### Features
