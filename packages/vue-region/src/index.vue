@@ -109,7 +109,8 @@ export default {
       this.change();
     },
     change() {
-      this.$emit("change", this.region, this.region_name);
+      const region_name = this.region_name.split(" ").slice(0, this.level + 1);
+      this.$emit("change", this.region, region_name);
     }
   }
 };
