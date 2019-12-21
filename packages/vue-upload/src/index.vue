@@ -1,6 +1,18 @@
 <template>
-  <draggable class="vue-upload-container" :class="{'file-upload-container': accept !== 'image/*'}" draggable=".image-card" :value="value" @input="changeValue">
-    <image-card v-for="(item, key) in value" :key="key" :accept="accept" :data="item" @remove="remove(key)" />
+  <draggable
+    class="vue-upload-container"
+    :class="{'file-upload-container': accept !== 'image/*'}"
+    draggable=".image-card"
+    :value="value"
+    @input="changeValue"
+  >
+    <image-card
+      v-for="(item, key) in value"
+      :key="key"
+      :accept="accept"
+      :data="item"
+      @remove="remove(key)"
+    />
     <upload-card v-if="dataValue.length < limit" :progress="progress" @click="upload" />
   </draggable>
 </template>
@@ -23,10 +35,6 @@ export default {
     event: "change"
   },
   props: {
-    action: {
-      type: String,
-      default: "https://upload.qiniup.com"
-    },
     value: {
       type: Array
     },
@@ -55,7 +63,7 @@ export default {
     },
     accept: {
       type: String,
-      default: 'image/*'
+      default: "image/*"
     },
     needMD5: {
       type: Boolean,

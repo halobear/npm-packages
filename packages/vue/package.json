@@ -1,6 +1,6 @@
 {
   "name": "@halobear/vue",
-  "version": "1.0.0",
+  "version": "1.0.2-alpha.1",
   "description": "vue",
   "keywords": [
     "halobear",
@@ -24,7 +24,7 @@
   },
   "files": [
     "lib",
-    "src"
+    "index.js"
   ],
   "publishConfig": {
     "access": "public"
@@ -37,13 +37,15 @@
     "url": "https://github.com/halobear/npm-packages/issues"
   },
   "dependencies": {
-    "@halobear/vue-debug": "^1.0.0",
-    "@halobear/vue-dialog": "^1.0.0",
-    "@halobear/vue-feedback": "^1.0.0",
-    "@halobear/vue-qrcode": "^1.0.0",
-    "@halobear/vue-request": "^1.0.0",
-    "@halobear/vue-shape": "^1.0.0",
-    "@halobear/vue-upload": "^1.0.0",
+    "@halobear/vue-amap": "^1.0.0",
+    "@halobear/vue-debug": "^1.0.2-alpha.1",
+    "@halobear/vue-dialog": "^1.0.2-alpha.1",
+    "@halobear/vue-feedback": "^1.0.2-alpha.1",
+    "@halobear/vue-qrcode": "^1.0.2-alpha.1",
+    "@halobear/vue-region": "^1.0.0",
+    "@halobear/vue-request": "^1.0.2-alpha.1",
+    "@halobear/vue-shape": "^1.0.2-alpha.1",
+    "@halobear/vue-upload": "^1.0.2-alpha.1",
     "core-js": "^2.6.5",
     "kuan-css": "^2.0.1",
     "vconsole": "^3.3.4",

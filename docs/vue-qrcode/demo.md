@@ -1,4 +1,4 @@
 ---
 navbar: false
-layout: vue-qrcode
+layout: vue-qrcode-index
 ---

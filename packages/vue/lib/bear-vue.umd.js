@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("@halobear/vue-debug"), require("@halobear/vue-request"), require("@halobear/vue-dialog"), require("@halobear/vue-shape"), require("@halobear/vue-qrcode"), require("@halobear/vue-feedback"));
+		module.exports = factory(require("@halobear/vue-debug"), require("@halobear/vue-amap"), require("@halobear/vue-region"), require("@halobear/vue-request"), require("@halobear/vue-dialog"), require("@halobear/vue-shape"), require("@halobear/vue-qrcode"), require("@halobear/vue-feedback"), require("@halobear/vue-upload"));
 	else if(typeof define === 'function' && define.amd)
-		define(["@halobear/vue-debug", "@halobear/vue-request", "@halobear/vue-dialog", "@halobear/vue-shape", "@halobear/vue-qrcode", "@halobear/vue-feedback"], factory);
+		define(["@halobear/vue-debug", "@halobear/vue-amap", "@halobear/vue-region", "@halobear/vue-request", "@halobear/vue-dialog", "@halobear/vue-shape", "@halobear/vue-qrcode", "@halobear/vue-feedback", "@halobear/vue-upload"], factory);
 	else if(typeof exports === 'object')
-		exports["bear-vue"] = factory(require("@halobear/vue-debug"), require("@halobear/vue-request"), require("@halobear/vue-dialog"), require("@halobear/vue-shape"), require("@halobear/vue-qrcode"), require("@halobear/vue-feedback"));
+		exports["bear-vue"] = factory(require("@halobear/vue-debug"), require("@halobear/vue-amap"), require("@halobear/vue-region"), require("@halobear/vue-request"), require("@halobear/vue-dialog"), require("@halobear/vue-shape"), require("@halobear/vue-qrcode"), require("@halobear/vue-feedback"), require("@halobear/vue-upload"));
 	else
-		root["bear-vue"] = factory(root["@halobear/vue-debug"], root["@halobear/vue-request"], root["@halobear/vue-dialog"], root["@halobear/vue-shape"], root["@halobear/vue-qrcode"], root["@halobear/vue-feedback"]);
-})((typeof self !== 'undefined' ? self : this), function(__WEBPACK_EXTERNAL_MODULE__04a8__, __WEBPACK_EXTERNAL_MODULE__3e33__, __WEBPACK_EXTERNAL_MODULE__5004__, __WEBPACK_EXTERNAL_MODULE__65e6__, __WEBPACK_EXTERNAL_MODULE__9427__, __WEBPACK_EXTERNAL_MODULE__9a71__) {
+		root["bear-vue"] = factory(root["@halobear/vue-debug"], root["@halobear/vue-amap"], root["@halobear/vue-region"], root["@halobear/vue-request"], root["@halobear/vue-dialog"], root["@halobear/vue-shape"], root["@halobear/vue-qrcode"], root["@halobear/vue-feedback"], root["@halobear/vue-upload"]);
+})((typeof self !== 'undefined' ? self : this), function(__WEBPACK_EXTERNAL_MODULE__04a8__, __WEBPACK_EXTERNAL_MODULE__0f78__, __WEBPACK_EXTERNAL_MODULE__230f__, __WEBPACK_EXTERNAL_MODULE__3e33__, __WEBPACK_EXTERNAL_MODULE__5004__, __WEBPACK_EXTERNAL_MODULE__65e6__, __WEBPACK_EXTERNAL_MODULE__9427__, __WEBPACK_EXTERNAL_MODULE__9a71__, __WEBPACK_EXTERNAL_MODULE_be27__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -146,6 +146,20 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__04a8__;
 
 /***/ }),
 
+/***/ "0f78":
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__0f78__;
+
+/***/ }),
+
+/***/ "230f":
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__230f__;
+
+/***/ }),
+
 /***/ "2db7":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -169,15 +183,9 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// EXTERNAL MODULE: external "@halobear/vue-feedback"
-var vue_feedback_ = __webpack_require__("9a71");
-
-// EXTERNAL MODULE: external "@halobear/vue-request"
-var vue_request_ = __webpack_require__("3e33");
-
-// EXTERNAL MODULE: external "@halobear/vue-qrcode"
-var vue_qrcode_ = __webpack_require__("9427");
-var vue_qrcode_default = /*#__PURE__*/__webpack_require__.n(vue_qrcode_);
+// EXTERNAL MODULE: external "@halobear/vue-amap"
+var vue_amap_ = __webpack_require__("0f78");
+var vue_amap_default = /*#__PURE__*/__webpack_require__.n(vue_amap_);
 
 // EXTERNAL MODULE: external "@halobear/vue-debug"
 var vue_debug_ = __webpack_require__("04a8");
@@ -187,31 +195,59 @@ var vue_debug_default = /*#__PURE__*/__webpack_require__.n(vue_debug_);
 var vue_dialog_ = __webpack_require__("5004");
 var vue_dialog_default = /*#__PURE__*/__webpack_require__.n(vue_dialog_);
 
+// EXTERNAL MODULE: external "@halobear/vue-feedback"
+var vue_feedback_ = __webpack_require__("9a71");
+
+// EXTERNAL MODULE: external "@halobear/vue-qrcode"
+var vue_qrcode_ = __webpack_require__("9427");
+var vue_qrcode_default = /*#__PURE__*/__webpack_require__.n(vue_qrcode_);
+
+// EXTERNAL MODULE: external "@halobear/vue-region"
+var vue_region_ = __webpack_require__("230f");
+var vue_region_default = /*#__PURE__*/__webpack_require__.n(vue_region_);
+
+// EXTERNAL MODULE: external "@halobear/vue-request"
+var vue_request_ = __webpack_require__("3e33");
+
 // EXTERNAL MODULE: external "@halobear/vue-shape"
 var vue_shape_ = __webpack_require__("65e6");
 var vue_shape_default = /*#__PURE__*/__webpack_require__.n(vue_shape_);
 
+// EXTERNAL MODULE: external "@halobear/vue-upload"
+var vue_upload_ = __webpack_require__("be27");
+var vue_upload_default = /*#__PURE__*/__webpack_require__.n(vue_upload_);
+
 // CONCATENATED MODULE: ./index.js
-
-
  // qrcode二维码
 
  // vue调试
 
  // vue弹窗
 
+ // 反馈组件
+
+ // qrcode二维码
+
  // vue形状编辑
 
 
+ // vue形状编辑
+
+ // vue上传组件
+
+
 // CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
+/* concated harmony reexport VueAmap */__webpack_require__.d(__webpack_exports__, "VueAmap", function() { return vue_amap_default.a; });
+/* concated harmony reexport VueDebug */__webpack_require__.d(__webpack_exports__, "VueDebug", function() { return vue_debug_default.a; });
+/* concated harmony reexport VueDialog */__webpack_require__.d(__webpack_exports__, "VueDialog", function() { return vue_dialog_default.a; });
 /* concated harmony reexport loading */__webpack_require__.d(__webpack_exports__, "loading", function() { return vue_feedback_["loading"]; });
 /* concated harmony reexport toast */__webpack_require__.d(__webpack_exports__, "toast", function() { return vue_feedback_["toast"]; });
+/* concated harmony reexport VueQrcode */__webpack_require__.d(__webpack_exports__, "VueQrcode", function() { return vue_qrcode_default.a; });
+/* concated harmony reexport VueRegion */__webpack_require__.d(__webpack_exports__, "VueRegion", function() { return vue_region_default.a; });
 /* concated harmony reexport createApi */__webpack_require__.d(__webpack_exports__, "createApi", function() { return vue_request_["createApi"]; });
 /* concated harmony reexport encrypt */__webpack_require__.d(__webpack_exports__, "encrypt", function() { return vue_request_["encrypt"]; });
-/* concated harmony reexport VueQrcode */__webpack_require__.d(__webpack_exports__, "VueQrcode", function() { return vue_qrcode_default.a; });
-/* concated harmony reexport VueDialog */__webpack_require__.d(__webpack_exports__, "VueDialog", function() { return vue_dialog_default.a; });
-/* concated harmony reexport VueDebug */__webpack_require__.d(__webpack_exports__, "VueDebug", function() { return vue_debug_default.a; });
 /* concated harmony reexport VueShape */__webpack_require__.d(__webpack_exports__, "VueShape", function() { return vue_shape_default.a; });
+/* concated harmony reexport VueUpload */__webpack_require__.d(__webpack_exports__, "VueUpload", function() { return vue_upload_default.a; });
 
 
 
@@ -250,6 +286,13 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__9427__;
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE__9a71__;
+
+/***/ }),
+
+/***/ "be27":
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_be27__;
 
 /***/ })
 

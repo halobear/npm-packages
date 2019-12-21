@@ -137,6 +137,20 @@ module.exports = require("@halobear/vue-debug");
 
 /***/ }),
 
+/***/ "0f78":
+/***/ (function(module, exports) {
+
+module.exports = require("@halobear/vue-amap");
+
+/***/ }),
+
+/***/ "230f":
+/***/ (function(module, exports) {
+
+module.exports = require("@halobear/vue-region");
+
+/***/ }),
+
 /***/ "2db7":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -160,15 +174,9 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// EXTERNAL MODULE: external "@halobear/vue-feedback"
-var vue_feedback_ = __webpack_require__("9a71");
-
-// EXTERNAL MODULE: external "@halobear/vue-request"
-var vue_request_ = __webpack_require__("3e33");
-
-// EXTERNAL MODULE: external "@halobear/vue-qrcode"
-var vue_qrcode_ = __webpack_require__("9427");
-var vue_qrcode_default = /*#__PURE__*/__webpack_require__.n(vue_qrcode_);
+// EXTERNAL MODULE: external "@halobear/vue-amap"
+var vue_amap_ = __webpack_require__("0f78");
+var vue_amap_default = /*#__PURE__*/__webpack_require__.n(vue_amap_);
 
 // EXTERNAL MODULE: external "@halobear/vue-debug"
 var vue_debug_ = __webpack_require__("04a8");
@@ -178,31 +186,59 @@ var vue_debug_default = /*#__PURE__*/__webpack_require__.n(vue_debug_);
 var vue_dialog_ = __webpack_require__("5004");
 var vue_dialog_default = /*#__PURE__*/__webpack_require__.n(vue_dialog_);
 
+// EXTERNAL MODULE: external "@halobear/vue-feedback"
+var vue_feedback_ = __webpack_require__("9a71");
+
+// EXTERNAL MODULE: external "@halobear/vue-qrcode"
+var vue_qrcode_ = __webpack_require__("9427");
+var vue_qrcode_default = /*#__PURE__*/__webpack_require__.n(vue_qrcode_);
+
+// EXTERNAL MODULE: external "@halobear/vue-region"
+var vue_region_ = __webpack_require__("230f");
+var vue_region_default = /*#__PURE__*/__webpack_require__.n(vue_region_);
+
+// EXTERNAL MODULE: external "@halobear/vue-request"
+var vue_request_ = __webpack_require__("3e33");
+
 // EXTERNAL MODULE: external "@halobear/vue-shape"
 var vue_shape_ = __webpack_require__("65e6");
 var vue_shape_default = /*#__PURE__*/__webpack_require__.n(vue_shape_);
 
+// EXTERNAL MODULE: external "@halobear/vue-upload"
+var vue_upload_ = __webpack_require__("be27");
+var vue_upload_default = /*#__PURE__*/__webpack_require__.n(vue_upload_);
+
 // CONCATENATED MODULE: ./index.js
-
-
  // qrcode二维码
 
  // vue调试
 
  // vue弹窗
 
+ // 反馈组件
+
+ // qrcode二维码
+
  // vue形状编辑
 
 
+ // vue形状编辑
+
+ // vue上传组件
+
+
 // CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
+/* concated harmony reexport VueAmap */__webpack_require__.d(__webpack_exports__, "VueAmap", function() { return vue_amap_default.a; });
+/* concated harmony reexport VueDebug */__webpack_require__.d(__webpack_exports__, "VueDebug", function() { return vue_debug_default.a; });
+/* concated harmony reexport VueDialog */__webpack_require__.d(__webpack_exports__, "VueDialog", function() { return vue_dialog_default.a; });
 /* concated harmony reexport loading */__webpack_require__.d(__webpack_exports__, "loading", function() { return vue_feedback_["loading"]; });
 /* concated harmony reexport toast */__webpack_require__.d(__webpack_exports__, "toast", function() { return vue_feedback_["toast"]; });
+/* concated harmony reexport VueQrcode */__webpack_require__.d(__webpack_exports__, "VueQrcode", function() { return vue_qrcode_default.a; });
+/* concated harmony reexport VueRegion */__webpack_require__.d(__webpack_exports__, "VueRegion", function() { return vue_region_default.a; });
 /* concated harmony reexport createApi */__webpack_require__.d(__webpack_exports__, "createApi", function() { return vue_request_["createApi"]; });
 /* concated harmony reexport encrypt */__webpack_require__.d(__webpack_exports__, "encrypt", function() { return vue_request_["encrypt"]; });
-/* concated harmony reexport VueQrcode */__webpack_require__.d(__webpack_exports__, "VueQrcode", function() { return vue_qrcode_default.a; });
-/* concated harmony reexport VueDialog */__webpack_require__.d(__webpack_exports__, "VueDialog", function() { return vue_dialog_default.a; });
-/* concated harmony reexport VueDebug */__webpack_require__.d(__webpack_exports__, "VueDebug", function() { return vue_debug_default.a; });
 /* concated harmony reexport VueShape */__webpack_require__.d(__webpack_exports__, "VueShape", function() { return vue_shape_default.a; });
+/* concated harmony reexport VueUpload */__webpack_require__.d(__webpack_exports__, "VueUpload", function() { return vue_upload_default.a; });
 
 
 
@@ -241,6 +277,13 @@ module.exports = require("@halobear/vue-qrcode");
 /***/ (function(module, exports) {
 
 module.exports = require("@halobear/vue-feedback");
+
+/***/ }),
+
+/***/ "be27":
+/***/ (function(module, exports) {
+
+module.exports = require("@halobear/vue-upload");
 
 /***/ })
 
