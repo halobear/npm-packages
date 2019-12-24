@@ -1,6 +1,6 @@
 {
   "name": "@halobear/vue-feedback",
-  "version": "1.0.2-alpha.1",
+  "version": "1.0.2",
   "description": "vue toast loading",
   "keywords": [
     "vue",

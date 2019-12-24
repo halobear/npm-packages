@@ -1,6 +1,6 @@
 {
   "name": "@halobear/vue-amap",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "vue高德地图",
   "keywords": [
     "vue"

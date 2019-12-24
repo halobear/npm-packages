@@ -1,4 +1,20 @@
-# [0.0.0](https://github.com/halobear/npm-packages/compare/v1.0.2-alpha.0...v0.0.0) (2019-12-14)
+# [0.0.0](https://github.com/halobear/npm-packages/compare/v1.0.2-alpha.1...v0.0.0) (2019-12-24)
+
+
+### Bug Fixes
+
+* region 样式 ([dc85242](https://github.com/halobear/npm-packages/commit/dc85242476c2b1f3eecfb18e3f752f3e4e179968))
+* **vue-region:** region ([4286fdb](https://github.com/halobear/npm-packages/commit/4286fdb8fd55b0ccc06208d92ff76e7fed932e9f))
+* 样式 ([933bd00](https://github.com/halobear/npm-packages/commit/933bd000ed68ea496923be11997ba641a8f44dd9))
+
+
+### Features
+
+* md ([98cc42f](https://github.com/halobear/npm-packages/commit/98cc42fefefa91955614764ee684b37bd04e3921))
+
+
+
+## [1.0.2-alpha.1](https://github.com/halobear/npm-packages/compare/v1.0.2-alpha.0...v1.0.2-alpha.1) (2019-12-14)
 
 
 ### Bug Fixes
