@@ -1,6 +1,6 @@
 {
   "name": "@halobear/vue",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "vue",
   "keywords": [
     "halobear",
@@ -43,7 +43,7 @@
     "@halobear/vue-feedback": "^1.0.2",
     "@halobear/vue-qrcode": "^1.0.2",
     "@halobear/vue-region": "^1.0.2",
-    "@halobear/vue-request": "^1.0.2",
+    "@halobear/vue-request": "^1.0.3",
     "@halobear/vue-shape": "^1.0.2",
     "@halobear/vue-upload": "^1.0.2",
     "core-js": "^2.6.5",
