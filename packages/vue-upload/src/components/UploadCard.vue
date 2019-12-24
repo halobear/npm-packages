@@ -1,6 +1,6 @@
 <template>
   <div @click="$emit('click')" class="upload-card">
-    <i class="icon-cloud-upload iconfont"></i>
+    <i class="icon-plus iconfont"></i>
     <span>点击上传</span>
     <div
       v-if="progress && progress !== 100"

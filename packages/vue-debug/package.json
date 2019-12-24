@@ -1,7 +1,7 @@
 {
   "name": "@halobear/vue-debug",
   "version": "1.0.2-alpha.1",
-  "description": "vue",
+  "description": "vue vconsole",
   "keywords": [
     "vue",
     "debug"

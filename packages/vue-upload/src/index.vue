@@ -80,7 +80,7 @@ export default {
     value: {
       deep: true,
       handler(value) {
-        this.dataValue = value;
+        this.dataValue = value || [];
       }
     }
   },

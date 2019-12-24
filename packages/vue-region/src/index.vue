@@ -58,6 +58,14 @@ export default {
       region: this.value || []
     };
   },
+  watch: {
+    value: {
+      deep: true,
+      handler(value) {
+        this.region = value || []
+      }
+    }
+  },
   computed: {
     province() {
       return data.filter(item => item.parent_id == 0);
