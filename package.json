@@ -9,9 +9,6 @@
     "json": "node ./scripts/createJSON.js",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
-  "gitHooks": {
-    "commit-msg": "node scripts/verifyCommitMsg.js"
-  },
   "keywords": [
     "halobear"
   ],
