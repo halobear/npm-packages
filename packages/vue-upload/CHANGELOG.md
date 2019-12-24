@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/halobear/npm-packages/compare/v1.0.2-alpha.1...v1.0.2) (2019-12-24)
+
+
+### Bug Fixes
+
+* 样式 ([933bd00](https://github.com/halobear/npm-packages/commit/933bd000ed68ea496923be11997ba641a8f44dd9))
+
+
+
 ## [1.0.2-alpha.1](https://github.com/halobear/npm-packages/compare/v1.0.2-alpha.0...v1.0.2-alpha.1) (2019-12-14)
 
 

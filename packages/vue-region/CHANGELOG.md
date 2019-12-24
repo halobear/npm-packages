@@ -1,3 +1,13 @@
+## [1.0.2](https://github.com/halobear/npm-packages/compare/v1.0.2-alpha.1...v1.0.2) (2019-12-24)
+
+
+### Bug Fixes
+
+* region 样式 ([dc85242](https://github.com/halobear/npm-packages/commit/dc85242476c2b1f3eecfb18e3f752f3e4e179968))
+* **vue-region:** region ([4286fdb](https://github.com/halobear/npm-packages/commit/4286fdb8fd55b0ccc06208d92ff76e7fed932e9f))
+
+
+
 ## [1.0.1](https://github.com/halobear/npm-packages/compare/v1.0.0...v1.0.1) (2019-12-14)
 
 
