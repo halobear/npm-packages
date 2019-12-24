@@ -40,14 +40,17 @@ export default {
   cursor: pointer;
   &:hover {
     border-color: #1890ff;
+    color: #1890ff;
+    transition: 0.3s;
     .iconfont {
       color: #1890ff;
     }
   }
   .iconfont {
-    font-size: 30px;
+    font-size: 24px;
     transition: color 1s;
-    opacity: 0.8s;
+    opacity: 0.8;
+    padding-bottom: 5px;
   }
   .upload-progress {
     position: absolute;
