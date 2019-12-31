@@ -1,3 +1,12 @@
+## [1.0.4](https://github.com/halobear/npm-packages/compare/v1.0.3...v1.0.4) (2019-12-31)
+
+
+### Bug Fixes
+
+* 城市选择 ([4a188a4](https://github.com/halobear/npm-packages/commit/4a188a4274921d69bba2fe51efa584d4caa5c296))
+
+
+
 ## [1.0.2](https://github.com/halobear/npm-packages/compare/v1.0.2-alpha.1...v1.0.2) (2019-12-24)
 
 

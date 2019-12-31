@@ -1,3 +1,7 @@
+## [1.0.4](https://github.com/halobear/npm-packages/compare/v1.0.3...v1.0.4) (2019-12-31)
+
+
+
 ## [1.0.3](https://github.com/halobear/npm-packages/compare/v1.0.2...v1.0.3) (2019-12-24)
 
 
