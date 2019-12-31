@@ -9,7 +9,7 @@
       @input="changeProvince"
     />
     <vue-select
-      v-if="level >= 1"
+      v-if="isVisible(1, city)"
       class="vue-select"
       placeholder="选择城市"
       :showSearch="showSearch"
@@ -18,7 +18,7 @@
       @input="changeCity"
     />
     <vue-select
-      v-if="level === 2"
+      v-if="isVisible(2, district)"
       class="vue-select"
       placeholder="选择区域"
       :showSearch="showSearch"
@@ -54,6 +54,10 @@ export default {
     },
     format: {
       type: Function
+    },
+    autoSelect: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -99,6 +103,10 @@ export default {
     }
   },
   methods: {
+    isVisible(index, data) {
+      if (this.level < index) return false;
+      return data.length || !this.autoSelect;
+    },
     changeProvince(p = "0") {
       if (p == this.region[0]) return this.change();
       this.region = [p];
@@ -111,10 +119,21 @@ export default {
       if (!city.length) return this.change();
       let c = cityValue;
       if (!c) {
-        this.region = [this.region[0], "", ""].slice(0, this.level);
-        return this.change();
+        if (!this.autoSelect) {
+          this.region = [this.region[0], "", ""].slice(0, this.level);
+          return this.change();
+        } else {
+          c = city[0].value;
+        }
       }
       this.region = [this.region[0], c];
+      if (this.autoSelect) {
+        // 默认选中第一个地区
+        const { district } = this;
+        if (district.length) {
+          this.region.push(district[0].value);
+        }
+      }
       this.change();
     },
     change() {
