@@ -64,8 +64,13 @@ export default {
     },
     filterOptions() {
       const { filterText } = this;
-      if (!filterText) return this.options;
-      return this.options.filter(item => item.label.includes(filterText));
+      const options = [
+        { parent_id: 0, label: "不限", value: "" },
+        ...this.options
+      ];
+      if (!filterText) return options;
+      const res = options.filter(item => item.label.includes(filterText));
+      return res;
     }
   },
   methods: {

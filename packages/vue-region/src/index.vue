@@ -9,7 +9,7 @@
       @input="changeProvince"
     />
     <vue-select
-      v-if="city.length && level >= 1"
+      v-if="level >= 1"
       class="vue-select"
       placeholder="选择城市"
       :showSearch="showSearch"
@@ -18,7 +18,7 @@
       @input="changeCity"
     />
     <vue-select
-      v-if="level === 2 && district.length"
+      v-if="level === 2"
       class="vue-select"
       placeholder="选择区域"
       :showSearch="showSearch"
@@ -51,18 +51,26 @@ export default {
     level: {
       type: Number,
       default: 1
+    },
+    format: {
+      type: Function
     }
   },
   data() {
+    let d = data;
+    if (this.format) {
+      d = this.format(data);
+    }
     return {
-      region: this.value || []
+      region: this.value || [],
+      data: d
     };
   },
   watch: {
     value: {
       deep: true,
       handler(value) {
-        this.region = value || []
+        this.region = value || [];
       }
     }
   },
@@ -102,22 +110,18 @@ export default {
       // 选择全国、只有一级选择
       if (!city.length) return this.change();
       let c = cityValue;
-      // 默认选中当前省第一个城市
       if (!c) {
-        c = city[0].value;
+        this.region = [this.region[0], "", ""].slice(0, this.level);
+        return this.change();
       }
       this.region = [this.region[0], c];
-      // 只选择城市
-      if (this.simple) return this.change();
-      // 默认选中第一个地区
-      const { district } = this;
-      if (district.length) {
-        this.region.push(district[0].value);
-      }
       this.change();
     },
     change() {
-      const region_name = this.region_name.split(" ").slice(0, this.level + 1);
+      const region_name = this.region_name
+        .split(" ")
+        .filter(item => item)
+        .slice(0, this.level + 1);
       this.$emit("change", this.region, region_name);
     }
   }
