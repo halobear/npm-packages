@@ -1,30 +1,8 @@
 <template>
   <div class="region-outer">
-    <vue-select
-      class="vue-select"
-      placeholder="选择省份"
-      :showSearch="showSearch"
-      :options="province"
-      :value="region[0]"
-      @input="changeProvince"
-    />
-    <vue-select
-      v-if="isVisible(1, city)"
-      class="vue-select"
-      placeholder="选择城市"
-      :showSearch="showSearch"
-      :options="city"
-      :value="region[1]"
-      @input="changeCity"
-    />
-    <vue-select
-      v-if="isVisible(2, district)"
-      class="vue-select"
-      placeholder="选择区域"
-      :showSearch="showSearch"
-      :options="district"
-      v-model="region[2]"
-    />
+    <vue-select class="vue-select" placeholder="选择省份" :showSearch="showSearch" :options="province" :value="region[0]" @input="changeProvince" />
+    <vue-select v-if="isVisible(1, city)" class="vue-select" placeholder="选择城市" :showSearch="showSearch" :options="city" :value="region[1]" @input="changeCity" />
+    <vue-select v-if="isVisible(2, district)" class="vue-select" placeholder="选择区域" :showSearch="showSearch" :options="district" v-model="region[2]" />
   </div>
 </template>
 

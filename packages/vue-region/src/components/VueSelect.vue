@@ -48,6 +48,10 @@ export default {
     showSearch: {
       type: Boolean,
       default: true
+    },
+    autoSelect: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -64,10 +68,9 @@ export default {
     },
     filterOptions() {
       const { filterText } = this;
-      const options = [
-        { parent_id: 0, label: "不限", value: "" },
-        ...this.options
-      ];
+      const options = !this.autoSelect
+        ? [{ parent_id: 0, label: "不限", value: "" }, ...this.options]
+        : this.options;
       if (!filterText) return options;
       const res = options.filter(item => item.label.includes(filterText));
       return res;

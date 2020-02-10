@@ -1,52 +1,52 @@
 {
-  "name": "@halobear/vue-region",
-  "version": "1.0.1",
-  "description": "中国城市选择",
-  "keywords": [
-    "vue"
-  ],
-  "scripts": {
-    "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js yarn serve",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build:lib": "vue build index.js -t lib -d lib -n vue-region",
-    "lint": "vue-cli-service lint",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --commit-path '.'"
-  },
-  "author": "luzhongkuan <luzhongk@126.com>",
-  "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-region",
-  "license": "ISC",
-  "main": "lib/vue-region.umd.min.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "files": [
-    "lib",
-    "src"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/halobear/npm-packages.git"
-  },
-  "bugs": {
-    "url": "https://github.com/halobear/npm-packages/issues"
-  },
-  "dependencies": {
-    "core-js": "^2.6.5",
-    "vue": "^2.6.10"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.12.0",
-    "@vue/cli-plugin-eslint": "^3.12.0",
-    "@vue/cli-service": "^3.12.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "less": "^3.10.3",
-    "less-loader": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
-  }
+	"name": "@halobear/vue-region",
+	"version": "1.0.4",
+	"description": "中国城市选择",
+	"keywords": [
+		"vue"
+	],
+	"scripts": {
+		"dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js yarn serve",
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"build:lib": "vue build index.js -t lib -d lib -n vue-region",
+		"lint": "vue-cli-service lint",
+		"version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --commit-path '.'"
+	},
+	"author": "luzhongkuan <luzhongk@126.com>",
+	"homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-region",
+	"license": "ISC",
+	"main": "lib/vue-region.umd.min.js",
+	"directories": {
+		"lib": "lib"
+	},
+	"files": [
+		"lib",
+		"src"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/halobear/npm-packages.git"
+	},
+	"bugs": {
+		"url": "https://github.com/halobear/npm-packages/issues"
+	},
+	"dependencies": {
+		"core-js": "^2.6.5",
+		"vue": "^2.6.10"
+	},
+	"devDependencies": {
+		"@vue/cli-plugin-babel": "^3.12.0",
+		"@vue/cli-plugin-eslint": "^3.12.0",
+		"@vue/cli-service": "^3.12.0",
+		"babel-eslint": "^10.0.1",
+		"eslint": "^5.16.0",
+		"eslint-plugin-vue": "^5.0.0",
+		"less": "^3.10.3",
+		"less-loader": "^5.0.0",
+		"vue-template-compiler": "^2.6.10"
+	}
 }
