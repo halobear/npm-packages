@@ -37,29 +37,18 @@
     "url": "https://github.com/halobear/npm-packages/issues"
   },
   "dependencies": {
-    "@halobear/vue-amap": "^1.0.2",
-    "@halobear/vue-debug": "^1.0.2",
-    "@halobear/vue-dialog": "^1.0.2",
-    "@halobear/vue-feedback": "^1.0.2",
-    "@halobear/vue-qrcode": "^1.0.2",
-    "@halobear/vue-region": "^1.0.4",
-    "@halobear/vue-request": "^1.0.3",
-    "@halobear/vue-shape": "^1.0.2",
-    "@halobear/vue-upload": "^1.0.2",
+    "@halobear/vue-amap": "file:../vue-amap",
+    "@halobear/vue-debug": "file:../vue-debug",
+    "@halobear/vue-dialog": "file:../vue-dialog",
+    "@halobear/vue-feedback": "file:../vue-feedback",
+    "@halobear/vue-qrcode": "file:../vue-qrcode",
+    "@halobear/vue-region": "file:../vue-region",
+    "@halobear/vue-request": "file:../vue-request",
+    "@halobear/vue-shape": "file:../vue-shape",
+    "@halobear/vue-upload": "file:../vue-upload",
     "core-js": "^2.6.5",
     "kuan-css": "^2.0.1",
     "vconsole": "^3.3.4",
     "vue": "^2.6.10"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.12.0",
-    "@vue/cli-plugin-eslint": "^3.12.0",
-    "@vue/cli-service": "^3.12.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "less": "^3.10.3",
-    "less-loader": "^5.0.0",
-    "vue-template-compiler": "^2.6.10"
   }
 }
