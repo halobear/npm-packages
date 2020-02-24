@@ -18,12 +18,12 @@
   "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-debug",
   "license": "ISC",
   "main": "lib/bear-vue.umd.min.js",
-  "module": "index.js",
   "directories": {
     "lib": "lib"
   },
   "files": [
     "lib",
+    "src",
     "index.js"
   ],
   "publishConfig": {
@@ -47,7 +47,6 @@
     "@halobear/vue-shape": "file:../vue-shape",
     "@halobear/vue-upload": "file:../vue-upload",
     "core-js": "^2.6.5",
-    "kuan-css": "^2.0.1",
     "vconsole": "^3.3.4",
     "vue": "^2.6.10"
   }

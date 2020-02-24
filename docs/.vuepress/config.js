@@ -5,8 +5,6 @@ const isDev = process.env.NODE_ENV === "development";
 
 const base = isDev ? "/" : "/npm-packages/";
 
-console.log(mapPackage());
-
 const alias = {
   ...mapPackage(),
   assets: path.resolve(__dirname, "..", "assets")

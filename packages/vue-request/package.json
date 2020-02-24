@@ -18,12 +18,12 @@
   "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-request",
   "license": "ISC",
   "main": "lib/vue-request.umd.min.js",
-  "module": "index.js",
   "directories": {
     "lib": "lib"
   },
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "publishConfig": {
     "access": "public"

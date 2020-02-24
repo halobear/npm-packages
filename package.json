@@ -2,7 +2,7 @@
   "name": "halobear",
   "private": true,
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist && lerna link convert",
+    "bootstrap": "lerna bootstrap && lerna link convert",
     "dev": "cross-env NODE_ENV=development vuepress dev docs",
     "build": "cross-env NODE_ENV=production vuepress build docs",
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d docs/.vuepress/dist",
@@ -27,7 +27,8 @@
     "@halobear/vue-region": "file:packages/vue-region",
     "@halobear/vue-request": "file:packages/vue-request",
     "@halobear/vue-shape": "file:packages/vue-shape",
-    "@halobear/vue-upload": "file:packages/vue-upload"
+    "@halobear/vue-upload": "file:packages/vue-upload",
+    "kuan-css": "^2.0.1"
   },
   "devDependencies": {
     "@vue/babel-preset-app": "^4.0.5",

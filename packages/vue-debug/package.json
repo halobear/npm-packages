@@ -18,7 +18,6 @@
   "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-debug",
   "license": "ISC",
   "main": "lib/vue-debug.umd.min.js",
-  "module": "index.js",
   "directories": {
     "lib": "lib"
   },

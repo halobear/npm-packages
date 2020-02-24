@@ -10,8 +10,6 @@
 <script>
 import VueQrcode from "@halobear/vue-qrcode";
 
-console.log(VueQrcode);
-
 export default {
   components: {
     VueQrcode
