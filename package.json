@@ -2,10 +2,10 @@
   "name": "halobear",
   "private": true,
   "scripts": {
+    "bootstrap": "lerna bootstrap --hoist && lerna link convert",
     "dev": "cross-env NODE_ENV=development vuepress dev docs",
     "build": "cross-env NODE_ENV=production vuepress build docs",
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d docs/.vuepress/dist",
-    "bootstrap": "lerna bootstrap",
     "json": "node ./scripts/createJSON.js",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
   },
