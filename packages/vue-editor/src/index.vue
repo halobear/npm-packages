@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>地图组件</h2>
+    <h2>vue编辑器开发中</h2>
   </div>
 </template>
 
