@@ -1,31 +1,8 @@
-## @halobear/vue-region
+## @halobear/vue-editor
 
-> 描述
+## [示例](https://halobear.github.io/npm-packages/vue-editor/demo.html)
 
-## 安装
+## 参考
 
-```bash
-yarn add @halobear/vue-region
-```
-
-## 使用
-
-```html
-<template>
-  <div>
-    <test></test>
-  </div>
-</template>
-
-<script>
-  import Test from "@halobear/vue-region";
-
-  export default {
-    components: {
-      Test
-    }
-  };
-</script>
-```
-
-## [示例](https://halobear.github.io/npm-packages/vue-region/demo.html)
+- [vue-markdown](https://github.com/miaolz123/vue-markdown)
+- [富文本编辑器](todo)
