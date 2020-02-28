@@ -1,7 +1,7 @@
 {
   "name": "@halobear/vue-editor",
   "version": "0.0.4",
-  "description": "编辑素材形状尺寸",
+  "description": "vue编辑器",
   "keywords": [
     "vue"
   ],
@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "markdown-it": "^10.0.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {

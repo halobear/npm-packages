@@ -25,7 +25,7 @@ module.exports = {
     },
     externals: {
       vue: { commonjs: 'vue', commonjs2: 'vue', root: 'Vue' },
-      axios: 'axios'
+      'markdown-it': 'markdown-it'
     }
   },
   productionSourceMap: false

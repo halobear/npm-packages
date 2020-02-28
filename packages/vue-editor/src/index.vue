@@ -1,11 +1,37 @@
 <template>
   <div>
-    <h2>vue编辑器开发中</h2>
+    <slot></slot>
   </div>
 </template>
 
 <script>
-export default {};
+import MarkdowIt from "markdown-it";
+
+export default {
+  props: {
+    source: {
+      type: String,
+      default: ""
+    }
+  },
+  data() {
+    return {
+      sourceData: this.source
+    };
+  },
+  mounted() {
+    this.init();
+  },
+  methods: {
+    init() {
+      this.md = new MarkdowIt();
+    },
+    html() {
+      if (!this.md) return "";
+      return this.md.render(this.sourceData);
+    }
+  }
+};
 </script>
 
 <style>
