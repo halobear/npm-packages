@@ -17,12 +17,18 @@ export default {
     };
   },
   mounted() {
-    this.text = [...Array(10000).keys()].join("\n");
+    this.text = [...Array(100).keys()]
+      .map(() => "```js\nconsole.log(1324)\n```\n\n")
+      .join("\n");
   }
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+body {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+}
 .test-container {
   width: 1300px;
   margin: 0 auto;

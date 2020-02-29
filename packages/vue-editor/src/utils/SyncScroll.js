@@ -21,14 +21,13 @@ class SyncScroll {
     this.r.addEventListener('mouseover', this.rOver)
   }
   destroy() {
-    this.l.removeEventListener('scroll', this.lScroll)
-    this.r.removeEventListener('scroll', this.rScroll)
-    this.l.removeEventListener('mouseover', this.lOver)
-    this.r.removeEventListener('mouseover', this.rOver)
+    this.l && this.l.removeEventListener('scroll', this.lScroll)
+    this.r && this.r.removeEventListener('scroll', this.rScroll)
+    this.l && this.l.removeEventListener('mouseover', this.lOver)
+    this.r && this.r.removeEventListener('mouseover', this.rOver)
   }
   lScroll() {
     if (this.currentTab !== 1) return
-    console.log(11, this.r, this.l)
     this.r.scrollTop = this.l.scrollTop * this.getScale()
   }
   rScroll() {

@@ -36,7 +36,9 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "highlight.js": "^9.18.1",
     "markdown-it": "^10.0.0",
+    "prismjs": "^1.19.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
