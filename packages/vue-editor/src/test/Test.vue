@@ -1,11 +1,13 @@
 <template>
   <div class="test-container">
-    <test v-model="text"></test>
+    <test style="height: 90vh;" v-model="text"></test>
   </div>
 </template>
 
 <script>
 import Test from "../index.vue";
+
+import text from "./text.js";
 
 export default {
   components: {
@@ -13,20 +15,14 @@ export default {
   },
   data() {
     return {
-      text: ""
+      text
     };
-  },
-  mounted() {
-    this.text = [...Array(100).keys()]
-      .map(() => "```js\nconsole.log(1324)\n```\n\n")
-      .join("\n");
   }
 };
 </script>
 
 <style lang="less">
 body {
-  min-height: 100vh;
   background-color: #f8f8f8;
 }
 .test-container {
