@@ -1,9 +1,5 @@
 <template>
   <div class="md-outer">
-    <div class="md-frame">
-      <textarea v-show="visible" :value="value" @input="change" ref="editor" class="editor"></textarea>
-      <div ref="preview" class="preview md-body" v-html="transfer"></div>
-    </div>
     <div class="md-action">
       <div>
         <span class="balloon" data-balloon="切换预览">
@@ -18,6 +14,10 @@
           <i @click="$emit('update:type', 'word')" class="icon-file-markdown iconfont"></i>
         </span>
       </div>
+    </div>
+    <div class="md-frame">
+      <textarea v-show="visible" :value="value" @input="change" ref="editor" class="editor"></textarea>
+      <div ref="preview" class="preview md-body" v-html="transfer"></div>
     </div>
   </div>
 </template>
@@ -119,7 +119,7 @@ export default {
   background-color: #fff;
   padding: 0 6px;
   .balloon {
-    .balloon(bottom);
+    .balloon(top);
   }
   .iconfont {
     cursor: pointer;

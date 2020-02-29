@@ -26,6 +26,7 @@ body {
   background-color: #f8f8f8;
 }
 .test-container {
+  padding-top: 35px;
   width: 1300px;
   margin: 0 auto;
 }
