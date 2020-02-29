@@ -1,6 +1,6 @@
 <template>
   <div class="test-container">
-    <test style="height: 90vh;" v-model="text"></test>
+    <test style="height: 90vh;" type="word" v-model="text"></test>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ body {
 }
 .test-container {
   padding-top: 35px;
-  width: 1300px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 </style>

@@ -9,7 +9,7 @@
           <i @click="copy" class="icon-file-copy iconfont"></i>
         </span>
       </div>
-      <div>
+      <div v-if="multiple">
         <span class="balloon" data-balloon="切换编辑器">
           <i @click="$emit('update:type', 'word')" class="icon-file-markdown iconfont"></i>
         </span>
@@ -40,6 +40,10 @@ export default {
     sync: {
       type: Boolean,
       default: true
+    },
+    multiple: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -129,7 +133,7 @@ export default {
 .md-frame {
   background-color: #e7e7ef;
   padding: 5px;
-  min-height: 500px;
+  min-height: 400px;
   height: calc(100% - 30px);
   display: flex;
   font-size: 14px;
