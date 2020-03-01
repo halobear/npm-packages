@@ -101,7 +101,7 @@ export default {
     copy() {
       copy(this.transfer);
       this.$emit("copy", this.transfer);
-      alert("复制成功");
+      alert("复制HTML成功");
     }
   }
 };

@@ -49,7 +49,7 @@ body {
   overflow: hidden;
 }
 .test-container {
-  padding-top: 35px;
+  padding-top: 40px;
   max-width: 1300px;
   margin: 0 auto;
 }

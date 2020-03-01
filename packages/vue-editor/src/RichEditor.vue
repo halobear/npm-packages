@@ -2,14 +2,20 @@
   <div class="rich-outer">
     <div class="rich-action">
       <div>
-        <span @click="insetImg" class="balloon" data-balloon="上传图片">
+        <span @click="edit('bold')" class="icon-bold iconfont"></span>
+        <span v-if="insetImage" @click="insetImg" class="balloon" data-balloon="上传图片">
           <i class="icon-file-image iconfont"></i>
         </span>
-        <span class="balloon" data-balloon="复制html">
-          <i class="icon-file-copy iconfont"></i>
+        <span @click="edit('undo')" class="icon-undo iconfont"></span>
+        <span @click="edit('redo')" class="icon-redo iconfont"></span>
+        <span style="padding-left: 10px;" @click="clear" class="balloon" data-balloon="清空内容">
+          <i class="icon-clear iconfont"></i>
         </span>
-        <span class="balloon" data-balloon="切换预览">
+        <span @click="changePreview" class="balloon" data-balloon="切换预览">
           <i class="icon-eye iconfont"></i>
+        </span>
+        <span @click="copy" class="balloon" data-balloon="复制html">
+          <i class="icon-file-copy iconfont"></i>
         </span>
       </div>
       <div v-if="multiple">
@@ -19,13 +25,15 @@
       </div>
     </div>
     <div class="editor-outer">
-      <div ref="editor" class="rich-editor"></div>
+      <div v-show="!html" ref="editor" class="rich-editor"></div>
+      <div v-show="html" class="rich-editor">{{html}}</div>
     </div>
   </div>
 </template>
 
 <script>
 import Squire from "./utils/Squire";
+import copy from "./utils/copy";
 
 const events = ["input", "focus", "blur"];
 
@@ -42,6 +50,12 @@ export default {
     insetImage: {
       type: Function
     }
+  },
+  data() {
+    return {
+      html: "",
+      icons: [{}]
+    };
   },
   mounted() {
     const { editor } = this.$refs;
@@ -65,6 +79,25 @@ export default {
       const [src = "", options = {}] = (await this.insetImage()) || [];
       if (src) {
         this.editor.insertImage(src, options);
+      }
+    },
+    change() {
+      this.$emit("input", this.editor.getHTML());
+    },
+    clear() {
+      this.editor.setHTML("");
+      this.change();
+    },
+    copy() {
+      copy(this.editor.getHTML());
+      alert("复制HTML成功");
+    },
+    changePreview() {
+      this.html = this.html ? "" : this.editor.getHTML();
+    },
+    edit(event) {
+      if (this.editor) {
+        this.editor[event]();
       }
     }
   }
