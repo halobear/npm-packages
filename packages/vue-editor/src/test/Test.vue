@@ -1,27 +1,32 @@
 <template>
   <div class="test-container">
-    <test style="height: 90vh;" type="word" v-model="text" :inset-image="insetImage" @input="input"></test>
+    <h2 class="title">富文本编辑器</h2>
+    <vue-editor class="editor-content" type="word" v-model="text" :inset-image="insetImage"></vue-editor>
+    <h2 class="title">markdown编辑器</h2>
+    <vue-editor class="editor-content" type="markdown" v-model="text"></vue-editor>
   </div>
 </template>
 
 <script>
-import Test from "../index.vue";
+import VueEditor from "../index.vue";
 
-// import text from "./text.js";
+import text from "./text.js";
 
 export default {
   components: {
-    Test
+    VueEditor
   },
   data() {
     return {
-      text: "<h1>1234</h1>"
+      text: ""
     };
   },
+  mounted() {
+    setTimeout(() => {
+      this.text = text;
+    }, 1000);
+  },
   methods: {
-    input(value) {
-      console.log(value);
-    },
     insetImage() {
       return new Promise(resolve => {
         setTimeout(() => {
@@ -46,11 +51,16 @@ export default {
 body {
   width: 100%;
   background-color: #f8f8f8;
-  overflow: hidden;
+}
+.title {
+  margin: 20px 0;
 }
 .test-container {
-  padding-top: 40px;
-  max-width: 1300px;
-  margin: 0 auto;
+  max-width: 1200px;
+  margin: 30px auto;
+}
+.editor-content {
+  max-width: 1200px;
+  height: 500px;
 }
 </style>

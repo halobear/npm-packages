@@ -1,9 +1,11 @@
 {
   "name": "@halobear/vue-editor",
   "version": "0.0.4",
-  "description": "vue编辑器",
+  "description": "一个洁面简介的vue编辑器，支持富文本和markdown",
   "keywords": [
-    "vue"
+    "vue",
+    "markdown-editor",
+    "rich-editor"
   ],
   "scripts": {
     "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js yarn serve",
@@ -36,9 +38,6 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "highlight.js": "^9.18.1",
-    "markdown-it": "^10.0.0",
-    "prismjs": "^1.19.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {
@@ -48,8 +47,10 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "highlight.js": "^9.18.1",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "markdown-it": "^10.0.0",
     "vue-template-compiler": "^2.6.10"
   }
 }

@@ -5,22 +5,27 @@
         <span @click="makeHeader('h1')" class="icon-h1 iconfont"></span>
         <span @click="makeHeader('h2')" class="icon-h2 iconfont"></span>
         <span @click="makeHeader('h3')" class="icon-h3 iconfont"></span>
-        <span @click="edit('bold')" class="icon-bold iconfont"></span>
-        <span @click="edit('italic')" class="icon-italic iconfont"></span>
-        <span @click="edit('underline')" class="icon-wuxuliebiao iconfont"></span>
-        <span @click="edit('makeOrderedList')" class="icon-underline iconfont"></span>
+        <span @click="testEdit('bold')" class="icon-bold iconfont"></span>
+        <span @click="testEdit('italic')" class="icon-italic iconfont"></span>
+        <span @click="testEdit('underline')" class="icon-underline iconfont"></span>
         <span @click="edit('setTextAlignment', 'left')" class="icon-align-left iconfont"></span>
         <span @click="edit('setTextAlignment', 'center')" class="icon-align-center iconfont"></span>
         <span @click="edit('setTextAlignment', 'right')" class="icon-align-right iconfont"></span>
+        <span @click="testEdit('makeUnorderedList')" class="icon-wuxuliebiao iconfont"></span>
         <span v-if="insetImage" @click="insetImg" class="balloon" data-balloon="上传图片">
           <i class="icon-file-image iconfont"></i>
         </span>
-        <span @click="edit('undo')" class="icon-undo iconfont"></span>
+        <span style="padding-left: 10px;" @click="edit('undo')" class="icon-undo iconfont"></span>
         <span @click="edit('redo')" class="icon-redo iconfont"></span>
         <span style="padding-left: 10px;" @click="clear" class="balloon" data-balloon="清空内容">
           <i class="icon-clear iconfont"></i>
         </span>
-        <span @click="changePreview" class="balloon" data-balloon="切换预览">
+        <span
+          style="padding-left: 10px;"
+          @click="changePreview"
+          class="balloon"
+          data-balloon="切换预览"
+        >
           <i class="icon-eye iconfont"></i>
         </span>
         <span @click="copy" class="balloon" data-balloon="复制html">
@@ -48,14 +53,25 @@ const events = ["input", "focus", "blur"];
 
 Squire.prototype.makeHeader = function(h) {
   return this.modifyBlocks(function(frag) {
-    var output = this._doc.createDocumentFragment();
-    var block = frag;
-    console.log(frag);
+    const output = this._doc.createDocumentFragment();
+    let block = frag;
     while ((block = Squire.getNextBlock(block))) {
       output.appendChild(this.createElement(h, [Squire.empty(block)]));
     }
     return output;
   });
+};
+
+Squire.prototype.testPresenceinSelection = function(
+  name,
+  action,
+  format,
+  validation
+) {
+  const path = this.getPath();
+  console.log(234134214);
+  const test = validation.test(path) | this.hasFormat(format);
+  return name == action && test ? true : false;
 };
 
 export default {
@@ -66,7 +82,7 @@ export default {
     },
     multiple: {
       type: Boolean,
-      default: true
+      default: false
     },
     insetImage: {
       type: Function
@@ -74,18 +90,29 @@ export default {
   },
   data() {
     return {
+      dataValue: this.value,
       html: "",
       icons: [{}]
     };
+  },
+  watch: {
+    value(value) {
+      if (value !== this.dataValue) {
+        this.dataValue = value;
+        this.editor.setHTML(this.value);
+      }
+    }
   },
   mounted() {
     const { editor } = this.$refs;
     this.editor = new Squire(editor);
     this.editor.setHTML(this.value);
     events.forEach(event => {
-      this.editor.addEventListener(event, () =>
-        this.$emit(event, this.editor.getHTML())
-      );
+      this.editor.addEventListener(event, () => {
+        const value = this.editor.getHTML();
+        this.dataValue = value;
+        this.$emit(event, value);
+      });
     });
   },
   beforeDestroy() {
@@ -103,7 +130,9 @@ export default {
       }
     },
     change() {
-      this.$emit("input", this.editor.getHTML());
+      const value = this.editor.getHTML();
+      this.dataValue = value;
+      this.$emit("input", value);
     },
     clear() {
       this.editor.setHTML("");
@@ -116,14 +145,55 @@ export default {
     changePreview() {
       this.html = this.html ? "" : this.editor.getHTML();
     },
-    edit(event, value) {
+    edit(action, value) {
       if (this.editor) {
-        this.editor[event](value);
+        this.editor[action](value);
+        this.editor.focus();
       }
     },
     makeHeader(h) {
       if (this.editor) {
         this.editor.makeHeader(h);
+      }
+    },
+    testEdit(action) {
+      const editor = this.editor;
+      if (!editor) return;
+      const test = {
+        testBold: editor.testPresenceinSelection("bold", action, "B", />B\b/),
+        testItalic: editor.testPresenceinSelection(
+          "italic",
+          action,
+          "I",
+          />I\b/
+        ),
+        testUnderline: editor.testPresenceinSelection(
+          "underline",
+          action,
+          "U",
+          />U\b/
+        ),
+        testUnorderedList: editor.testPresenceinSelection(
+          "makeUnorderedList",
+          action,
+          "UL",
+          />UL\b/
+        )
+      };
+      if (
+        test.testBold |
+        test.testItalic |
+        test.testUnderline |
+        test.testUnorderedList
+      ) {
+        if (test.testBold) editor.removeBold();
+        if (test.testItalic) editor.removeItalic();
+        if (test.testUnderline) editor.removeUnderline();
+        if (test.testLink) editor.removeLink();
+        if (test.testUnorderedList) editor.removeList();
+        console.log(test.makeUnorderedList);
+      } else {
+        this.edit(action);
       }
     }
   }
@@ -138,6 +208,9 @@ export default {
   border-radius: 3px;
   border: 1px solid #dbdbdb;
   color: #333;
+  & /deep/ ul {
+    margin: 0.5em 0 0.5em 1.5em;
+  }
 }
 .editor-outer {
   min-height: 400px;
