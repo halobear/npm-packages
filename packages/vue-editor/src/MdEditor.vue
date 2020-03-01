@@ -132,7 +132,7 @@ export default {
 }
 .md-frame {
   background-color: #e7e7ef;
-  padding: 5px;
+  padding: 6px 4px;
   min-height: 400px;
   height: calc(100% - 30px);
   display: flex;

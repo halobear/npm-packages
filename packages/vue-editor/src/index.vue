@@ -7,7 +7,7 @@
       v-bind="$attrs"
       v-on="$listeners"
     />
-    <rich-editor v-else />
+    <rich-editor v-else :type.sync="t" :multiple="multiple" v-bind="$attrs" v-on="$listeners" />
   </div>
 </template>
 
