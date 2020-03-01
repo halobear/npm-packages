@@ -2,7 +2,16 @@
   <div class="rich-outer">
     <div class="rich-action">
       <div>
+        <span @click="makeHeader('h1')" class="icon-h1 iconfont"></span>
+        <span @click="makeHeader('h2')" class="icon-h2 iconfont"></span>
+        <span @click="makeHeader('h3')" class="icon-h3 iconfont"></span>
         <span @click="edit('bold')" class="icon-bold iconfont"></span>
+        <span @click="edit('italic')" class="icon-italic iconfont"></span>
+        <span @click="edit('underline')" class="icon-wuxuliebiao iconfont"></span>
+        <span @click="edit('makeOrderedList')" class="icon-underline iconfont"></span>
+        <span @click="edit('setTextAlignment', 'left')" class="icon-align-left iconfont"></span>
+        <span @click="edit('setTextAlignment', 'center')" class="icon-align-center iconfont"></span>
+        <span @click="edit('setTextAlignment', 'right')" class="icon-align-right iconfont"></span>
         <span v-if="insetImage" @click="insetImg" class="balloon" data-balloon="上传图片">
           <i class="icon-file-image iconfont"></i>
         </span>
@@ -36,6 +45,18 @@ import Squire from "./utils/Squire";
 import copy from "./utils/copy";
 
 const events = ["input", "focus", "blur"];
+
+Squire.prototype.makeHeader = function(h) {
+  return this.modifyBlocks(function(frag) {
+    var output = this._doc.createDocumentFragment();
+    var block = frag;
+    console.log(frag);
+    while ((block = Squire.getNextBlock(block))) {
+      output.appendChild(this.createElement(h, [Squire.empty(block)]));
+    }
+    return output;
+  });
+};
 
 export default {
   props: {
@@ -95,9 +116,14 @@ export default {
     changePreview() {
       this.html = this.html ? "" : this.editor.getHTML();
     },
-    edit(event) {
+    edit(event, value) {
       if (this.editor) {
-        this.editor[event]();
+        this.editor[event](value);
+      }
+    },
+    makeHeader(h) {
+      if (this.editor) {
+        this.editor.makeHeader(h);
       }
     }
   }
@@ -111,6 +137,7 @@ export default {
   height: 100%;
   border-radius: 3px;
   border: 1px solid #dbdbdb;
+  color: #333;
 }
 .editor-outer {
   min-height: 400px;
@@ -141,6 +168,9 @@ export default {
   .iconfont {
     cursor: pointer;
     margin: 0 4px;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }
 </style>
