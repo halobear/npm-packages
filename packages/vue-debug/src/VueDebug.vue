@@ -53,8 +53,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~kuan-css/index.css";
-
 .debug-outer {
   min-height: 100vh;
   background: #f7f7f7;

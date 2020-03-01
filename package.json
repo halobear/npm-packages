@@ -21,6 +21,7 @@
     "@halobear/vue": "file:packages/vue",
     "@halobear/vue-amap": "file:packages/vue-amap",
     "@halobear/vue-debug": "file:packages/vue-debug",
+    "@halobear/vue-editor": "file:packages/vue-editor",
     "@halobear/vue-dialog": "file:packages/vue-dialog",
     "@halobear/vue-feedback": "file:packages/vue-feedback",
     "@halobear/vue-qrcode": "file:packages/vue-qrcode",
