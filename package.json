@@ -5,6 +5,7 @@
     "bootstrap": "lerna bootstrap && lerna link convert",
     "dev": "cross-env NODE_ENV=development vuepress dev docs",
     "build": "cross-env NODE_ENV=production vuepress build docs",
+    "build:lib": "cross-env NODE_ENV=production lerna run build:lib",
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d docs/.vuepress/dist",
     "json": "node ./scripts/createJSON.js",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
@@ -28,7 +29,8 @@
     "@halobear/vue-region": "file:packages/vue-region",
     "@halobear/vue-request": "file:packages/vue-request",
     "@halobear/vue-shape": "file:packages/vue-shape",
-    "@halobear/vue-upload": "file:packages/vue-upload"
+    "@halobear/vue-upload": "file:packages/vue-upload",
+    "kuan-css": "^2.0.2"
   },
   "devDependencies": {
     "@vue/babel-preset-app": "^4.0.5",
