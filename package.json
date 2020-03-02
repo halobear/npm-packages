@@ -21,15 +21,14 @@
     "@halobear/vue": "file:packages/vue",
     "@halobear/vue-amap": "file:packages/vue-amap",
     "@halobear/vue-debug": "file:packages/vue-debug",
-    "@halobear/vue-editor": "file:packages/vue-editor",
     "@halobear/vue-dialog": "file:packages/vue-dialog",
+    "@halobear/vue-editor": "file:packages/vue-editor",
     "@halobear/vue-feedback": "file:packages/vue-feedback",
     "@halobear/vue-qrcode": "file:packages/vue-qrcode",
     "@halobear/vue-region": "file:packages/vue-region",
     "@halobear/vue-request": "file:packages/vue-request",
     "@halobear/vue-shape": "file:packages/vue-shape",
-    "@halobear/vue-upload": "file:packages/vue-upload",
-    "kuan-css": "^2.0.1"
+    "@halobear/vue-upload": "file:packages/vue-upload"
   },
   "devDependencies": {
     "@vue/babel-preset-app": "^4.0.5",
@@ -44,11 +43,13 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "gh-pages": "^2.1.1",
+    "highlight.js": "^9.18.1",
     "inquirer": "^7.0.0",
     "js-sha256": "^0.9.0",
     "lerna": "^3.16.4",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
+    "markdown-it": "^10.0.0",
     "vue-template-compiler": "^2.6.10",
     "yorkie": "^2.0.0"
   },
