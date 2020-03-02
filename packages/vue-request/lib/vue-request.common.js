@@ -1079,8 +1079,8 @@ var es_array_includes = __webpack_require__("85bf");
 // EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es.array.join.js
 var es_array_join = __webpack_require__("45f1");
 
-// EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es.array.sort.js
-var es_array_sort = __webpack_require__("64cb");
+// EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es.array.reduce.js
+var es_array_reduce = __webpack_require__("9a61");
 
 // EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__("5ea3");
@@ -1088,11 +1088,10 @@ var es_object_keys = __webpack_require__("5ea3");
 // EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es.string.trim.js
 var es_string_trim = __webpack_require__("521d");
 
-// EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es.array.reduce.js
-var es_array_reduce = __webpack_require__("9a61");
-
 // CONCATENATED MODULE: /Users/kuan/Desktop/projects/npm-packages/node_modules/@babel/runtime/helpers/esm/typeof.js
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function _typeof(obj) {
       return typeof obj;
@@ -2939,46 +2938,6 @@ module.exports = function (input, PREFERRED_STRING) {
   if (!PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
   throw TypeError("Can't convert object to primitive value");
 };
-
-
-/***/ }),
-
-/***/ "64cb":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $ = __webpack_require__("41dd");
-var aFunction = __webpack_require__("d607");
-var toObject = __webpack_require__("bb2b");
-var fails = __webpack_require__("8d9d");
-var arrayMethodIsStrict = __webpack_require__("3766");
-
-var test = [];
-var nativeSort = test.sort;
-
-// IE8-
-var FAILS_ON_UNDEFINED = fails(function () {
-  test.sort(undefined);
-});
-// V8 bug
-var FAILS_ON_NULL = fails(function () {
-  test.sort(null);
-});
-// Old WebKit
-var STRICT_METHOD = arrayMethodIsStrict('sort');
-
-var FORCED = FAILS_ON_UNDEFINED || !FAILS_ON_NULL || !STRICT_METHOD;
-
-// `Array.prototype.sort` method
-// https://tc39.github.io/ecma262/#sec-array.prototype.sort
-$({ target: 'Array', proto: true, forced: FORCED }, {
-  sort: function sort(comparefn) {
-    return comparefn === undefined
-      ? nativeSort.call(toObject(this))
-      : nativeSort.call(toObject(this), aFunction(comparefn));
-  }
-});
 
 
 /***/ }),

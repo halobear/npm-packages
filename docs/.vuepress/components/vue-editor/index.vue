@@ -13,7 +13,7 @@ export default {
     };
   },
   mounted() {
-    import("./vue-upload").then(module => {
+    import("./vue-editor").then(module => {
       this.is = module.default;
     });
   }

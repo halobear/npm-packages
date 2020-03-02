@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import "kuan-css";
+import "kuan-css/index.css";
 import { createApi } from "@halobear/vue-request";
 const request = createApi();
 

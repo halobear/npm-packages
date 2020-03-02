@@ -12,6 +12,7 @@ yarn add @halobear/vue
 ### vue 组件
 
 - [@halobear/vue-qrcode](./vue-qrcode)
+- [@halobear/vue-editor](./vue-editor)
 - [@halobear/vue-dialog](./vue-dialog)
 - [@halobear/vue-debug](./vue-debug)
 - [@halobear/vue-shape](./vue-shape)

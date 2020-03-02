@@ -1,7 +1,5 @@
 ## @halobear/vue-editor
 
-## [示例](./demo)
-
 ## 安装
 
 ```bash
@@ -44,3 +42,5 @@ yarn add @halobear/vue-editor
 
 - [vue-markdown](https://github.com/miaolz123/vue-markdown)
 - [Squire](https://github.com/neilj/Squire)
+
+## [示例](./demo)

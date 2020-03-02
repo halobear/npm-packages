@@ -135,18 +135,6 @@ exports.getEncodedBits = function getEncodedBits (errorCorrectionLevel, mask) {
 
 /***/ }),
 
-/***/ "07d3":
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-
-/***/ }),
-
 /***/ "08a0":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3368,6 +3356,18 @@ exports.getPositions = function getPositions (version) {
 
 /***/ }),
 
+/***/ "465e":
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
+
+
+/***/ }),
+
 /***/ "485c":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3775,7 +3775,7 @@ var Version = __webpack_require__("651d")
 var FormatInfo = __webpack_require__("0269")
 var Mode = __webpack_require__("2600")
 var Segments = __webpack_require__("891a")
-var isArray = __webpack_require__("07d3")
+var isArray = __webpack_require__("465e")
 
 /**
  * QRCode for JavaScript
@@ -4384,7 +4384,7 @@ var ECCode = __webpack_require__("9f0b")
 var ECLevel = __webpack_require__("1024")
 var Mode = __webpack_require__("2600")
 var VersionCheck = __webpack_require__("a77a")
-var isArray = __webpack_require__("07d3")
+var isArray = __webpack_require__("465e")
 
 // Generator polynomial used to encode version information
 var G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0)
@@ -6494,7 +6494,7 @@ exports.testAlphanumeric = function testAlphanumeric (str) {
 
 
 
-var isArray = __webpack_require__("07d3")
+var isArray = __webpack_require__("465e")
 
 function typedArraySupport () {
   // Can typed array instances be augmented?

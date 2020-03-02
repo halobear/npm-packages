@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "~kuan-css";
+@import "~kuan-css/index.css";
 .test-container {
   max-width: 1000px;
   margin: 0 auto;
