@@ -24,8 +24,7 @@ module.exports = {
       app: './index.js'
     },
     externals: {
-      vue: { commonjs: 'vue', commonjs2: 'vue', root: 'Vue' },
-      'markdown-it': 'markdown-it'
+      vue: { commonjs: 'vue', commonjs2: 'vue', root: 'Vue' }
     }
   },
   productionSourceMap: false
