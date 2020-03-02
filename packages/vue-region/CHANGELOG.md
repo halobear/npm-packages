@@ -1,3 +1,14 @@
+## [1.0.5](https://github.com/halobear/npm-packages/compare/v1.0.4...v1.0.5) (2020-03-02)
+
+
+### Bug Fixes
+
+* **vue-region:** auto select ([796b926](https://github.com/halobear/npm-packages/commit/796b926683d918e9e4734e44fc05d0443c0eeca7))
+* package.json ([dd167b8](https://github.com/halobear/npm-packages/commit/dd167b8ba13eb73ecf2273c7046e0495bcaded67))
+* 删除lib ([06998e4](https://github.com/halobear/npm-packages/commit/06998e43bdf491d5b65094c8a8efe83d7116d439))
+
+
+
 ## [1.0.4](https://github.com/halobear/npm-packages/compare/v1.0.3...v1.0.4) (2019-12-31)
 
 
