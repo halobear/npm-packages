@@ -1,6 +1,6 @@
 {
   "name": "@halobear/vue-editor",
-  "version": "0.0.4",
+  "version": "1.0.5",
   "description": "一个洁面简介的vue编辑器，支持富文本和markdown",
   "keywords": [
     "vue",

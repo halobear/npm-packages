@@ -1,6 +1,6 @@
 {
   "name": "@halobear/vue-request",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "axios在vue中使用",
   "keywords": [
     "axios",
