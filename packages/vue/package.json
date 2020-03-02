@@ -46,7 +46,7 @@
     "@halobear/vue-request": "file:../vue-request",
     "@halobear/vue-shape": "file:../vue-shape",
     "@halobear/vue-upload": "file:../vue-upload",
-    "core-js": "3.4.4",
+    "core-js": "^3.4.4",
     "vconsole": "^3.3.4",
     "vue": "^2.6.10"
   }
