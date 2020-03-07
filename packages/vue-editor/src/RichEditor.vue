@@ -191,7 +191,6 @@ export default {
         if (test.testUnderline) editor.removeUnderline();
         if (test.testLink) editor.removeLink();
         if (test.testUnorderedList) editor.removeList();
-        console.log(test.makeUnorderedList);
       } else {
         this.edit(action);
       }
