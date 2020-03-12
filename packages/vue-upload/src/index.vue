@@ -67,7 +67,7 @@ export default {
     },
     needMD5: {
       type: Boolean,
-      default: true // 是否获取文件MD5
+      default: false // 是否获取文件MD5
     }
   },
   data() {
