@@ -91,7 +91,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "2db7");
+/******/ 	return __webpack_require__(__webpack_require__.s = "13b1");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -103,49 +103,6 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__04a8__;
 
 /***/ }),
 
-/***/ "0e08":
-/***/ (function(module, exports) {
-
-// document.currentScript polyfill by Adam Miller
-
-// MIT license
-
-(function(document){
-  var currentScript = "currentScript",
-      scripts = document.getElementsByTagName('script'); // Live NodeList collection
-
-  // If browser needs currentScript polyfill, add get currentScript() to the document object
-  if (!(currentScript in document)) {
-    Object.defineProperty(document, currentScript, {
-      get: function(){
-
-        // IE 6-10 supports script readyState
-        // IE 10+ support stack trace
-        try { throw new Error(); }
-        catch (err) {
-
-          // Find the second match for the "at" string to get file src url from stack.
-          // Specifically works with the format of stack traces in IE.
-          var i, res = ((/.*at [^\(]*\((.*):.+:.+\)$/ig).exec(err.stack) || [false])[1];
-
-          // For all scripts on the page, if src matches or if ready state is interactive, return the script tag
-          for(i in scripts){
-            if(scripts[i].src == res || scripts[i].readyState == "interactive"){
-              return scripts[i];
-            }
-          }
-
-          // If no match, return null
-          return null;
-        }
-      }
-    });
-  }
-})(document);
-
-
-/***/ }),
-
 /***/ "0f78":
 /***/ (function(module, exports) {
 
@@ -153,25 +110,32 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__0f78__;
 
 /***/ }),
 
-/***/ "230f":
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE__230f__;
-
-/***/ }),
-
-/***/ "2db7":
+/***/ "13b1":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "VueAmap", function() { return /* reexport */ vue_amap_default.a; });
+__webpack_require__.d(__webpack_exports__, "VueDebug", function() { return /* reexport */ vue_debug_default.a; });
+__webpack_require__.d(__webpack_exports__, "VueDialog", function() { return /* reexport */ vue_dialog_default.a; });
+__webpack_require__.d(__webpack_exports__, "loading", function() { return /* reexport */ vue_feedback_["loading"]; });
+__webpack_require__.d(__webpack_exports__, "toast", function() { return /* reexport */ vue_feedback_["toast"]; });
+__webpack_require__.d(__webpack_exports__, "VueQrcode", function() { return /* reexport */ vue_qrcode_default.a; });
+__webpack_require__.d(__webpack_exports__, "VueRegion", function() { return /* reexport */ vue_region_default.a; });
+__webpack_require__.d(__webpack_exports__, "createApi", function() { return /* reexport */ vue_request_["createApi"]; });
+__webpack_require__.d(__webpack_exports__, "encrypt", function() { return /* reexport */ vue_request_["encrypt"]; });
+__webpack_require__.d(__webpack_exports__, "VueShape", function() { return /* reexport */ vue_shape_default.a; });
+__webpack_require__.d(__webpack_exports__, "VueUpload", function() { return /* reexport */ vue_upload_default.a; });
+
+// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_@vue_cli-service@4.2.3@@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
 
 if (typeof window !== 'undefined') {
   if (true) {
-    __webpack_require__("0e08")
+    __webpack_require__("a6d7")
   }
 
   var i
@@ -236,21 +200,17 @@ var vue_upload_default = /*#__PURE__*/__webpack_require__.n(vue_upload_);
  // vue上传组件
 
 
-// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/@vue/cli-service/lib/commands/build/entry-lib-no-default.js
-/* concated harmony reexport VueAmap */__webpack_require__.d(__webpack_exports__, "VueAmap", function() { return vue_amap_default.a; });
-/* concated harmony reexport VueDebug */__webpack_require__.d(__webpack_exports__, "VueDebug", function() { return vue_debug_default.a; });
-/* concated harmony reexport VueDialog */__webpack_require__.d(__webpack_exports__, "VueDialog", function() { return vue_dialog_default.a; });
-/* concated harmony reexport loading */__webpack_require__.d(__webpack_exports__, "loading", function() { return vue_feedback_["loading"]; });
-/* concated harmony reexport toast */__webpack_require__.d(__webpack_exports__, "toast", function() { return vue_feedback_["toast"]; });
-/* concated harmony reexport VueQrcode */__webpack_require__.d(__webpack_exports__, "VueQrcode", function() { return vue_qrcode_default.a; });
-/* concated harmony reexport VueRegion */__webpack_require__.d(__webpack_exports__, "VueRegion", function() { return vue_region_default.a; });
-/* concated harmony reexport createApi */__webpack_require__.d(__webpack_exports__, "createApi", function() { return vue_request_["createApi"]; });
-/* concated harmony reexport encrypt */__webpack_require__.d(__webpack_exports__, "encrypt", function() { return vue_request_["encrypt"]; });
-/* concated harmony reexport VueShape */__webpack_require__.d(__webpack_exports__, "VueShape", function() { return vue_shape_default.a; });
-/* concated harmony reexport VueUpload */__webpack_require__.d(__webpack_exports__, "VueUpload", function() { return vue_upload_default.a; });
+// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_@vue_cli-service@4.2.3@@vue/cli-service/lib/commands/build/entry-lib-no-default.js
 
 
 
+
+/***/ }),
+
+/***/ "230f":
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE__230f__;
 
 /***/ }),
 
@@ -286,6 +246,49 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__9427__;
 /***/ (function(module, exports) {
 
 module.exports = __WEBPACK_EXTERNAL_MODULE__9a71__;
+
+/***/ }),
+
+/***/ "a6d7":
+/***/ (function(module, exports) {
+
+// document.currentScript polyfill by Adam Miller
+
+// MIT license
+
+(function(document){
+  var currentScript = "currentScript",
+      scripts = document.getElementsByTagName('script'); // Live NodeList collection
+
+  // If browser needs currentScript polyfill, add get currentScript() to the document object
+  if (!(currentScript in document)) {
+    Object.defineProperty(document, currentScript, {
+      get: function(){
+
+        // IE 6-10 supports script readyState
+        // IE 10+ support stack trace
+        try { throw new Error(); }
+        catch (err) {
+
+          // Find the second match for the "at" string to get file src url from stack.
+          // Specifically works with the format of stack traces in IE.
+          var i, res = ((/.*at [^\(]*\((.*):.+:.+\)$/ig).exec(err.stack) || [false])[1];
+
+          // For all scripts on the page, if src matches or if ready state is interactive, return the script tag
+          for(i in scripts){
+            if(scripts[i].src == res || scripts[i].readyState == "interactive"){
+              return scripts[i];
+            }
+          }
+
+          // If no match, return null
+          return null;
+        }
+      }
+    });
+  }
+})(document);
+
 
 /***/ }),
 
