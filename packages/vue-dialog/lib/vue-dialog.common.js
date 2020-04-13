@@ -82,22 +82,404 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "ddbc");
+/******/ 	return __webpack_require__(__webpack_require__.s = "13f6");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "582f":
+/***/ "0e08":
+/***/ (function(module, exports) {
+
+// document.currentScript polyfill by Adam Miller
+
+// MIT license
+
+(function(document){
+  var currentScript = "currentScript",
+      scripts = document.getElementsByTagName('script'); // Live NodeList collection
+
+  // If browser needs currentScript polyfill, add get currentScript() to the document object
+  if (!(currentScript in document)) {
+    Object.defineProperty(document, currentScript, {
+      get: function(){
+
+        // IE 6-10 supports script readyState
+        // IE 10+ support stack trace
+        try { throw new Error(); }
+        catch (err) {
+
+          // Find the second match for the "at" string to get file src url from stack.
+          // Specifically works with the format of stack traces in IE.
+          var i, res = ((/.*at [^\(]*\((.*):.+:.+\)$/ig).exec(err.stack) || [false])[1];
+
+          // For all scripts on the page, if src matches or if ready state is interactive, return the script tag
+          for(i in scripts){
+            if(scripts[i].src == res || scripts[i].readyState == "interactive"){
+              return scripts[i];
+            }
+          }
+
+          // If no match, return null
+          return null;
+        }
+      }
+    });
+  }
+})(document);
+
+
+/***/ }),
+
+/***/ "13f6":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, "default", function() { return /* binding */ addStylesClient; });
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
+// This file is imported into lib/wc client bundles.
 
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_vue-style-loader@4.1.2@vue-style-loader/lib/listToStyles.js
+if (typeof window !== 'undefined') {
+  if (true) {
+    __webpack_require__("0e08")
+  }
+
+  var i
+  if ((i = window.document.currentScript) && (i = i.src.match(/(.+\/)[^/]+\.js(\?.*)?$/))) {
+    __webpack_require__.p = i[1] // eslint-disable-line
+  }
+}
+
+// Indicate to webpack that this file can be concatenated
+/* harmony default export */ var setPublicPath = (null);
+
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"505be2cd-vue-loader-template"}!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/cache-loader/dist/cjs.js??ref--0-0!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib??vue-loader-options!./src/VueDialog.vue?vue&type=template&id=7946d30e&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"fade"}},[(_vm.visible)?_c('div',{staticClass:"my-dialog-container",class:[_vm.direction],on:{"click":_vm.close}},[_c('div',{staticClass:"my-dialog-inner",on:{"click":function($event){$event.stopPropagation();}}},[_vm._t("default")],2),_c('div')]):_vm._e()])}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/VueDialog.vue?vue&type=template&id=7946d30e&scoped=true&
+
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/thread-loader/dist/cjs.js!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/babel-loader/lib??ref--12-1!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/cache-loader/dist/cjs.js??ref--0-0!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib??vue-loader-options!./src/VueDialog.vue?vue&type=script&lang=js&
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ var VueDialogvue_type_script_lang_js_ = ({
+  model: {
+    prop: 'visible',
+    event: 'close' // bottom top
+
+  },
+  props: {
+    visible: {
+      type: Boolean,
+      default: false
+    },
+    direction: {
+      type: String,
+      default: 'center'
+    }
+  },
+  methods: {
+    close: function close() {
+      this.$emit('close', false);
+    }
+  }
+});
+// CONCATENATED MODULE: ./src/VueDialog.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_VueDialogvue_type_script_lang_js_ = (VueDialogvue_type_script_lang_js_); 
+// EXTERNAL MODULE: ./src/VueDialog.vue?vue&type=style&index=0&id=7946d30e&lang=less&scoped=true&
+var VueDialogvue_type_style_index_0_id_7946d30e_lang_less_scoped_true_ = __webpack_require__("702d");
+
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/runtime/componentNormalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+// CONCATENATED MODULE: ./src/VueDialog.vue
+
+
+
+
+
+
+/* normalize component */
+
+var component = normalizeComponent(
+  src_VueDialogvue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  "7946d30e",
+  null
+  
+)
+
+/* harmony default export */ var VueDialog = (component.exports);
+// CONCATENATED MODULE: ./index.js
+
+
+VueDialog.install = function (Vue) {
+  Vue.component('vue-dialog', VueDialog);
+};
+
+/* harmony default export */ var index = (VueDialog);
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
+
+
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (index);
+
+
+
+/***/ }),
+
+/***/ "2915":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+// eslint-disable-next-line func-names
+module.exports = function (useSourceMap) {
+  var list = []; // return the list of modules as css string
+
+  list.toString = function toString() {
+    return this.map(function (item) {
+      var content = cssWithMappingToString(item, useSourceMap);
+
+      if (item[2]) {
+        return "@media ".concat(item[2], " {").concat(content, "}");
+      }
+
+      return content;
+    }).join('');
+  }; // import a list of modules into the list
+  // eslint-disable-next-line func-names
+
+
+  list.i = function (modules, mediaQuery, dedupe) {
+    if (typeof modules === 'string') {
+      // eslint-disable-next-line no-param-reassign
+      modules = [[null, modules, '']];
+    }
+
+    var alreadyImportedModules = {};
+
+    if (dedupe) {
+      for (var i = 0; i < this.length; i++) {
+        // eslint-disable-next-line prefer-destructuring
+        var id = this[i][0];
+
+        if (id != null) {
+          alreadyImportedModules[id] = true;
+        }
+      }
+    }
+
+    for (var _i = 0; _i < modules.length; _i++) {
+      var item = [].concat(modules[_i]);
+
+      if (dedupe && alreadyImportedModules[item[0]]) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      if (mediaQuery) {
+        if (!item[2]) {
+          item[2] = mediaQuery;
+        } else {
+          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
+        }
+      }
+
+      list.push(item);
+    }
+  };
+
+  return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+  var content = item[1] || ''; // eslint-disable-next-line prefer-destructuring
+
+  var cssMapping = item[3];
+
+  if (!cssMapping) {
+    return content;
+  }
+
+  if (useSourceMap && typeof btoa === 'function') {
+    var sourceMapping = toComment(cssMapping);
+    var sourceURLs = cssMapping.sources.map(function (source) {
+      return "/*# sourceURL=".concat(cssMapping.sourceRoot || '').concat(source, " */");
+    });
+    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+  }
+
+  return [content].join('\n');
+} // Adapted from convert-source-map (MIT)
+
+
+function toComment(sourceMap) {
+  // eslint-disable-next-line no-undef
+  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+  var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
+  return "/*# ".concat(data, " */");
+}
+
+/***/ }),
+
+/***/ "702d":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_lib_loaders_stylePostLoader_js_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_4_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_cache_loader_dist_cjs_js_ref_0_0_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_lib_index_js_vue_loader_options_VueDialog_vue_vue_type_style_index_0_id_7946d30e_lang_less_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("bdd8");
+/* harmony import */ var _nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_lib_loaders_stylePostLoader_js_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_4_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_cache_loader_dist_cjs_js_ref_0_0_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_lib_index_js_vue_loader_options_VueDialog_vue_vue_type_style_index_0_id_7946d30e_lang_less_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_lib_loaders_stylePostLoader_js_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_4_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_cache_loader_dist_cjs_js_ref_0_0_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_lib_index_js_vue_loader_options_VueDialog_vue_vue_type_style_index_0_id_7946d30e_lang_less_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_style_loader_index_js_ref_10_oneOf_1_0_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_css_loader_dist_cjs_js_ref_10_oneOf_1_1_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_lib_loaders_stylePostLoader_js_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_2_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_4_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_cache_loader_dist_cjs_js_ref_0_0_nvm_versions_node_v10_13_0_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_lib_index_js_vue_loader_options_VueDialog_vue_vue_type_style_index_0_id_7946d30e_lang_less_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "bdd8":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("cab6");
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var add = __webpack_require__("f24d").default
+var update = add("56833846", content, true, {"sourceMap":false,"shadowMode":false});
+
+/***/ }),
+
+/***/ "cab6":
+/***/ (function(module, exports, __webpack_require__) {
+
+// Imports
+var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("2915");
+exports = ___CSS_LOADER_API_IMPORT___(false);
+// Module
+exports.push([module.i, ".my-dialog-container[data-v-7946d30e]{width:100%;height:100%;background:rgba(0,0,0,.7);position:fixed;top:0;left:0;z-index:2000;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.my-dialog-container .my-dialog-inner[data-v-7946d30e]{position:relative}.my-dialog-container.center[data-v-7946d30e]{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.my-dialog-container.center .my-dialog-inner[data-v-7946d30e]{-webkit-animation:fadeZoomIn-data-v-7946d30e .5s cubic-bezier(.8,0,0,1.5);animation:fadeZoomIn-data-v-7946d30e .5s cubic-bezier(.8,0,0,1.5)}.my-dialog-container.top[data-v-7946d30e]{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.my-dialog-container.top .my-dialog-inner[data-v-7946d30e]{-webkit-animation:slideInDown-data-v-7946d30e .3s linear;animation:slideInDown-data-v-7946d30e .3s linear}.my-dialog-container.bottom[data-v-7946d30e]{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.my-dialog-container.bottom .my-dialog-inner[data-v-7946d30e]{-webkit-animation:slideInUp-data-v-7946d30e .3s linear;animation:slideInUp-data-v-7946d30e .3s linear}.fade-enter-active[data-v-7946d30e],.fade-leave-active[data-v-7946d30e]{-webkit-transition:opacity .5s;transition:opacity .5s}.fade-enter[data-v-7946d30e],.fade-leave-to[data-v-7946d30e]{opacity:0}@-webkit-keyframes fadeZoomIn-data-v-7946d30e{0%{opacity:0;-webkit-transform:scale(.1);transform:scale(.1)}to{opacity:1;-webkit-transform:scale(1);transform:scale(1)}}@keyframes fadeZoomIn-data-v-7946d30e{0%{opacity:0;-webkit-transform:scale(.1);transform:scale(.1)}to{opacity:1;-webkit-transform:scale(1);transform:scale(1)}}@-webkit-keyframes slideInUp-data-v-7946d30e{0%{-webkit-transform:translateY(100%);transform:translateY(100%)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes slideInUp-data-v-7946d30e{0%{-webkit-transform:translateY(100%);transform:translateY(100%)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@-webkit-keyframes slideInDown-data-v-7946d30e{0%{-webkit-transform:translateY(-100%);transform:translateY(-100%)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes slideInDown-data-v-7946d30e{0%{-webkit-transform:translateY(-100%);transform:translateY(-100%)}to{-webkit-transform:translateY(0);transform:translateY(0)}}", ""]);
+// Exports
+module.exports = exports;
+
+
+/***/ }),
+
+/***/ "f24d":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-style-loader/lib/listToStyles.js
 /**
  * Translates the list format produced by css-loader into something
  * easier to manipulate.
@@ -126,7 +508,8 @@ function listToStyles (parentId, list) {
   return styles
 }
 
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_vue-style-loader@4.1.2@vue-style-loader/lib/addStylesClient.js
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-style-loader/lib/addStylesClient.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addStylesClient; });
 /*
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
@@ -349,393 +732,6 @@ function applyToTag (styleElement, obj) {
     styleElement.appendChild(document.createTextNode(css))
   }
 }
-
-
-/***/ }),
-
-/***/ "702d":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_style_loader_4_1_2_vue_style_loader_index_js_ref_10_oneOf_1_0_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_css_loader_3_4_2_css_loader_dist_cjs_js_ref_10_oneOf_1_1_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_15_9_1_vue_loader_lib_loaders_stylePostLoader_js_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_3_0_0_postcss_loader_src_index_js_ref_10_oneOf_1_2_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_3_0_0_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_4_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_cache_loader_4_1_0_cache_loader_dist_cjs_js_ref_0_0_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_15_9_1_vue_loader_lib_index_js_vue_loader_options_VueDialog_vue_vue_type_style_index_0_id_7946d30e_lang_less_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("c90d");
-/* harmony import */ var _nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_style_loader_4_1_2_vue_style_loader_index_js_ref_10_oneOf_1_0_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_css_loader_3_4_2_css_loader_dist_cjs_js_ref_10_oneOf_1_1_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_15_9_1_vue_loader_lib_loaders_stylePostLoader_js_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_3_0_0_postcss_loader_src_index_js_ref_10_oneOf_1_2_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_3_0_0_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_4_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_cache_loader_4_1_0_cache_loader_dist_cjs_js_ref_0_0_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_15_9_1_vue_loader_lib_index_js_vue_loader_options_VueDialog_vue_vue_type_style_index_0_id_7946d30e_lang_less_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_style_loader_4_1_2_vue_style_loader_index_js_ref_10_oneOf_1_0_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_css_loader_3_4_2_css_loader_dist_cjs_js_ref_10_oneOf_1_1_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_15_9_1_vue_loader_lib_loaders_stylePostLoader_js_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_3_0_0_postcss_loader_src_index_js_ref_10_oneOf_1_2_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_3_0_0_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_4_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_cache_loader_4_1_0_cache_loader_dist_cjs_js_ref_0_0_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_15_9_1_vue_loader_lib_index_js_vue_loader_options_VueDialog_vue_vue_type_style_index_0_id_7946d30e_lang_less_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_style_loader_4_1_2_vue_style_loader_index_js_ref_10_oneOf_1_0_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_css_loader_3_4_2_css_loader_dist_cjs_js_ref_10_oneOf_1_1_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_15_9_1_vue_loader_lib_loaders_stylePostLoader_js_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_3_0_0_postcss_loader_src_index_js_ref_10_oneOf_1_2_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_postcss_loader_3_0_0_postcss_loader_src_index_js_ref_10_oneOf_1_3_node_modules_less_loader_dist_cjs_js_ref_10_oneOf_1_4_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_cache_loader_4_1_0_cache_loader_dist_cjs_js_ref_0_0_nvm_versions_node_v12_14_1_lib_node_modules_vue_cli_service_global_node_modules_vue_loader_15_9_1_vue_loader_lib_index_js_vue_loader_options_VueDialog_vue_vue_type_style_index_0_id_7946d30e_lang_less_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
-
-/***/ }),
-
-/***/ "92bc":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-// eslint-disable-next-line func-names
-module.exports = function (useSourceMap) {
-  var list = []; // return the list of modules as css string
-
-  list.toString = function toString() {
-    return this.map(function (item) {
-      var content = cssWithMappingToString(item, useSourceMap);
-
-      if (item[2]) {
-        return "@media ".concat(item[2], " {").concat(content, "}");
-      }
-
-      return content;
-    }).join('');
-  }; // import a list of modules into the list
-  // eslint-disable-next-line func-names
-
-
-  list.i = function (modules, mediaQuery, dedupe) {
-    if (typeof modules === 'string') {
-      // eslint-disable-next-line no-param-reassign
-      modules = [[null, modules, '']];
-    }
-
-    var alreadyImportedModules = {};
-
-    if (dedupe) {
-      for (var i = 0; i < this.length; i++) {
-        // eslint-disable-next-line prefer-destructuring
-        var id = this[i][0];
-
-        if (id != null) {
-          alreadyImportedModules[id] = true;
-        }
-      }
-    }
-
-    for (var _i = 0; _i < modules.length; _i++) {
-      var item = [].concat(modules[_i]);
-
-      if (dedupe && alreadyImportedModules[item[0]]) {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-
-      if (mediaQuery) {
-        if (!item[2]) {
-          item[2] = mediaQuery;
-        } else {
-          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
-        }
-      }
-
-      list.push(item);
-    }
-  };
-
-  return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-  var content = item[1] || ''; // eslint-disable-next-line prefer-destructuring
-
-  var cssMapping = item[3];
-
-  if (!cssMapping) {
-    return content;
-  }
-
-  if (useSourceMap && typeof btoa === 'function') {
-    var sourceMapping = toComment(cssMapping);
-    var sourceURLs = cssMapping.sources.map(function (source) {
-      return "/*# sourceURL=".concat(cssMapping.sourceRoot || '').concat(source, " */");
-    });
-    return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-  }
-
-  return [content].join('\n');
-} // Adapted from convert-source-map (MIT)
-
-
-function toComment(sourceMap) {
-  // eslint-disable-next-line no-undef
-  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-  var data = "sourceMappingURL=data:application/json;charset=utf-8;base64,".concat(base64);
-  return "/*# ".concat(data, " */");
-}
-
-/***/ }),
-
-/***/ "937c":
-/***/ (function(module, exports, __webpack_require__) {
-
-// Imports
-var ___CSS_LOADER_API_IMPORT___ = __webpack_require__("92bc");
-exports = ___CSS_LOADER_API_IMPORT___(false);
-// Module
-exports.push([module.i, ".my-dialog-container[data-v-7946d30e]{width:100%;height:100%;background:rgba(0,0,0,.7);position:fixed;top:0;left:0;z-index:2000;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.my-dialog-container .my-dialog-inner[data-v-7946d30e]{position:relative}.my-dialog-container.center[data-v-7946d30e]{-webkit-box-align:center;-ms-flex-align:center;align-items:center}.my-dialog-container.center .my-dialog-inner[data-v-7946d30e]{-webkit-animation:fadeZoomIn-data-v-7946d30e .5s cubic-bezier(.8,0,0,1.5);animation:fadeZoomIn-data-v-7946d30e .5s cubic-bezier(.8,0,0,1.5)}.my-dialog-container.top[data-v-7946d30e]{-webkit-box-align:start;-ms-flex-align:start;align-items:flex-start}.my-dialog-container.top .my-dialog-inner[data-v-7946d30e]{-webkit-animation:slideInDown-data-v-7946d30e .3s linear;animation:slideInDown-data-v-7946d30e .3s linear}.my-dialog-container.bottom[data-v-7946d30e]{-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.my-dialog-container.bottom .my-dialog-inner[data-v-7946d30e]{-webkit-animation:slideInUp-data-v-7946d30e .3s linear;animation:slideInUp-data-v-7946d30e .3s linear}.fade-enter-active[data-v-7946d30e],.fade-leave-active[data-v-7946d30e]{-webkit-transition:opacity .5s;transition:opacity .5s}.fade-enter[data-v-7946d30e],.fade-leave-to[data-v-7946d30e]{opacity:0}@-webkit-keyframes fadeZoomIn-data-v-7946d30e{0%{opacity:0;-webkit-transform:scale(.1);transform:scale(.1)}to{opacity:1;-webkit-transform:scale(1);transform:scale(1)}}@keyframes fadeZoomIn-data-v-7946d30e{0%{opacity:0;-webkit-transform:scale(.1);transform:scale(.1)}to{opacity:1;-webkit-transform:scale(1);transform:scale(1)}}@-webkit-keyframes slideInUp-data-v-7946d30e{0%{-webkit-transform:translateY(100%);transform:translateY(100%)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes slideInUp-data-v-7946d30e{0%{-webkit-transform:translateY(100%);transform:translateY(100%)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@-webkit-keyframes slideInDown-data-v-7946d30e{0%{-webkit-transform:translateY(-100%);transform:translateY(-100%)}to{-webkit-transform:translateY(0);transform:translateY(0)}}@keyframes slideInDown-data-v-7946d30e{0%{-webkit-transform:translateY(-100%);transform:translateY(-100%)}to{-webkit-transform:translateY(0);transform:translateY(0)}}", ""]);
-// Exports
-module.exports = exports;
-
-
-/***/ }),
-
-/***/ "a6d7":
-/***/ (function(module, exports) {
-
-// document.currentScript polyfill by Adam Miller
-
-// MIT license
-
-(function(document){
-  var currentScript = "currentScript",
-      scripts = document.getElementsByTagName('script'); // Live NodeList collection
-
-  // If browser needs currentScript polyfill, add get currentScript() to the document object
-  if (!(currentScript in document)) {
-    Object.defineProperty(document, currentScript, {
-      get: function(){
-
-        // IE 6-10 supports script readyState
-        // IE 10+ support stack trace
-        try { throw new Error(); }
-        catch (err) {
-
-          // Find the second match for the "at" string to get file src url from stack.
-          // Specifically works with the format of stack traces in IE.
-          var i, res = ((/.*at [^\(]*\((.*):.+:.+\)$/ig).exec(err.stack) || [false])[1];
-
-          // For all scripts on the page, if src matches or if ready state is interactive, return the script tag
-          for(i in scripts){
-            if(scripts[i].src == res || scripts[i].readyState == "interactive"){
-              return scripts[i];
-            }
-          }
-
-          // If no match, return null
-          return null;
-        }
-      }
-    });
-  }
-})(document);
-
-
-/***/ }),
-
-/***/ "c90d":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("937c");
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var add = __webpack_require__("582f").default
-var update = add("3cb2a4c0", content, true, {"sourceMap":false,"shadowMode":false});
-
-/***/ }),
-
-/***/ "ddbc":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_@vue_cli-service@4.2.3@@vue/cli-service/lib/commands/build/setPublicPath.js
-// This file is imported into lib/wc client bundles.
-
-if (typeof window !== 'undefined') {
-  if (true) {
-    __webpack_require__("a6d7")
-  }
-
-  var i
-  if ((i = window.document.currentScript) && (i = i.src.match(/(.+\/)[^/]+\.js(\?.*)?$/))) {
-    __webpack_require__.p = i[1] // eslint-disable-line
-  }
-}
-
-// Indicate to webpack that this file can be concatenated
-/* harmony default export */ var setPublicPath = (null);
-
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_cache-loader@4.1.0@cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4315e0ea-vue-loader-template"}!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_vue-loader@15.9.1@vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_cache-loader@4.1.0@cache-loader/dist/cjs.js??ref--0-0!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_vue-loader@15.9.1@vue-loader/lib??vue-loader-options!./src/VueDialog.vue?vue&type=template&id=7946d30e&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"fade"}},[(_vm.visible)?_c('div',{staticClass:"my-dialog-container",class:[_vm.direction],on:{"click":_vm.close}},[_c('div',{staticClass:"my-dialog-inner",on:{"click":function($event){$event.stopPropagation();}}},[_vm._t("default")],2),_c('div')]):_vm._e()])}
-var staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/VueDialog.vue?vue&type=template&id=7946d30e&scoped=true&
-
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_thread-loader@2.1.3@thread-loader/dist/cjs.js!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_babel-loader@8.1.0@babel-loader/lib??ref--12-1!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_cache-loader@4.1.0@cache-loader/dist/cjs.js??ref--0-0!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_vue-loader@15.9.1@vue-loader/lib??vue-loader-options!./src/VueDialog.vue?vue&type=script&lang=js&
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ var VueDialogvue_type_script_lang_js_ = ({
-  model: {
-    prop: 'visible',
-    event: 'close' // bottom top
-
-  },
-  props: {
-    visible: {
-      type: Boolean,
-      default: false
-    },
-    direction: {
-      type: String,
-      default: 'center'
-    }
-  },
-  methods: {
-    close: function close() {
-      this.$emit('close', false);
-    }
-  }
-});
-// CONCATENATED MODULE: ./src/VueDialog.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_VueDialogvue_type_script_lang_js_ = (VueDialogvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/VueDialog.vue?vue&type=style&index=0&id=7946d30e&lang=less&scoped=true&
-var VueDialogvue_type_style_index_0_id_7946d30e_lang_less_scoped_true_ = __webpack_require__("702d");
-
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_vue-loader@15.9.1@vue-loader/lib/runtime/componentNormalizer.js
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functional component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-// CONCATENATED MODULE: ./src/VueDialog.vue
-
-
-
-
-
-
-/* normalize component */
-
-var component = normalizeComponent(
-  src_VueDialogvue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  null,
-  "7946d30e",
-  null
-  
-)
-
-/* harmony default export */ var VueDialog = (component.exports);
-// CONCATENATED MODULE: ./index.js
-
-
-VueDialog.install = function (Vue) {
-  Vue.component('vue-dialog', VueDialog);
-};
-
-/* harmony default export */ var index = (VueDialog);
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_@vue_cli-service@4.2.3@@vue/cli-service/lib/commands/build/entry-lib.js
-
-
-/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (index);
-
 
 
 /***/ })

@@ -1,8 +1,7 @@
+const path = require('path')
+
 module.exports = {
   publicPath: '/', // public path
-  devServer: {
-    port: '10086'
-  },
   css: {
     extract: false
   },
@@ -11,7 +10,7 @@ module.exports = {
       symlinks: false // 使用npm link
     },
     entry: {
-      app: './index.js'
+      app: path.resolve(__dirname, 'src/test')
     }
   },
   productionSourceMap: false

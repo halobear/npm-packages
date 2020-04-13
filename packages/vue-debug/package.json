@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "core-js": "^3.4.4",
-    "kuan-css": "^2.0.2",
+    "kuan-css": "^2.0.3",
     "vconsole": "^3.3.4",
     "vue": "^2.6.10"
   }

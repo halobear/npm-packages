@@ -1,31 +1,31 @@
 <template>
   <div class="layout-wrapper">
     {{menus}}
-    <layout-header @select="onSelect" v-model="menus" @change="onChange"></layout-header>
+    <aa @select="onSelect" v-model="menus" @change="onChange"></aa>
   </div>
 </template>
 
 <script>
-import LayoutHeader from "@halobear/layout-header";
+import aa from "@halobear/layout-header";
 
 export default {
   components: {
-    LayoutHeader
+    aa
   },
   data() {
     return {
-      menus: ['licheng', 'four']
+      menus: ["licheng", "four"]
     };
   },
   methods: {
     onChange() {
-      console.log(this.menus, 'menus')
+      console.log(this.menus, "menus");
     },
     onSelect(res) {
-      console.log(res)
+      console.log(res);
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>

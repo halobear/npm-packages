@@ -25,12 +25,18 @@
 </template>
 
 <script>
-import menuRoutes from './config'
-import Modal from './components/Modal'
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+
+import menuRoutes from "./config";
+import Modal from "./components/Modal";
+
+import "swiper/css/swiper.css";
 
 export default {
-  name: 'layout-header',
+  name: "layout-header",
   components: {
+    Swiper,
+    SwiperSlide,
     Modal
   },
   props: {
@@ -41,11 +47,11 @@ export default {
   },
   computed: {
     location() {
-      return this.$route ? this.$route.path : window.location.hash
+      return this.$route ? this.$route.path : window.location.hash;
     }
   },
   data() {
-    let that = this
+    let that = this;
     return {
       menuRoutes,
       isShow: false,
@@ -55,43 +61,49 @@ export default {
         slidesPerView: 1,
         spaceBetween: 40,
         breakpoints: {
-          320: {  //当屏幕宽度大于等于320
+          320: {
+            //当屏幕宽度大于等于320
             slidesPerView: 4,
             spaceBetween: 10
           },
-          768: {  //当屏幕宽度大于等于768 
+          768: {
+            //当屏幕宽度大于等于768
             slidesPerView: 8,
             spaceBetween: 20
           },
-          1280: {  //当屏幕宽度大于等于1280
+          1280: {
+            //当屏幕宽度大于等于1280
             slidesPerView: 18,
             spaceBetween: 30
           }
         },
         on: {
-          click: function () {
-            if (this.clickedIndex && this.clickedIndex === menuRoutes.length - 1) {
-              let it = menuRoutes[this.clickedIndex]
-              that.open(it)
+          click: function() {
+            if (
+              this.clickedIndex &&
+              this.clickedIndex === menuRoutes.length - 1
+            ) {
+              let it = menuRoutes[this.clickedIndex];
+              that.open(it);
             }
-          },
+          }
         }
       }
-    }
+    };
   },
   methods: {
     // 点击跳转事件
     open(it) {
-      this.$emit('select', it)
+      this.$emit("select", it);
     },
     // 点击添加事件
     add(res) {
-      this.$emit('add', res);
-      this.$emit('change', res)
-      this.$emit('input', res)
+      this.$emit("add", res);
+      this.$emit("change", res);
+      this.$emit("input", res);
     }
   }
-}
+};
 </script>
 <style lang="less" scoped>
 .layout-header-wrapper {

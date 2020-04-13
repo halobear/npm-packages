@@ -901,70 +901,77 @@
     unique-filename "^1.1.1"
     which "^1.3.1"
 
+"@halobear/layout-header@file:packages/layout-header":
+  version "1.0.0"
+  dependencies:
+    swiper "^5.3.6"
+    vue "^2.6.10"
+    vue-awesome-swiper "^4.1.0"
+
 "@halobear/vue-amap@file:packages/vue-amap":
-  version "1.0.2"
+  version "1.0.5"
   dependencies:
     core-js "^3.4.4"
     vue "^2.6.10"
 
 "@halobear/vue-debug@file:packages/vue-debug":
-  version "1.0.2"
+  version "1.0.5"
   dependencies:
     core-js "^3.4.4"
-    kuan-css "^2.0.2"
+    kuan-css "^2.0.3"
     vconsole "^3.3.4"
     vue "^2.6.10"
 
 "@halobear/vue-dialog@file:packages/vue-dialog":
-  version "1.0.2"
+  version "1.0.5"
   dependencies:
     core-js "^3.4.4"
     vue "^2.6.10"
 
 "@halobear/vue-editor@file:packages/vue-editor":
-  version "0.0.4"
+  version "1.0.6"
   dependencies:
     core-js "^3.4.4"
     vue "^2.6.10"
 
 "@halobear/vue-feedback@file:packages/vue-feedback":
-  version "1.0.2"
+  version "1.0.5"
   dependencies:
     core-js "^3.4.4"
     vue "^2.6.10"
 
 "@halobear/vue-qrcode@file:packages/vue-qrcode":
-  version "1.0.2"
+  version "1.0.5"
   dependencies:
     core-js "^3.4.4"
     qrcode "^1.4.2"
     vue "^2.6.10"
 
 "@halobear/vue-region@file:packages/vue-region":
-  version "1.0.4"
+  version "1.0.5"
   dependencies:
     core-js "^3.4.4"
     vue "^2.6.10"
 
 "@halobear/vue-request@file:packages/vue-request":
-  version "1.0.3"
+  version "1.0.5"
   dependencies:
-    "@halobear/vue-feedback" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-request-1.0.3-ce340819-8b56-4b7b-a937-16025be958d6-1583117056907/node_modules/@halobear/vue-feedback"
+    "@halobear/vue-feedback" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-request-1.0.5-110d6d1c-f572-4862-94df-b21d8b784577-1586776975355/node_modules/@halobear/vue-feedback"
     axios "^0.19.0"
     core-js "^3.4.4"
     js-sha256 "^0.9.0"
     vue "^2.6.10"
 
 "@halobear/vue-shape@file:packages/vue-shape":
-  version "1.0.2"
+  version "1.0.5"
   dependencies:
     core-js "^3.4.4"
     vue "^2.6.10"
 
 "@halobear/vue-upload@file:packages/vue-upload":
-  version "1.0.2"
+  version "1.0.5"
   dependencies:
-    "@halobear/vue-feedback" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-upload-1.0.2-e568d54e-8ba0-4590-826f-ae3407cdb000-1583117056891/node_modules/@halobear/vue-feedback"
+    "@halobear/vue-feedback" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-upload-1.0.5-6cb3b3a2-d0c4-440e-abc8-cc88dda83d72-1586776975357/node_modules/@halobear/vue-feedback"
     axios "^0.19.0"
     core-js "^3.4.4"
     kuan-utils "^1.3.16"
@@ -974,17 +981,17 @@
     vuedraggable "^2.23.2"
 
 "@halobear/vue@file:packages/vue":
-  version "1.0.4"
+  version "1.0.5"
   dependencies:
-    "@halobear/vue-amap" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.4-c73cd4b2-a763-41ad-9a85-b21518ddc23c-1583117056880/node_modules/@halobear/vue-amap"
-    "@halobear/vue-debug" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.4-c73cd4b2-a763-41ad-9a85-b21518ddc23c-1583117056880/node_modules/@halobear/vue-debug"
-    "@halobear/vue-dialog" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.4-c73cd4b2-a763-41ad-9a85-b21518ddc23c-1583117056880/node_modules/@halobear/vue-dialog"
-    "@halobear/vue-feedback" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.4-c73cd4b2-a763-41ad-9a85-b21518ddc23c-1583117056880/node_modules/@halobear/vue-feedback"
-    "@halobear/vue-qrcode" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.4-c73cd4b2-a763-41ad-9a85-b21518ddc23c-1583117056880/node_modules/@halobear/vue-qrcode"
-    "@halobear/vue-region" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.4-c73cd4b2-a763-41ad-9a85-b21518ddc23c-1583117056880/node_modules/@halobear/vue-region"
-    "@halobear/vue-request" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.4-c73cd4b2-a763-41ad-9a85-b21518ddc23c-1583117056880/node_modules/@halobear/vue-request"
-    "@halobear/vue-shape" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.4-c73cd4b2-a763-41ad-9a85-b21518ddc23c-1583117056880/node_modules/@halobear/vue-shape"
-    "@halobear/vue-upload" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.4-c73cd4b2-a763-41ad-9a85-b21518ddc23c-1583117056880/node_modules/@halobear/vue-upload"
+    "@halobear/vue-amap" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-0be7ccf2-e081-4f35-9e44-b87be886a968-1586776975301/node_modules/@halobear/vue-amap"
+    "@halobear/vue-debug" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-0be7ccf2-e081-4f35-9e44-b87be886a968-1586776975301/node_modules/@halobear/vue-debug"
+    "@halobear/vue-dialog" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-0be7ccf2-e081-4f35-9e44-b87be886a968-1586776975301/node_modules/@halobear/vue-dialog"
+    "@halobear/vue-feedback" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-0be7ccf2-e081-4f35-9e44-b87be886a968-1586776975301/node_modules/@halobear/vue-feedback"
+    "@halobear/vue-qrcode" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-0be7ccf2-e081-4f35-9e44-b87be886a968-1586776975301/node_modules/@halobear/vue-qrcode"
+    "@halobear/vue-region" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-0be7ccf2-e081-4f35-9e44-b87be886a968-1586776975301/node_modules/@halobear/vue-region"
+    "@halobear/vue-request" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-0be7ccf2-e081-4f35-9e44-b87be886a968-1586776975301/node_modules/@halobear/vue-request"
+    "@halobear/vue-shape" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-0be7ccf2-e081-4f35-9e44-b87be886a968-1586776975301/node_modules/@halobear/vue-shape"
+    "@halobear/vue-upload" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-0be7ccf2-e081-4f35-9e44-b87be886a968-1586776975301/node_modules/@halobear/vue-upload"
     core-js "^3.4.4"
     vconsole "^3.3.4"
     vue "^2.6.10"
@@ -4328,6 +4335,13 @@ dom-serializer@0:
     domelementtype "^2.0.1"
     entities "^2.0.0"
 
+dom7@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.npm.taobao.org/dom7/download/dom7-2.1.3.tgz#a736f9c3bfbc4ca039a81cd095f97d1d7f3de19c"
+  integrity sha1-pzb5w7+8TKA5qBzQlfl9HX894Zw=
+  dependencies:
+    ssr-window "^1.0.1"
+
 domain-browser@^1.1.1:
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/domain-browser/download/domain-browser-1.2.0.tgz?cache=0&sync_timestamp=1575879334171&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdomain-browser%2Fdownload%2Fdomain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
@@ -6690,10 +6704,10 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.npm.taobao.org/kind-of/download/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha1-B8BQNKbDSfoG4k+jWqdttFgM5N0=
 
-kuan-css@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.npm.taobao.org/kuan-css/download/kuan-css-2.0.2.tgz#2b6fec636dc3b6a6635d00e54fb45975b32c36f4"
-  integrity sha1-K2/sY23DtqZjXQDlT7RZdbMsNvQ=
+kuan-css@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/kuan-css/-/kuan-css-2.0.3.tgz#6e8d3903a36bb3ee179bbc5102040e52ecb298e1"
+  integrity sha512-GswuUWEFaqaSdnckWjilzCSvJWIPQwScBCkZhLriDLziOIYMnZPTll2Xljyzmq5WXHPW2l6pwvlbQlXpXfDycg==
 
 kuan-utils@^1.3.16:
   version "1.3.16"
@@ -9903,6 +9917,11 @@ sshpk@^1.7.0:
     safer-buffer "^2.0.2"
     tweetnacl "~0.14.0"
 
+ssr-window@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/ssr-window/download/ssr-window-1.0.1.tgz#30752a6a4666e7767f0b7e6aa6fc2fdbd0d9b369"
+  integrity sha1-MHUqakZm53Z/C35qpvwv29DZs2k=
+
 ssri@^5.2.4:
   version "5.3.0"
   resolved "https://registry.npm.taobao.org/ssri/download/ssri-5.3.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fssri%2Fdownload%2Fssri-5.3.0.tgz#ba3872c9c6d33a0704a7d71ff045e5ec48999d06"
@@ -10209,6 +10228,14 @@ svgo@^1.0.0:
     stable "^0.1.8"
     unquote "~1.1.1"
     util.promisify "~1.0.0"
+
+swiper@^5.3.6:
+  version "5.3.7"
+  resolved "https://registry.npm.taobao.org/swiper/download/swiper-5.3.7.tgz?cache=0&sync_timestamp=1586538009404&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fswiper%2Fdownload%2Fswiper-5.3.7.tgz#1349c055730e9247e4482b72631166119b83f409"
+  integrity sha1-E0nAVXMOkkfkSCtyYxFmEZuD9Ak=
+  dependencies:
+    dom7 "^2.1.3"
+    ssr-window "^1.0.1"
 
 table@4.0.2:
   version "4.0.2"
@@ -10791,6 +10818,11 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/vm-browserify/download/vm-browserify-1.1.2.tgz?cache=0&sync_timestamp=1572870776965&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvm-browserify%2Fdownload%2Fvm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha1-eGQcSIuObKkadfUR56OzKobl3aA=
+
+vue-awesome-swiper@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.npm.taobao.org/vue-awesome-swiper/download/vue-awesome-swiper-4.1.0.tgz?cache=0&sync_timestamp=1585494688076&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-awesome-swiper%2Fdownload%2Fvue-awesome-swiper-4.1.0.tgz#163e94597b119e5476d80380e208d2d9a7419c75"
+  integrity sha1-Fj6UWXsRnlR22AOA4gjS2adBnHU=
 
 vue-eslint-parser@^2.0.3:
   version "2.0.3"

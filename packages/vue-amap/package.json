@@ -6,7 +6,7 @@
     "vue"
   ],
   "scripts": {
-    "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js yarn serve",
+    "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js vue serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build:lib": "vue build index.js -t lib -d lib -n vue-amap",

@@ -91,10 +91,22 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "ddbc");
+/******/ 	return __webpack_require__(__webpack_require__.s = "13f6");
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "0102":
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+
+
+/***/ }),
 
 /***/ "0269":
 /***/ (function(module, exports, __webpack_require__) {
@@ -132,89 +144,117 @@ exports.getEncodedBits = function getEncodedBits (errorCorrectionLevel, mask) {
 
 /***/ }),
 
-/***/ "02df":
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__("34f3");
-var isObject = __webpack_require__("6ffb");
-
-var document = global.document;
-// typeof document.createElement is 'object' in old IE
-var EXISTS = isObject(document) && isObject(document.createElement);
-
-module.exports = function (it) {
-  return EXISTS ? document.createElement(it) : {};
-};
-
-
-/***/ }),
-
-/***/ "05f6":
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__("6ffb");
-
-module.exports = function (it) {
-  if (!isObject(it) && it !== null) {
-    throw TypeError("Can't set " + String(it) + ' as a prototype');
-  } return it;
-};
-
-
-/***/ }),
-
-/***/ "0631":
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__("c3f2");
-var aPossiblePrototype = __webpack_require__("05f6");
-
-// `Object.setPrototypeOf` method
-// https://tc39.github.io/ecma262/#sec-object.setprototypeof
-// Works with __proto__ only. Old v8 can't work with null proto objects.
-/* eslint-disable no-proto */
-module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
-  var CORRECT_SETTER = false;
-  var test = {};
-  var setter;
-  try {
-    setter = Object.getOwnPropertyDescriptor(Object.prototype, '__proto__').set;
-    setter.call(test, []);
-    CORRECT_SETTER = test instanceof Array;
-  } catch (error) { /* empty */ }
-  return function setPrototypeOf(O, proto) {
-    anObject(O);
-    aPossiblePrototype(proto);
-    if (CORRECT_SETTER) setter.call(O, proto);
-    else O.__proto__ = proto;
-    return O;
-  };
-}() : undefined);
-
-
-/***/ }),
-
-/***/ "0ab2":
-/***/ (function(module, exports, __webpack_require__) {
-
-var DESCRIPTORS = __webpack_require__("e49d");
-var definePropertyModule = __webpack_require__("74fa");
-var createPropertyDescriptor = __webpack_require__("d480");
-
-module.exports = DESCRIPTORS ? function (object, key, value) {
-  return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-
-/***/ }),
-
-/***/ "0bfd":
+/***/ "07d3":
 /***/ (function(module, exports) {
 
-module.exports = {};
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
+
+
+/***/ }),
+
+/***/ "08a0":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var nativePropertyIsEnumerable = {}.propertyIsEnumerable;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+// Nashorn ~ JDK8 bug
+var NASHORN_BUG = getOwnPropertyDescriptor && !nativePropertyIsEnumerable.call({ 1: 2 }, 1);
+
+// `Object.prototype.propertyIsEnumerable` method implementation
+// https://tc39.github.io/ecma262/#sec-object.prototype.propertyisenumerable
+exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
+  var descriptor = getOwnPropertyDescriptor(this, V);
+  return !!descriptor && descriptor.enumerable;
+} : nativePropertyIsEnumerable;
+
+
+/***/ }),
+
+/***/ "08a1":
+/***/ (function(module, exports, __webpack_require__) {
+
+var internalObjectKeys = __webpack_require__("cf25");
+var enumBugKeys = __webpack_require__("4b1f");
+
+// `Object.keys` method
+// https://tc39.github.io/ecma262/#sec-object.keys
+module.exports = Object.keys || function keys(O) {
+  return internalObjectKeys(O, enumBugKeys);
+};
+
+
+/***/ }),
+
+/***/ "0e08":
+/***/ (function(module, exports) {
+
+// document.currentScript polyfill by Adam Miller
+
+// MIT license
+
+(function(document){
+  var currentScript = "currentScript",
+      scripts = document.getElementsByTagName('script'); // Live NodeList collection
+
+  // If browser needs currentScript polyfill, add get currentScript() to the document object
+  if (!(currentScript in document)) {
+    Object.defineProperty(document, currentScript, {
+      get: function(){
+
+        // IE 6-10 supports script readyState
+        // IE 10+ support stack trace
+        try { throw new Error(); }
+        catch (err) {
+
+          // Find the second match for the "at" string to get file src url from stack.
+          // Specifically works with the format of stack traces in IE.
+          var i, res = ((/.*at [^\(]*\((.*):.+:.+\)$/ig).exec(err.stack) || [false])[1];
+
+          // For all scripts on the page, if src matches or if ready state is interactive, return the script tag
+          for(i in scripts){
+            if(scripts[i].src == res || scripts[i].readyState == "interactive"){
+              return scripts[i];
+            }
+          }
+
+          // If no match, return null
+          return null;
+        }
+      }
+    });
+  }
+})(document);
+
+
+/***/ }),
+
+/***/ "0fc8":
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__("f738");
+var shared = __webpack_require__("a0c8");
+var has = __webpack_require__("66f4");
+var uid = __webpack_require__("ba70");
+var NATIVE_SYMBOL = __webpack_require__("c763");
+var USE_SYMBOL_AS_UID = __webpack_require__("78b6");
+
+var WellKnownSymbolsStore = shared('wks');
+var Symbol = global.Symbol;
+var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol : Symbol && Symbol.withoutSetter || uid;
+
+module.exports = function (name) {
+  if (!has(WellKnownSymbolsStore, name)) {
+    if (NATIVE_SYMBOL && has(Symbol, name)) WellKnownSymbolsStore[name] = Symbol[name];
+    else WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
+  } return WellKnownSymbolsStore[name];
+};
 
 
 /***/ }),
@@ -276,34 +316,295 @@ exports.from = function from (value, defaultValue) {
 
 /***/ }),
 
-/***/ "12b9":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "13f6":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var TO_STRING_TAG_SUPPORT = __webpack_require__("68d4");
-var classofRaw = __webpack_require__("6fd9");
-var wellKnownSymbol = __webpack_require__("465f");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 
-var TO_STRING_TAG = wellKnownSymbol('toStringTag');
-// ES3 wrong here
-var CORRECT_ARGUMENTS = classofRaw(function () { return arguments; }()) == 'Arguments';
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
+// This file is imported into lib/wc client bundles.
 
-// fallback for IE11 Script Access Denied error
-var tryGet = function (it, key) {
-  try {
-    return it[key];
-  } catch (error) { /* empty */ }
+if (typeof window !== 'undefined') {
+  if (true) {
+    __webpack_require__("0e08")
+  }
+
+  var i
+  if ((i = window.document.currentScript) && (i = i.src.match(/(.+\/)[^/]+\.js(\?.*)?$/))) {
+    __webpack_require__.p = i[1] // eslint-disable-line
+  }
+}
+
+// Indicate to webpack that this file can be concatenated
+/* harmony default export */ var setPublicPath = (null);
+
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"505be2cd-vue-loader-template"}!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/cache-loader/dist/cjs.js??ref--0-0!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib??vue-loader-options!./src/Qrcode.vue?vue&type=template&id=e19956dc&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('canvas',{ref:"canvas",style:({ height: _vm.h, width: _vm.w }),attrs:{"url":_vm.url}})}
+var staticRenderFns = []
+
+
+// CONCATENATED MODULE: ./src/Qrcode.vue?vue&type=template&id=e19956dc&
+
+// EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es.number.constructor.js
+var es_number_constructor = __webpack_require__("bf74");
+
+// EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es.object.to-string.js
+var es_object_to_string = __webpack_require__("d750");
+
+// EXTERNAL MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/core-js/modules/es.regexp.to-string.js
+var es_regexp_to_string = __webpack_require__("3bb8");
+
+// EXTERNAL MODULE: /Users/kuan/Desktop/projects/npm-packages/node_modules/qrcode/lib/browser.js
+var browser = __webpack_require__("3871");
+var browser_default = /*#__PURE__*/__webpack_require__.n(browser);
+
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/thread-loader/dist/cjs.js!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/babel-loader/lib??ref--12-1!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/cache-loader/dist/cjs.js??ref--0-0!/Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib??vue-loader-options!./src/Qrcode.vue?vue&type=script&lang=js&
+
+
+
+
+
+
+//
+//
+//
+//
+
+/* harmony default export */ var Qrcodevue_type_script_lang_js_ = ({
+  name: "qrcode",
+  props: {
+    url: {
+      type: String,
+      default: ""
+    },
+    width: {
+      type: [String, Number],
+      default: 200
+    },
+    height: {
+      type: [String, Number],
+      default: 200
+    }
+  },
+  computed: {
+    w: function w() {
+      var w = this.width.toString();
+
+      if (/^\d*$/.test(w)) {
+        return "".concat(w, "px");
+      }
+
+      return w;
+    },
+    h: function h() {
+      var h = this.height.toString();
+
+      if (/^\d*$/.test(h)) {
+        return "".concat(h, "px");
+      }
+
+      return h;
+    }
+  },
+  watch: {
+    url: function url() {
+      this.generateCode();
+    }
+  },
+  methods: {
+    generateCode: function generateCode() {
+      if (!this.url) return;
+      var canvas = this.$refs.canvas;
+      browser_default.a.toCanvas(canvas, this.url, {
+        width: this.width,
+        height: this.height,
+        margin: "1"
+      }, function (err) {
+        if (err) {
+          console.error(err);
+        }
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.generateCode();
+  }
+});
+// CONCATENATED MODULE: ./src/Qrcode.vue?vue&type=script&lang=js&
+ /* harmony default export */ var src_Qrcodevue_type_script_lang_js_ = (Qrcodevue_type_script_lang_js_); 
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/vue-loader/lib/runtime/componentNormalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+// CONCATENATED MODULE: ./src/Qrcode.vue
+
+
+
+
+
+/* normalize component */
+
+var component = normalizeComponent(
+  src_Qrcodevue_type_script_lang_js_,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var Qrcode = (component.exports);
+// CONCATENATED MODULE: ./index.js
+
+
+Qrcode.install = function (Vue) {
+  Vue.component('vue-qrcode', Qrcode);
 };
 
-// getting tag from ES6+ `Object.prototype.toString`
-module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
-  var O, tag, result;
-  return it === undefined ? 'Undefined' : it === null ? 'Null'
-    // @@toStringTag case
-    : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG)) == 'string' ? tag
-    // builtinTag case
-    : CORRECT_ARGUMENTS ? classofRaw(O)
-    // ES3 arguments fallback
-    : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
+/* harmony default export */ var index = (Qrcode);
+// CONCATENATED MODULE: /Users/kuan/.nvm/versions/node/v10.13.0/lib/node_modules/@vue/cli-service-global/node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
+
+
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (index);
+
+
+
+/***/ }),
+
+/***/ "18c1":
+/***/ (function(module, exports, __webpack_require__) {
+
+var path = __webpack_require__("d2f9");
+var global = __webpack_require__("f738");
+
+var aFunction = function (variable) {
+  return typeof variable == 'function' ? variable : undefined;
+};
+
+module.exports = function (namespace, method) {
+  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global[namespace])
+    : path[namespace] && path[namespace][method] || global[namespace] && global[namespace][method];
+};
+
+
+/***/ }),
+
+/***/ "1c73":
+/***/ (function(module, exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__("f402");
+var propertyIsEnumerableModule = __webpack_require__("08a0");
+var createPropertyDescriptor = __webpack_require__("83e1");
+var toIndexedObject = __webpack_require__("934d");
+var toPrimitive = __webpack_require__("6263");
+var has = __webpack_require__("66f4");
+var IE8_DOM_DEFINE = __webpack_require__("ccfc");
+
+var nativeGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
+
+// `Object.getOwnPropertyDescriptor` method
+// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
+exports.f = DESCRIPTORS ? nativeGetOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
+  O = toIndexedObject(O);
+  P = toPrimitive(P, true);
+  if (IE8_DOM_DEFINE) try {
+    return nativeGetOwnPropertyDescriptor(O, P);
+  } catch (error) { /* empty */ }
+  if (has(O, P)) return createPropertyDescriptor(!propertyIsEnumerableModule.f.call(O, P), O[P]);
 };
 
 
@@ -338,3945 +639,7 @@ exports.getPositions = function getPositions (version) {
 
 /***/ }),
 
-/***/ "212a":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.byteLength = byteLength
-exports.toByteArray = toByteArray
-exports.fromByteArray = fromByteArray
-
-var lookup = []
-var revLookup = []
-var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
-
-var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
-for (var i = 0, len = code.length; i < len; ++i) {
-  lookup[i] = code[i]
-  revLookup[code.charCodeAt(i)] = i
-}
-
-// Support decoding URL-safe base64 strings, as Node.js does.
-// See: https://en.wikipedia.org/wiki/Base64#URL_applications
-revLookup['-'.charCodeAt(0)] = 62
-revLookup['_'.charCodeAt(0)] = 63
-
-function getLens (b64) {
-  var len = b64.length
-
-  if (len % 4 > 0) {
-    throw new Error('Invalid string. Length must be a multiple of 4')
-  }
-
-  // Trim off extra bytes after placeholder bytes are found
-  // See: https://github.com/beatgammit/base64-js/issues/42
-  var validLen = b64.indexOf('=')
-  if (validLen === -1) validLen = len
-
-  var placeHoldersLen = validLen === len
-    ? 0
-    : 4 - (validLen % 4)
-
-  return [validLen, placeHoldersLen]
-}
-
-// base64 is 4/3 + up to two characters of the original data
-function byteLength (b64) {
-  var lens = getLens(b64)
-  var validLen = lens[0]
-  var placeHoldersLen = lens[1]
-  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
-}
-
-function _byteLength (b64, validLen, placeHoldersLen) {
-  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
-}
-
-function toByteArray (b64) {
-  var tmp
-  var lens = getLens(b64)
-  var validLen = lens[0]
-  var placeHoldersLen = lens[1]
-
-  var arr = new Arr(_byteLength(b64, validLen, placeHoldersLen))
-
-  var curByte = 0
-
-  // if there are placeholders, only get up to the last complete 4 chars
-  var len = placeHoldersLen > 0
-    ? validLen - 4
-    : validLen
-
-  var i
-  for (i = 0; i < len; i += 4) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 18) |
-      (revLookup[b64.charCodeAt(i + 1)] << 12) |
-      (revLookup[b64.charCodeAt(i + 2)] << 6) |
-      revLookup[b64.charCodeAt(i + 3)]
-    arr[curByte++] = (tmp >> 16) & 0xFF
-    arr[curByte++] = (tmp >> 8) & 0xFF
-    arr[curByte++] = tmp & 0xFF
-  }
-
-  if (placeHoldersLen === 2) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 2) |
-      (revLookup[b64.charCodeAt(i + 1)] >> 4)
-    arr[curByte++] = tmp & 0xFF
-  }
-
-  if (placeHoldersLen === 1) {
-    tmp =
-      (revLookup[b64.charCodeAt(i)] << 10) |
-      (revLookup[b64.charCodeAt(i + 1)] << 4) |
-      (revLookup[b64.charCodeAt(i + 2)] >> 2)
-    arr[curByte++] = (tmp >> 8) & 0xFF
-    arr[curByte++] = tmp & 0xFF
-  }
-
-  return arr
-}
-
-function tripletToBase64 (num) {
-  return lookup[num >> 18 & 0x3F] +
-    lookup[num >> 12 & 0x3F] +
-    lookup[num >> 6 & 0x3F] +
-    lookup[num & 0x3F]
-}
-
-function encodeChunk (uint8, start, end) {
-  var tmp
-  var output = []
-  for (var i = start; i < end; i += 3) {
-    tmp =
-      ((uint8[i] << 16) & 0xFF0000) +
-      ((uint8[i + 1] << 8) & 0xFF00) +
-      (uint8[i + 2] & 0xFF)
-    output.push(tripletToBase64(tmp))
-  }
-  return output.join('')
-}
-
-function fromByteArray (uint8) {
-  var tmp
-  var len = uint8.length
-  var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
-  var parts = []
-  var maxChunkLength = 16383 // must be multiple of 3
-
-  // go through the array every three bytes, we'll deal with trailing stuff later
-  for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
-    parts.push(encodeChunk(
-      uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)
-    ))
-  }
-
-  // pad the end with zeros, but make sure to not forget the extra bytes
-  if (extraBytes === 1) {
-    tmp = uint8[len - 1]
-    parts.push(
-      lookup[tmp >> 2] +
-      lookup[(tmp << 4) & 0x3F] +
-      '=='
-    )
-  } else if (extraBytes === 2) {
-    tmp = (uint8[len - 2] << 8) + uint8[len - 1]
-    parts.push(
-      lookup[tmp >> 10] +
-      lookup[(tmp >> 4) & 0x3F] +
-      lookup[(tmp << 2) & 0x3F] +
-      '='
-    )
-  }
-
-  return parts.join('')
-}
-
-
-/***/ }),
-
-/***/ "2600":
-/***/ (function(module, exports, __webpack_require__) {
-
-var VersionCheck = __webpack_require__("a77a")
-var Regex = __webpack_require__("e4e2")
-
-/**
- * Numeric mode encodes data from the decimal digit set (0 - 9)
- * (byte values 30HEX to 39HEX).
- * Normally, 3 data characters are represented by 10 bits.
- *
- * @type {Object}
- */
-exports.NUMERIC = {
-  id: 'Numeric',
-  bit: 1 << 0,
-  ccBits: [10, 12, 14]
-}
-
-/**
- * Alphanumeric mode encodes data from a set of 45 characters,
- * i.e. 10 numeric digits (0 - 9),
- *      26 alphabetic characters (A - Z),
- *   and 9 symbols (SP, $, %, *, +, -, ., /, :).
- * Normally, two input characters are represented by 11 bits.
- *
- * @type {Object}
- */
-exports.ALPHANUMERIC = {
-  id: 'Alphanumeric',
-  bit: 1 << 1,
-  ccBits: [9, 11, 13]
-}
-
-/**
- * In byte mode, data is encoded at 8 bits per character.
- *
- * @type {Object}
- */
-exports.BYTE = {
-  id: 'Byte',
-  bit: 1 << 2,
-  ccBits: [8, 16, 16]
-}
-
-/**
- * The Kanji mode efficiently encodes Kanji characters in accordance with
- * the Shift JIS system based on JIS X 0208.
- * The Shift JIS values are shifted from the JIS X 0208 values.
- * JIS X 0208 gives details of the shift coded representation.
- * Each two-byte character value is compacted to a 13-bit binary codeword.
- *
- * @type {Object}
- */
-exports.KANJI = {
-  id: 'Kanji',
-  bit: 1 << 3,
-  ccBits: [8, 10, 12]
-}
-
-/**
- * Mixed mode will contain a sequences of data in a combination of any of
- * the modes described above
- *
- * @type {Object}
- */
-exports.MIXED = {
-  bit: -1
-}
-
-/**
- * Returns the number of bits needed to store the data length
- * according to QR Code specifications.
- *
- * @param  {Mode}   mode    Data mode
- * @param  {Number} version QR Code version
- * @return {Number}         Number of bits
- */
-exports.getCharCountIndicator = function getCharCountIndicator (mode, version) {
-  if (!mode.ccBits) throw new Error('Invalid mode: ' + mode)
-
-  if (!VersionCheck.isValid(version)) {
-    throw new Error('Invalid version: ' + version)
-  }
-
-  if (version >= 1 && version < 10) return mode.ccBits[0]
-  else if (version < 27) return mode.ccBits[1]
-  return mode.ccBits[2]
-}
-
-/**
- * Returns the most efficient mode to store the specified data
- *
- * @param  {String} dataStr Input data string
- * @return {Mode}           Best mode
- */
-exports.getBestModeForData = function getBestModeForData (dataStr) {
-  if (Regex.testNumeric(dataStr)) return exports.NUMERIC
-  else if (Regex.testAlphanumeric(dataStr)) return exports.ALPHANUMERIC
-  else if (Regex.testKanji(dataStr)) return exports.KANJI
-  else return exports.BYTE
-}
-
-/**
- * Return mode name as string
- *
- * @param {Mode} mode Mode object
- * @returns {String}  Mode name
- */
-exports.toString = function toString (mode) {
-  if (mode && mode.id) return mode.id
-  throw new Error('Invalid mode')
-}
-
-/**
- * Check if input param is a valid mode object
- *
- * @param   {Mode}    mode Mode object
- * @returns {Boolean} True if valid mode, false otherwise
- */
-exports.isValid = function isValid (mode) {
-  return mode && mode.bit && mode.ccBits
-}
-
-/**
- * Get mode object from its name
- *
- * @param   {String} string Mode name
- * @returns {Mode}          Mode object
- */
-function fromString (string) {
-  if (typeof string !== 'string') {
-    throw new Error('Param is not a string')
-  }
-
-  var lcStr = string.toLowerCase()
-
-  switch (lcStr) {
-    case 'numeric':
-      return exports.NUMERIC
-    case 'alphanumeric':
-      return exports.ALPHANUMERIC
-    case 'kanji':
-      return exports.KANJI
-    case 'byte':
-      return exports.BYTE
-    default:
-      throw new Error('Unknown mode: ' + string)
-  }
-}
-
-/**
- * Returns mode from a value.
- * If value is not a valid mode, returns defaultValue
- *
- * @param  {Mode|String} value        Encoding mode
- * @param  {Mode}        defaultValue Fallback value
- * @return {Mode}                     Encoding mode
- */
-exports.from = function from (value, defaultValue) {
-  if (exports.isValid(value)) {
-    return value
-  }
-
-  try {
-    return fromString(value)
-  } catch (e) {
-    return defaultValue
-  }
-}
-
-
-/***/ }),
-
-/***/ "26d4":
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__("6ffb");
-var setPrototypeOf = __webpack_require__("0631");
-
-// makes subclassing work correct for wrapped built-ins
-module.exports = function ($this, dummy, Wrapper) {
-  var NewTarget, NewTargetPrototype;
-  if (
-    // it can work only with native `setPrototypeOf`
-    setPrototypeOf &&
-    // we haven't completely correct pre-ES6 way for getting `new.target`, so use this
-    typeof (NewTarget = dummy.constructor) == 'function' &&
-    NewTarget !== Wrapper &&
-    isObject(NewTargetPrototype = NewTarget.prototype) &&
-    NewTargetPrototype !== Wrapper.prototype
-  ) setPrototypeOf($this, NewTargetPrototype);
-  return $this;
-};
-
-
-/***/ }),
-
-/***/ "2cfa":
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__("c3f2");
-var defineProperties = __webpack_require__("6910");
-var enumBugKeys = __webpack_require__("cf47");
-var hiddenKeys = __webpack_require__("0bfd");
-var html = __webpack_require__("f819");
-var documentCreateElement = __webpack_require__("02df");
-var sharedKey = __webpack_require__("fc4f");
-
-var GT = '>';
-var LT = '<';
-var PROTOTYPE = 'prototype';
-var SCRIPT = 'script';
-var IE_PROTO = sharedKey('IE_PROTO');
-
-var EmptyConstructor = function () { /* empty */ };
-
-var scriptTag = function (content) {
-  return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
-};
-
-// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
-var NullProtoObjectViaActiveX = function (activeXDocument) {
-  activeXDocument.write(scriptTag(''));
-  activeXDocument.close();
-  var temp = activeXDocument.parentWindow.Object;
-  activeXDocument = null; // avoid memory leak
-  return temp;
-};
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var NullProtoObjectViaIFrame = function () {
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = documentCreateElement('iframe');
-  var JS = 'java' + SCRIPT + ':';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  html.appendChild(iframe);
-  // https://github.com/zloirock/core-js/issues/475
-  iframe.src = String(JS);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(scriptTag('document.F=Object'));
-  iframeDocument.close();
-  return iframeDocument.F;
-};
-
-// Check for document.domain and active x support
-// No need to use active x approach when document.domain is not set
-// see https://github.com/es-shims/es5-shim/issues/150
-// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
-// avoid IE GC bug
-var activeXDocument;
-var NullProtoObject = function () {
-  try {
-    /* global ActiveXObject */
-    activeXDocument = document.domain && new ActiveXObject('htmlfile');
-  } catch (error) { /* ignore */ }
-  NullProtoObject = activeXDocument ? NullProtoObjectViaActiveX(activeXDocument) : NullProtoObjectViaIFrame();
-  var length = enumBugKeys.length;
-  while (length--) delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
-  return NullProtoObject();
-};
-
-hiddenKeys[IE_PROTO] = true;
-
-// `Object.create` method
-// https://tc39.github.io/ecma262/#sec-object.create
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    EmptyConstructor[PROTOTYPE] = anObject(O);
-    result = new EmptyConstructor();
-    EmptyConstructor[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = NullProtoObject();
-  return Properties === undefined ? result : defineProperties(result, Properties);
-};
-
-
-/***/ }),
-
-/***/ "2e32":
-/***/ (function(module, exports, __webpack_require__) {
-
-var fails = __webpack_require__("dcc0");
-
-module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
-  // Chrome 38 Symbol has incorrect toString conversion
-  // eslint-disable-next-line no-undef
-  return !String(Symbol());
-});
-
-
-/***/ }),
-
-/***/ "2e47":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var DESCRIPTORS = __webpack_require__("e49d");
-var global = __webpack_require__("34f3");
-var isForced = __webpack_require__("ec49");
-var redefine = __webpack_require__("6d4c");
-var has = __webpack_require__("379c");
-var classof = __webpack_require__("6fd9");
-var inheritIfRequired = __webpack_require__("26d4");
-var toPrimitive = __webpack_require__("bca5");
-var fails = __webpack_require__("dcc0");
-var create = __webpack_require__("2cfa");
-var getOwnPropertyNames = __webpack_require__("48a0").f;
-var getOwnPropertyDescriptor = __webpack_require__("60d3").f;
-var defineProperty = __webpack_require__("74fa").f;
-var trim = __webpack_require__("56b2").trim;
-
-var NUMBER = 'Number';
-var NativeNumber = global[NUMBER];
-var NumberPrototype = NativeNumber.prototype;
-
-// Opera ~12 has broken Object#toString
-var BROKEN_CLASSOF = classof(create(NumberPrototype)) == NUMBER;
-
-// `ToNumber` abstract operation
-// https://tc39.github.io/ecma262/#sec-tonumber
-var toNumber = function (argument) {
-  var it = toPrimitive(argument, false);
-  var first, third, radix, maxCode, digits, length, index, code;
-  if (typeof it == 'string' && it.length > 2) {
-    it = trim(it);
-    first = it.charCodeAt(0);
-    if (first === 43 || first === 45) {
-      third = it.charCodeAt(2);
-      if (third === 88 || third === 120) return NaN; // Number('+0x1') should be NaN, old V8 fix
-    } else if (first === 48) {
-      switch (it.charCodeAt(1)) {
-        case 66: case 98: radix = 2; maxCode = 49; break; // fast equal of /^0b[01]+$/i
-        case 79: case 111: radix = 8; maxCode = 55; break; // fast equal of /^0o[0-7]+$/i
-        default: return +it;
-      }
-      digits = it.slice(2);
-      length = digits.length;
-      for (index = 0; index < length; index++) {
-        code = digits.charCodeAt(index);
-        // parseInt parses a string to a first unavailable symbol
-        // but ToNumber should return NaN if a string contains unavailable symbols
-        if (code < 48 || code > maxCode) return NaN;
-      } return parseInt(digits, radix);
-    }
-  } return +it;
-};
-
-// `Number` constructor
-// https://tc39.github.io/ecma262/#sec-number-constructor
-if (isForced(NUMBER, !NativeNumber(' 0o1') || !NativeNumber('0b1') || NativeNumber('+0x1'))) {
-  var NumberWrapper = function Number(value) {
-    var it = arguments.length < 1 ? 0 : value;
-    var dummy = this;
-    return dummy instanceof NumberWrapper
-      // check on 1..constructor(foo) case
-      && (BROKEN_CLASSOF ? fails(function () { NumberPrototype.valueOf.call(dummy); }) : classof(dummy) != NUMBER)
-        ? inheritIfRequired(new NativeNumber(toNumber(it)), dummy, NumberWrapper) : toNumber(it);
-  };
-  for (var keys = DESCRIPTORS ? getOwnPropertyNames(NativeNumber) : (
-    // ES3:
-    'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
-    // ES2015 (in case, if modules with ES2015 Number statics required before):
-    'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' +
-    'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger'
-  ).split(','), j = 0, key; keys.length > j; j++) {
-    if (has(NativeNumber, key = keys[j]) && !has(NumberWrapper, key)) {
-      defineProperty(NumberWrapper, key, getOwnPropertyDescriptor(NativeNumber, key));
-    }
-  }
-  NumberWrapper.prototype = NumberPrototype;
-  NumberPrototype.constructor = NumberWrapper;
-  redefine(global, NUMBER, NumberWrapper);
-}
-
-
-/***/ }),
-
-/***/ "2f12":
-/***/ (function(module, exports) {
-
-function BitBuffer () {
-  this.buffer = []
-  this.length = 0
-}
-
-BitBuffer.prototype = {
-
-  get: function (index) {
-    var bufIndex = Math.floor(index / 8)
-    return ((this.buffer[bufIndex] >>> (7 - index % 8)) & 1) === 1
-  },
-
-  put: function (num, length) {
-    for (var i = 0; i < length; i++) {
-      this.putBit(((num >>> (length - i - 1)) & 1) === 1)
-    }
-  },
-
-  getLengthInBits: function () {
-    return this.length
-  },
-
-  putBit: function (bit) {
-    var bufIndex = Math.floor(this.length / 8)
-    if (this.buffer.length <= bufIndex) {
-      this.buffer.push(0)
-    }
-
-    if (bit) {
-      this.buffer[bufIndex] |= (0x80 >>> (this.length % 8))
-    }
-
-    this.length++
-  }
-}
-
-module.exports = BitBuffer
-
-
-/***/ }),
-
-/***/ "3071":
-/***/ (function(module, exports) {
-
-// `RequireObjectCoercible` abstract operation
-// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on " + it);
-  return it;
-};
-
-
-/***/ }),
-
-/***/ "324f":
-/***/ (function(module, exports, __webpack_require__) {
-
-var internalObjectKeys = __webpack_require__("feb3");
-var enumBugKeys = __webpack_require__("cf47");
-
-// `Object.keys` method
-// https://tc39.github.io/ecma262/#sec-object.keys
-module.exports = Object.keys || function keys(O) {
-  return internalObjectKeys(O, enumBugKeys);
-};
-
-
-/***/ }),
-
-/***/ "3426":
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || new Function("return this")();
-} catch (e) {
-	// This works if the window reference is available
-	if (typeof window === "object") g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ "34f3":
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var check = function (it) {
-  return it && it.Math == Math && it;
-};
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-module.exports =
-  // eslint-disable-next-line no-undef
-  check(typeof globalThis == 'object' && globalThis) ||
-  check(typeof window == 'object' && window) ||
-  check(typeof self == 'object' && self) ||
-  check(typeof global == 'object' && global) ||
-  // eslint-disable-next-line no-new-func
-  Function('return this')();
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("3426")))
-
-/***/ }),
-
-/***/ "3526":
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__("ea03");
-
-var max = Math.max;
-var min = Math.min;
-
-// Helper for a popular repeating case of the spec:
-// Let integer be ? ToInteger(index).
-// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
-module.exports = function (index, length) {
-  var integer = toInteger(index);
-  return integer < 0 ? max(integer + length, 0) : min(integer, length);
-};
-
-
-/***/ }),
-
-/***/ "3606":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/******************************************************************************
- * Created 2008-08-19.
- *
- * Dijkstra path-finding functions. Adapted from the Dijkstar Python project.
- *
- * Copyright (C) 2008
- *   Wyatt Baldwin <self@wyattbaldwin.com>
- *   All rights reserved
- *
- * Licensed under the MIT license.
- *
- *   http://www.opensource.org/licenses/mit-license.php
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *****************************************************************************/
-var dijkstra = {
-  single_source_shortest_paths: function(graph, s, d) {
-    // Predecessor map for each node that has been encountered.
-    // node ID => predecessor node ID
-    var predecessors = {};
-
-    // Costs of shortest paths from s to all nodes encountered.
-    // node ID => cost
-    var costs = {};
-    costs[s] = 0;
-
-    // Costs of shortest paths from s to all nodes encountered; differs from
-    // `costs` in that it provides easy access to the node that currently has
-    // the known shortest path from s.
-    // XXX: Do we actually need both `costs` and `open`?
-    var open = dijkstra.PriorityQueue.make();
-    open.push(s, 0);
-
-    var closest,
-        u, v,
-        cost_of_s_to_u,
-        adjacent_nodes,
-        cost_of_e,
-        cost_of_s_to_u_plus_cost_of_e,
-        cost_of_s_to_v,
-        first_visit;
-    while (!open.empty()) {
-      // In the nodes remaining in graph that have a known cost from s,
-      // find the node, u, that currently has the shortest path from s.
-      closest = open.pop();
-      u = closest.value;
-      cost_of_s_to_u = closest.cost;
-
-      // Get nodes adjacent to u...
-      adjacent_nodes = graph[u] || {};
-
-      // ...and explore the edges that connect u to those nodes, updating
-      // the cost of the shortest paths to any or all of those nodes as
-      // necessary. v is the node across the current edge from u.
-      for (v in adjacent_nodes) {
-        if (adjacent_nodes.hasOwnProperty(v)) {
-          // Get the cost of the edge running from u to v.
-          cost_of_e = adjacent_nodes[v];
-
-          // Cost of s to u plus the cost of u to v across e--this is *a*
-          // cost from s to v that may or may not be less than the current
-          // known cost to v.
-          cost_of_s_to_u_plus_cost_of_e = cost_of_s_to_u + cost_of_e;
-
-          // If we haven't visited v yet OR if the current known cost from s to
-          // v is greater than the new cost we just found (cost of s to u plus
-          // cost of u to v across e), update v's cost in the cost list and
-          // update v's predecessor in the predecessor list (it's now u).
-          cost_of_s_to_v = costs[v];
-          first_visit = (typeof costs[v] === 'undefined');
-          if (first_visit || cost_of_s_to_v > cost_of_s_to_u_plus_cost_of_e) {
-            costs[v] = cost_of_s_to_u_plus_cost_of_e;
-            open.push(v, cost_of_s_to_u_plus_cost_of_e);
-            predecessors[v] = u;
-          }
-        }
-      }
-    }
-
-    if (typeof d !== 'undefined' && typeof costs[d] === 'undefined') {
-      var msg = ['Could not find a path from ', s, ' to ', d, '.'].join('');
-      throw new Error(msg);
-    }
-
-    return predecessors;
-  },
-
-  extract_shortest_path_from_predecessor_list: function(predecessors, d) {
-    var nodes = [];
-    var u = d;
-    var predecessor;
-    while (u) {
-      nodes.push(u);
-      predecessor = predecessors[u];
-      u = predecessors[u];
-    }
-    nodes.reverse();
-    return nodes;
-  },
-
-  find_path: function(graph, s, d) {
-    var predecessors = dijkstra.single_source_shortest_paths(graph, s, d);
-    return dijkstra.extract_shortest_path_from_predecessor_list(
-      predecessors, d);
-  },
-
-  /**
-   * A very naive priority queue implementation.
-   */
-  PriorityQueue: {
-    make: function (opts) {
-      var T = dijkstra.PriorityQueue,
-          t = {},
-          key;
-      opts = opts || {};
-      for (key in T) {
-        if (T.hasOwnProperty(key)) {
-          t[key] = T[key];
-        }
-      }
-      t.queue = [];
-      t.sorter = opts.sorter || T.default_sorter;
-      return t;
-    },
-
-    default_sorter: function (a, b) {
-      return a.cost - b.cost;
-    },
-
-    /**
-     * Add a new item to the queue and ensure the highest priority element
-     * is at the front of the queue.
-     */
-    push: function (value, cost) {
-      var item = {value: value, cost: cost};
-      this.queue.push(item);
-      this.queue.sort(this.sorter);
-    },
-
-    /**
-     * Return the highest priority element in the queue.
-     */
-    pop: function () {
-      return this.queue.shift();
-    },
-
-    empty: function () {
-      return this.queue.length === 0;
-    }
-  }
-};
-
-
-// node.js module exports
-if (true) {
-  module.exports = dijkstra;
-}
-
-
-/***/ }),
-
-/***/ "379c":
-/***/ (function(module, exports) {
-
-var hasOwnProperty = {}.hasOwnProperty;
-
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-
-/***/ }),
-
-/***/ "3871":
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var canPromise = __webpack_require__("bbd3")
-
-var QRCode = __webpack_require__("5b3b")
-var CanvasRenderer = __webpack_require__("d5a8")
-var SvgRenderer = __webpack_require__("4ee3")
-
-function renderCanvas (renderFunc, canvas, text, opts, cb) {
-  var args = [].slice.call(arguments, 1)
-  var argsNum = args.length
-  var isLastArgCb = typeof args[argsNum - 1] === 'function'
-
-  if (!isLastArgCb && !canPromise()) {
-    throw new Error('Callback required as last argument')
-  }
-
-  if (isLastArgCb) {
-    if (argsNum < 2) {
-      throw new Error('Too few arguments provided')
-    }
-
-    if (argsNum === 2) {
-      cb = text
-      text = canvas
-      canvas = opts = undefined
-    } else if (argsNum === 3) {
-      if (canvas.getContext && typeof cb === 'undefined') {
-        cb = opts
-        opts = undefined
-      } else {
-        cb = opts
-        opts = text
-        text = canvas
-        canvas = undefined
-      }
-    }
-  } else {
-    if (argsNum < 1) {
-      throw new Error('Too few arguments provided')
-    }
-
-    if (argsNum === 1) {
-      text = canvas
-      canvas = opts = undefined
-    } else if (argsNum === 2 && !canvas.getContext) {
-      opts = text
-      text = canvas
-      canvas = undefined
-    }
-
-    return new Promise(function (resolve, reject) {
-      try {
-        var data = QRCode.create(text, opts)
-        resolve(renderFunc(data, canvas, opts))
-      } catch (e) {
-        reject(e)
-      }
-    })
-  }
-
-  try {
-    var data = QRCode.create(text, opts)
-    cb(null, renderFunc(data, canvas, opts))
-  } catch (e) {
-    cb(e)
-  }
-}
-
-exports.create = QRCode.create
-exports.toCanvas = renderCanvas.bind(null, CanvasRenderer.render)
-exports.toDataURL = renderCanvas.bind(null, CanvasRenderer.renderToDataURL)
-
-// only svg for now.
-exports.toString = renderCanvas.bind(null, function (data, _, opts) {
-  return SvgRenderer.render(data, opts)
-})
-
-
-/***/ }),
-
-/***/ "3a93":
-/***/ (function(module, exports) {
-
-/**
- * Data mask pattern reference
- * @type {Object}
- */
-exports.Patterns = {
-  PATTERN000: 0,
-  PATTERN001: 1,
-  PATTERN010: 2,
-  PATTERN011: 3,
-  PATTERN100: 4,
-  PATTERN101: 5,
-  PATTERN110: 6,
-  PATTERN111: 7
-}
-
-/**
- * Weighted penalty scores for the undesirable features
- * @type {Object}
- */
-var PenaltyScores = {
-  N1: 3,
-  N2: 3,
-  N3: 40,
-  N4: 10
-}
-
-/**
- * Check if mask pattern value is valid
- *
- * @param  {Number}  mask    Mask pattern
- * @return {Boolean}         true if valid, false otherwise
- */
-exports.isValid = function isValid (mask) {
-  return mask != null && mask !== '' && !isNaN(mask) && mask >= 0 && mask <= 7
-}
-
-/**
- * Returns mask pattern from a value.
- * If value is not valid, returns undefined
- *
- * @param  {Number|String} value        Mask pattern value
- * @return {Number}                     Valid mask pattern or undefined
- */
-exports.from = function from (value) {
-  return exports.isValid(value) ? parseInt(value, 10) : undefined
-}
-
-/**
-* Find adjacent modules in row/column with the same color
-* and assign a penalty value.
-*
-* Points: N1 + i
-* i is the amount by which the number of adjacent modules of the same color exceeds 5
-*/
-exports.getPenaltyN1 = function getPenaltyN1 (data) {
-  var size = data.size
-  var points = 0
-  var sameCountCol = 0
-  var sameCountRow = 0
-  var lastCol = null
-  var lastRow = null
-
-  for (var row = 0; row < size; row++) {
-    sameCountCol = sameCountRow = 0
-    lastCol = lastRow = null
-
-    for (var col = 0; col < size; col++) {
-      var module = data.get(row, col)
-      if (module === lastCol) {
-        sameCountCol++
-      } else {
-        if (sameCountCol >= 5) points += PenaltyScores.N1 + (sameCountCol - 5)
-        lastCol = module
-        sameCountCol = 1
-      }
-
-      module = data.get(col, row)
-      if (module === lastRow) {
-        sameCountRow++
-      } else {
-        if (sameCountRow >= 5) points += PenaltyScores.N1 + (sameCountRow - 5)
-        lastRow = module
-        sameCountRow = 1
-      }
-    }
-
-    if (sameCountCol >= 5) points += PenaltyScores.N1 + (sameCountCol - 5)
-    if (sameCountRow >= 5) points += PenaltyScores.N1 + (sameCountRow - 5)
-  }
-
-  return points
-}
-
-/**
- * Find 2x2 blocks with the same color and assign a penalty value
- *
- * Points: N2 * (m - 1) * (n - 1)
- */
-exports.getPenaltyN2 = function getPenaltyN2 (data) {
-  var size = data.size
-  var points = 0
-
-  for (var row = 0; row < size - 1; row++) {
-    for (var col = 0; col < size - 1; col++) {
-      var last = data.get(row, col) +
-        data.get(row, col + 1) +
-        data.get(row + 1, col) +
-        data.get(row + 1, col + 1)
-
-      if (last === 4 || last === 0) points++
-    }
-  }
-
-  return points * PenaltyScores.N2
-}
-
-/**
- * Find 1:1:3:1:1 ratio (dark:light:dark:light:dark) pattern in row/column,
- * preceded or followed by light area 4 modules wide
- *
- * Points: N3 * number of pattern found
- */
-exports.getPenaltyN3 = function getPenaltyN3 (data) {
-  var size = data.size
-  var points = 0
-  var bitsCol = 0
-  var bitsRow = 0
-
-  for (var row = 0; row < size; row++) {
-    bitsCol = bitsRow = 0
-    for (var col = 0; col < size; col++) {
-      bitsCol = ((bitsCol << 1) & 0x7FF) | data.get(row, col)
-      if (col >= 10 && (bitsCol === 0x5D0 || bitsCol === 0x05D)) points++
-
-      bitsRow = ((bitsRow << 1) & 0x7FF) | data.get(col, row)
-      if (col >= 10 && (bitsRow === 0x5D0 || bitsRow === 0x05D)) points++
-    }
-  }
-
-  return points * PenaltyScores.N3
-}
-
-/**
- * Calculate proportion of dark modules in entire symbol
- *
- * Points: N4 * k
- *
- * k is the rating of the deviation of the proportion of dark modules
- * in the symbol from 50% in steps of 5%
- */
-exports.getPenaltyN4 = function getPenaltyN4 (data) {
-  var darkCount = 0
-  var modulesCount = data.data.length
-
-  for (var i = 0; i < modulesCount; i++) darkCount += data.data[i]
-
-  var k = Math.abs(Math.ceil((darkCount * 100 / modulesCount) / 5) - 10)
-
-  return k * PenaltyScores.N4
-}
-
-/**
- * Return mask value at given position
- *
- * @param  {Number} maskPattern Pattern reference value
- * @param  {Number} i           Row
- * @param  {Number} j           Column
- * @return {Boolean}            Mask value
- */
-function getMaskAt (maskPattern, i, j) {
-  switch (maskPattern) {
-    case exports.Patterns.PATTERN000: return (i + j) % 2 === 0
-    case exports.Patterns.PATTERN001: return i % 2 === 0
-    case exports.Patterns.PATTERN010: return j % 3 === 0
-    case exports.Patterns.PATTERN011: return (i + j) % 3 === 0
-    case exports.Patterns.PATTERN100: return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 === 0
-    case exports.Patterns.PATTERN101: return (i * j) % 2 + (i * j) % 3 === 0
-    case exports.Patterns.PATTERN110: return ((i * j) % 2 + (i * j) % 3) % 2 === 0
-    case exports.Patterns.PATTERN111: return ((i * j) % 3 + (i + j) % 2) % 2 === 0
-
-    default: throw new Error('bad maskPattern:' + maskPattern)
-  }
-}
-
-/**
- * Apply a mask pattern to a BitMatrix
- *
- * @param  {Number}    pattern Pattern reference number
- * @param  {BitMatrix} data    BitMatrix data
- */
-exports.applyMask = function applyMask (pattern, data) {
-  var size = data.size
-
-  for (var col = 0; col < size; col++) {
-    for (var row = 0; row < size; row++) {
-      if (data.isReserved(row, col)) continue
-      data.xor(row, col, getMaskAt(pattern, row, col))
-    }
-  }
-}
-
-/**
- * Returns the best mask pattern for data
- *
- * @param  {BitMatrix} data
- * @return {Number} Mask pattern reference number
- */
-exports.getBestMask = function getBestMask (data, setupFormatFunc) {
-  var numPatterns = Object.keys(exports.Patterns).length
-  var bestPattern = 0
-  var lowerPenalty = Infinity
-
-  for (var p = 0; p < numPatterns; p++) {
-    setupFormatFunc(p)
-    exports.applyMask(p, data)
-
-    // Calculate penalty
-    var penalty =
-      exports.getPenaltyN1(data) +
-      exports.getPenaltyN2(data) +
-      exports.getPenaltyN3(data) +
-      exports.getPenaltyN4(data)
-
-    // Undo previously applied mask
-    exports.applyMask(p, data)
-
-    if (penalty < lowerPenalty) {
-      lowerPenalty = penalty
-      bestPattern = p
-    }
-  }
-
-  return bestPattern
-}
-
-
-/***/ }),
-
-/***/ "3ea4":
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Alignment pattern are fixed reference pattern in defined positions
- * in a matrix symbology, which enables the decode software to re-synchronise
- * the coordinate mapping of the image modules in the event of moderate amounts
- * of distortion of the image.
- *
- * Alignment patterns are present only in QR Code symbols of version 2 or larger
- * and their number depends on the symbol version.
- */
-
-var getSymbolSize = __webpack_require__("c811").getSymbolSize
-
-/**
- * Calculate the row/column coordinates of the center module of each alignment pattern
- * for the specified QR Code version.
- *
- * The alignment patterns are positioned symmetrically on either side of the diagonal
- * running from the top left corner of the symbol to the bottom right corner.
- *
- * Since positions are simmetrical only half of the coordinates are returned.
- * Each item of the array will represent in turn the x and y coordinate.
- * @see {@link getPositions}
- *
- * @param  {Number} version QR Code version
- * @return {Array}          Array of coordinate
- */
-exports.getRowColCoords = function getRowColCoords (version) {
-  if (version === 1) return []
-
-  var posCount = Math.floor(version / 7) + 2
-  var size = getSymbolSize(version)
-  var intervals = size === 145 ? 26 : Math.ceil((size - 13) / (2 * posCount - 2)) * 2
-  var positions = [size - 7] // Last coord is always (size - 7)
-
-  for (var i = 1; i < posCount - 1; i++) {
-    positions[i] = positions[i - 1] - intervals
-  }
-
-  positions.push(6) // First coord is always 6
-
-  return positions.reverse()
-}
-
-/**
- * Returns an array containing the positions of each alignment pattern.
- * Each array's element represent the center point of the pattern as (x, y) coordinates
- *
- * Coordinates are calculated expanding the row/column coordinates returned by {@link getRowColCoords}
- * and filtering out the items that overlaps with finder pattern
- *
- * @example
- * For a Version 7 symbol {@link getRowColCoords} returns values 6, 22 and 38.
- * The alignment patterns, therefore, are to be centered on (row, column)
- * positions (6,22), (22,6), (22,22), (22,38), (38,22), (38,38).
- * Note that the coordinates (6,6), (6,38), (38,6) are occupied by finder patterns
- * and are not therefore used for alignment patterns.
- *
- * var pos = getPositions(7)
- * // [[6,22], [22,6], [22,22], [22,38], [38,22], [38,38]]
- *
- * @param  {Number} version QR Code version
- * @return {Array}          Array of coordinates
- */
-exports.getPositions = function getPositions (version) {
-  var coords = []
-  var pos = exports.getRowColCoords(version)
-  var posLength = pos.length
-
-  for (var i = 0; i < posLength; i++) {
-    for (var j = 0; j < posLength; j++) {
-      // Skip if position is occupied by finder patterns
-      if ((i === 0 && j === 0) ||             // top-left
-          (i === 0 && j === posLength - 1) || // bottom-left
-          (i === posLength - 1 && j === 0)) { // top-right
-        continue
-      }
-
-      coords.push([pos[i], pos[j]])
-    }
-  }
-
-  return coords
-}
-
-
-/***/ }),
-
-/***/ "465e":
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-
-/***/ }),
-
-/***/ "465f":
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__("34f3");
-var shared = __webpack_require__("7993");
-var has = __webpack_require__("379c");
-var uid = __webpack_require__("ce0e");
-var NATIVE_SYMBOL = __webpack_require__("2e32");
-var USE_SYMBOL_AS_UID = __webpack_require__("5cd0");
-
-var WellKnownSymbolsStore = shared('wks');
-var Symbol = global.Symbol;
-var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol : Symbol && Symbol.withoutSetter || uid;
-
-module.exports = function (name) {
-  if (!has(WellKnownSymbolsStore, name)) {
-    if (NATIVE_SYMBOL && has(Symbol, name)) WellKnownSymbolsStore[name] = Symbol[name];
-    else WellKnownSymbolsStore[name] = createWellKnownSymbol('Symbol.' + name);
-  } return WellKnownSymbolsStore[name];
-};
-
-
-/***/ }),
-
-/***/ "47d5":
-/***/ (function(module, exports, __webpack_require__) {
-
-var TO_STRING_TAG_SUPPORT = __webpack_require__("68d4");
-var redefine = __webpack_require__("6d4c");
-var toString = __webpack_require__("e930");
-
-// `Object.prototype.toString` method
-// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
-if (!TO_STRING_TAG_SUPPORT) {
-  redefine(Object.prototype, 'toString', toString, { unsafe: true });
-}
-
-
-/***/ }),
-
-/***/ "485c":
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mode = __webpack_require__("2600")
-
-/**
- * Array of characters available in alphanumeric mode
- *
- * As per QR Code specification, to each character
- * is assigned a value from 0 to 44 which in this case coincides
- * with the array index
- *
- * @type {Array}
- */
-var ALPHA_NUM_CHARS = [
-  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-  ' ', '$', '%', '*', '+', '-', '.', '/', ':'
-]
-
-function AlphanumericData (data) {
-  this.mode = Mode.ALPHANUMERIC
-  this.data = data
-}
-
-AlphanumericData.getBitsLength = function getBitsLength (length) {
-  return 11 * Math.floor(length / 2) + 6 * (length % 2)
-}
-
-AlphanumericData.prototype.getLength = function getLength () {
-  return this.data.length
-}
-
-AlphanumericData.prototype.getBitsLength = function getBitsLength () {
-  return AlphanumericData.getBitsLength(this.data.length)
-}
-
-AlphanumericData.prototype.write = function write (bitBuffer) {
-  var i
-
-  // Input data characters are divided into groups of two characters
-  // and encoded as 11-bit binary codes.
-  for (i = 0; i + 2 <= this.data.length; i += 2) {
-    // The character value of the first character is multiplied by 45
-    var value = ALPHA_NUM_CHARS.indexOf(this.data[i]) * 45
-
-    // The character value of the second digit is added to the product
-    value += ALPHA_NUM_CHARS.indexOf(this.data[i + 1])
-
-    // The sum is then stored as 11-bit binary number
-    bitBuffer.put(value, 11)
-  }
-
-  // If the number of input data characters is not a multiple of two,
-  // the character value of the final character is encoded as a 6-bit binary number.
-  if (this.data.length % 2) {
-    bitBuffer.put(ALPHA_NUM_CHARS.indexOf(this.data[i]), 6)
-  }
-}
-
-module.exports = AlphanumericData
-
-
-/***/ }),
-
-/***/ "48a0":
-/***/ (function(module, exports, __webpack_require__) {
-
-var internalObjectKeys = __webpack_require__("feb3");
-var enumBugKeys = __webpack_require__("cf47");
-
-var hiddenKeys = enumBugKeys.concat('length', 'prototype');
-
-// `Object.getOwnPropertyNames` method
-// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
-exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
-  return internalObjectKeys(O, hiddenKeys);
-};
-
-
-/***/ }),
-
-/***/ "4ee3":
-/***/ (function(module, exports, __webpack_require__) {
-
-var Utils = __webpack_require__("5538")
-
-function getColorAttrib (color, attrib) {
-  var alpha = color.a / 255
-  var str = attrib + '="' + color.hex + '"'
-
-  return alpha < 1
-    ? str + ' ' + attrib + '-opacity="' + alpha.toFixed(2).slice(1) + '"'
-    : str
-}
-
-function svgCmd (cmd, x, y) {
-  var str = cmd + x
-  if (typeof y !== 'undefined') str += ' ' + y
-
-  return str
-}
-
-function qrToPath (data, size, margin) {
-  var path = ''
-  var moveBy = 0
-  var newRow = false
-  var lineLength = 0
-
-  for (var i = 0; i < data.length; i++) {
-    var col = Math.floor(i % size)
-    var row = Math.floor(i / size)
-
-    if (!col && !newRow) newRow = true
-
-    if (data[i]) {
-      lineLength++
-
-      if (!(i > 0 && col > 0 && data[i - 1])) {
-        path += newRow
-          ? svgCmd('M', col + margin, 0.5 + row + margin)
-          : svgCmd('m', moveBy, 0)
-
-        moveBy = 0
-        newRow = false
-      }
-
-      if (!(col + 1 < size && data[i + 1])) {
-        path += svgCmd('h', lineLength)
-        lineLength = 0
-      }
-    } else {
-      moveBy++
-    }
-  }
-
-  return path
-}
-
-exports.render = function render (qrData, options, cb) {
-  var opts = Utils.getOptions(options)
-  var size = qrData.modules.size
-  var data = qrData.modules.data
-  var qrcodesize = size + opts.margin * 2
-
-  var bg = !opts.color.light.a
-    ? ''
-    : '<path ' + getColorAttrib(opts.color.light, 'fill') +
-      ' d="M0 0h' + qrcodesize + 'v' + qrcodesize + 'H0z"/>'
-
-  var path =
-    '<path ' + getColorAttrib(opts.color.dark, 'stroke') +
-    ' d="' + qrToPath(data, size, opts.margin) + '"/>'
-
-  var viewBox = 'viewBox="' + '0 0 ' + qrcodesize + ' ' + qrcodesize + '"'
-
-  var width = !opts.width ? '' : 'width="' + opts.width + '" height="' + opts.width + '" '
-
-  var svgTag = '<svg xmlns="http://www.w3.org/2000/svg" ' + width + viewBox + ' shape-rendering="crispEdges">' + bg + path + '</svg>\n'
-
-  if (typeof cb === 'function') {
-    cb(null, svgTag)
-  }
-
-  return svgTag
-}
-
-
-/***/ }),
-
-/***/ "5538":
-/***/ (function(module, exports) {
-
-function hex2rgba (hex) {
-  if (typeof hex === 'number') {
-    hex = hex.toString()
-  }
-
-  if (typeof hex !== 'string') {
-    throw new Error('Color should be defined as hex string')
-  }
-
-  var hexCode = hex.slice().replace('#', '').split('')
-  if (hexCode.length < 3 || hexCode.length === 5 || hexCode.length > 8) {
-    throw new Error('Invalid hex color: ' + hex)
-  }
-
-  // Convert from short to long form (fff -> ffffff)
-  if (hexCode.length === 3 || hexCode.length === 4) {
-    hexCode = Array.prototype.concat.apply([], hexCode.map(function (c) {
-      return [c, c]
-    }))
-  }
-
-  // Add default alpha value
-  if (hexCode.length === 6) hexCode.push('F', 'F')
-
-  var hexValue = parseInt(hexCode.join(''), 16)
-
-  return {
-    r: (hexValue >> 24) & 255,
-    g: (hexValue >> 16) & 255,
-    b: (hexValue >> 8) & 255,
-    a: hexValue & 255,
-    hex: '#' + hexCode.slice(0, 6).join('')
-  }
-}
-
-exports.getOptions = function getOptions (options) {
-  if (!options) options = {}
-  if (!options.color) options.color = {}
-
-  var margin = typeof options.margin === 'undefined' ||
-    options.margin === null ||
-    options.margin < 0 ? 4 : options.margin
-
-  var width = options.width && options.width >= 21 ? options.width : undefined
-  var scale = options.scale || 4
-
-  return {
-    width: width,
-    scale: width ? 4 : scale,
-    margin: margin,
-    color: {
-      dark: hex2rgba(options.color.dark || '#000000ff'),
-      light: hex2rgba(options.color.light || '#ffffffff')
-    },
-    type: options.type,
-    rendererOpts: options.rendererOpts || {}
-  }
-}
-
-exports.getScale = function getScale (qrSize, opts) {
-  return opts.width && opts.width >= qrSize + opts.margin * 2
-    ? opts.width / (qrSize + opts.margin * 2)
-    : opts.scale
-}
-
-exports.getImageWidth = function getImageWidth (qrSize, opts) {
-  var scale = exports.getScale(qrSize, opts)
-  return Math.floor((qrSize + opts.margin * 2) * scale)
-}
-
-exports.qrToImageData = function qrToImageData (imgData, qr, opts) {
-  var size = qr.modules.size
-  var data = qr.modules.data
-  var scale = exports.getScale(size, opts)
-  var symbolSize = Math.floor((size + opts.margin * 2) * scale)
-  var scaledMargin = opts.margin * scale
-  var palette = [opts.color.light, opts.color.dark]
-
-  for (var i = 0; i < symbolSize; i++) {
-    for (var j = 0; j < symbolSize; j++) {
-      var posDst = (i * symbolSize + j) * 4
-      var pxColor = opts.color.light
-
-      if (i >= scaledMargin && j >= scaledMargin &&
-        i < symbolSize - scaledMargin && j < symbolSize - scaledMargin) {
-        var iSrc = Math.floor((i - scaledMargin) / scale)
-        var jSrc = Math.floor((j - scaledMargin) / scale)
-        pxColor = palette[data[iSrc * size + jSrc] ? 1 : 0]
-      }
-
-      imgData[posDst++] = pxColor.r
-      imgData[posDst++] = pxColor.g
-      imgData[posDst++] = pxColor.b
-      imgData[posDst] = pxColor.a
-    }
-  }
-}
-
-
-/***/ }),
-
-/***/ "55ac":
-/***/ (function(module, exports, __webpack_require__) {
-
-var path = __webpack_require__("6950");
-var global = __webpack_require__("34f3");
-
-var aFunction = function (variable) {
-  return typeof variable == 'function' ? variable : undefined;
-};
-
-module.exports = function (namespace, method) {
-  return arguments.length < 2 ? aFunction(path[namespace]) || aFunction(global[namespace])
-    : path[namespace] && path[namespace][method] || global[namespace] && global[namespace][method];
-};
-
-
-/***/ }),
-
-/***/ "56b2":
-/***/ (function(module, exports, __webpack_require__) {
-
-var requireObjectCoercible = __webpack_require__("3071");
-var whitespaces = __webpack_require__("58be");
-
-var whitespace = '[' + whitespaces + ']';
-var ltrim = RegExp('^' + whitespace + whitespace + '*');
-var rtrim = RegExp(whitespace + whitespace + '*$');
-
-// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
-var createMethod = function (TYPE) {
-  return function ($this) {
-    var string = String(requireObjectCoercible($this));
-    if (TYPE & 1) string = string.replace(ltrim, '');
-    if (TYPE & 2) string = string.replace(rtrim, '');
-    return string;
-  };
-};
-
-module.exports = {
-  // `String.prototype.{ trimLeft, trimStart }` methods
-  // https://tc39.github.io/ecma262/#sec-string.prototype.trimstart
-  start: createMethod(1),
-  // `String.prototype.{ trimRight, trimEnd }` methods
-  // https://tc39.github.io/ecma262/#sec-string.prototype.trimend
-  end: createMethod(2),
-  // `String.prototype.trim` method
-  // https://tc39.github.io/ecma262/#sec-string.prototype.trim
-  trim: createMethod(3)
-};
-
-
-/***/ }),
-
-/***/ "58be":
-/***/ (function(module, exports) {
-
-// a string of all valid unicode whitespaces
-// eslint-disable-next-line max-len
-module.exports = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
-
-
-/***/ }),
-
-/***/ "5b2a":
-/***/ (function(module, exports) {
-
-module.exports = false;
-
-
-/***/ }),
-
-/***/ "5b3b":
-/***/ (function(module, exports, __webpack_require__) {
-
-var BufferUtil = __webpack_require__("ebb4")
-var Utils = __webpack_require__("c811")
-var ECLevel = __webpack_require__("1024")
-var BitBuffer = __webpack_require__("2f12")
-var BitMatrix = __webpack_require__("d7cf")
-var AlignmentPattern = __webpack_require__("3ea4")
-var FinderPattern = __webpack_require__("1e72")
-var MaskPattern = __webpack_require__("3a93")
-var ECCode = __webpack_require__("9f0b")
-var ReedSolomonEncoder = __webpack_require__("c022")
-var Version = __webpack_require__("651d")
-var FormatInfo = __webpack_require__("0269")
-var Mode = __webpack_require__("2600")
-var Segments = __webpack_require__("891a")
-var isArray = __webpack_require__("465e")
-
-/**
- * QRCode for JavaScript
- *
- * modified by Ryan Day for nodejs support
- * Copyright (c) 2011 Ryan Day
- *
- * Licensed under the MIT license:
- *   http://www.opensource.org/licenses/mit-license.php
- *
-//---------------------------------------------------------------------
-// QRCode for JavaScript
-//
-// Copyright (c) 2009 Kazuhiko Arase
-//
-// URL: http://www.d-project.com/
-//
-// Licensed under the MIT license:
-//   http://www.opensource.org/licenses/mit-license.php
-//
-// The word "QR Code" is registered trademark of
-// DENSO WAVE INCORPORATED
-//   http://www.denso-wave.com/qrcode/faqpatent-e.html
-//
-//---------------------------------------------------------------------
-*/
-
-/**
- * Add finder patterns bits to matrix
- *
- * @param  {BitMatrix} matrix  Modules matrix
- * @param  {Number}    version QR Code version
- */
-function setupFinderPattern (matrix, version) {
-  var size = matrix.size
-  var pos = FinderPattern.getPositions(version)
-
-  for (var i = 0; i < pos.length; i++) {
-    var row = pos[i][0]
-    var col = pos[i][1]
-
-    for (var r = -1; r <= 7; r++) {
-      if (row + r <= -1 || size <= row + r) continue
-
-      for (var c = -1; c <= 7; c++) {
-        if (col + c <= -1 || size <= col + c) continue
-
-        if ((r >= 0 && r <= 6 && (c === 0 || c === 6)) ||
-          (c >= 0 && c <= 6 && (r === 0 || r === 6)) ||
-          (r >= 2 && r <= 4 && c >= 2 && c <= 4)) {
-          matrix.set(row + r, col + c, true, true)
-        } else {
-          matrix.set(row + r, col + c, false, true)
-        }
-      }
-    }
-  }
-}
-
-/**
- * Add timing pattern bits to matrix
- *
- * Note: this function must be called before {@link setupAlignmentPattern}
- *
- * @param  {BitMatrix} matrix Modules matrix
- */
-function setupTimingPattern (matrix) {
-  var size = matrix.size
-
-  for (var r = 8; r < size - 8; r++) {
-    var value = r % 2 === 0
-    matrix.set(r, 6, value, true)
-    matrix.set(6, r, value, true)
-  }
-}
-
-/**
- * Add alignment patterns bits to matrix
- *
- * Note: this function must be called after {@link setupTimingPattern}
- *
- * @param  {BitMatrix} matrix  Modules matrix
- * @param  {Number}    version QR Code version
- */
-function setupAlignmentPattern (matrix, version) {
-  var pos = AlignmentPattern.getPositions(version)
-
-  for (var i = 0; i < pos.length; i++) {
-    var row = pos[i][0]
-    var col = pos[i][1]
-
-    for (var r = -2; r <= 2; r++) {
-      for (var c = -2; c <= 2; c++) {
-        if (r === -2 || r === 2 || c === -2 || c === 2 ||
-          (r === 0 && c === 0)) {
-          matrix.set(row + r, col + c, true, true)
-        } else {
-          matrix.set(row + r, col + c, false, true)
-        }
-      }
-    }
-  }
-}
-
-/**
- * Add version info bits to matrix
- *
- * @param  {BitMatrix} matrix  Modules matrix
- * @param  {Number}    version QR Code version
- */
-function setupVersionInfo (matrix, version) {
-  var size = matrix.size
-  var bits = Version.getEncodedBits(version)
-  var row, col, mod
-
-  for (var i = 0; i < 18; i++) {
-    row = Math.floor(i / 3)
-    col = i % 3 + size - 8 - 3
-    mod = ((bits >> i) & 1) === 1
-
-    matrix.set(row, col, mod, true)
-    matrix.set(col, row, mod, true)
-  }
-}
-
-/**
- * Add format info bits to matrix
- *
- * @param  {BitMatrix} matrix               Modules matrix
- * @param  {ErrorCorrectionLevel}    errorCorrectionLevel Error correction level
- * @param  {Number}    maskPattern          Mask pattern reference value
- */
-function setupFormatInfo (matrix, errorCorrectionLevel, maskPattern) {
-  var size = matrix.size
-  var bits = FormatInfo.getEncodedBits(errorCorrectionLevel, maskPattern)
-  var i, mod
-
-  for (i = 0; i < 15; i++) {
-    mod = ((bits >> i) & 1) === 1
-
-    // vertical
-    if (i < 6) {
-      matrix.set(i, 8, mod, true)
-    } else if (i < 8) {
-      matrix.set(i + 1, 8, mod, true)
-    } else {
-      matrix.set(size - 15 + i, 8, mod, true)
-    }
-
-    // horizontal
-    if (i < 8) {
-      matrix.set(8, size - i - 1, mod, true)
-    } else if (i < 9) {
-      matrix.set(8, 15 - i - 1 + 1, mod, true)
-    } else {
-      matrix.set(8, 15 - i - 1, mod, true)
-    }
-  }
-
-  // fixed module
-  matrix.set(size - 8, 8, 1, true)
-}
-
-/**
- * Add encoded data bits to matrix
- *
- * @param  {BitMatrix} matrix Modules matrix
- * @param  {Buffer}    data   Data codewords
- */
-function setupData (matrix, data) {
-  var size = matrix.size
-  var inc = -1
-  var row = size - 1
-  var bitIndex = 7
-  var byteIndex = 0
-
-  for (var col = size - 1; col > 0; col -= 2) {
-    if (col === 6) col--
-
-    while (true) {
-      for (var c = 0; c < 2; c++) {
-        if (!matrix.isReserved(row, col - c)) {
-          var dark = false
-
-          if (byteIndex < data.length) {
-            dark = (((data[byteIndex] >>> bitIndex) & 1) === 1)
-          }
-
-          matrix.set(row, col - c, dark)
-          bitIndex--
-
-          if (bitIndex === -1) {
-            byteIndex++
-            bitIndex = 7
-          }
-        }
-      }
-
-      row += inc
-
-      if (row < 0 || size <= row) {
-        row -= inc
-        inc = -inc
-        break
-      }
-    }
-  }
-}
-
-/**
- * Create encoded codewords from data input
- *
- * @param  {Number}   version              QR Code version
- * @param  {ErrorCorrectionLevel}   errorCorrectionLevel Error correction level
- * @param  {ByteData} data                 Data input
- * @return {Buffer}                        Buffer containing encoded codewords
- */
-function createData (version, errorCorrectionLevel, segments) {
-  // Prepare data buffer
-  var buffer = new BitBuffer()
-
-  segments.forEach(function (data) {
-    // prefix data with mode indicator (4 bits)
-    buffer.put(data.mode.bit, 4)
-
-    // Prefix data with character count indicator.
-    // The character count indicator is a string of bits that represents the
-    // number of characters that are being encoded.
-    // The character count indicator must be placed after the mode indicator
-    // and must be a certain number of bits long, depending on the QR version
-    // and data mode
-    // @see {@link Mode.getCharCountIndicator}.
-    buffer.put(data.getLength(), Mode.getCharCountIndicator(data.mode, version))
-
-    // add binary data sequence to buffer
-    data.write(buffer)
-  })
-
-  // Calculate required number of bits
-  var totalCodewords = Utils.getSymbolTotalCodewords(version)
-  var ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel)
-  var dataTotalCodewordsBits = (totalCodewords - ecTotalCodewords) * 8
-
-  // Add a terminator.
-  // If the bit string is shorter than the total number of required bits,
-  // a terminator of up to four 0s must be added to the right side of the string.
-  // If the bit string is more than four bits shorter than the required number of bits,
-  // add four 0s to the end.
-  if (buffer.getLengthInBits() + 4 <= dataTotalCodewordsBits) {
-    buffer.put(0, 4)
-  }
-
-  // If the bit string is fewer than four bits shorter, add only the number of 0s that
-  // are needed to reach the required number of bits.
-
-  // After adding the terminator, if the number of bits in the string is not a multiple of 8,
-  // pad the string on the right with 0s to make the string's length a multiple of 8.
-  while (buffer.getLengthInBits() % 8 !== 0) {
-    buffer.putBit(0)
-  }
-
-  // Add pad bytes if the string is still shorter than the total number of required bits.
-  // Extend the buffer to fill the data capacity of the symbol corresponding to
-  // the Version and Error Correction Level by adding the Pad Codewords 11101100 (0xEC)
-  // and 00010001 (0x11) alternately.
-  var remainingByte = (dataTotalCodewordsBits - buffer.getLengthInBits()) / 8
-  for (var i = 0; i < remainingByte; i++) {
-    buffer.put(i % 2 ? 0x11 : 0xEC, 8)
-  }
-
-  return createCodewords(buffer, version, errorCorrectionLevel)
-}
-
-/**
- * Encode input data with Reed-Solomon and return codewords with
- * relative error correction bits
- *
- * @param  {BitBuffer} bitBuffer            Data to encode
- * @param  {Number}    version              QR Code version
- * @param  {ErrorCorrectionLevel} errorCorrectionLevel Error correction level
- * @return {Buffer}                         Buffer containing encoded codewords
- */
-function createCodewords (bitBuffer, version, errorCorrectionLevel) {
-  // Total codewords for this QR code version (Data + Error correction)
-  var totalCodewords = Utils.getSymbolTotalCodewords(version)
-
-  // Total number of error correction codewords
-  var ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel)
-
-  // Total number of data codewords
-  var dataTotalCodewords = totalCodewords - ecTotalCodewords
-
-  // Total number of blocks
-  var ecTotalBlocks = ECCode.getBlocksCount(version, errorCorrectionLevel)
-
-  // Calculate how many blocks each group should contain
-  var blocksInGroup2 = totalCodewords % ecTotalBlocks
-  var blocksInGroup1 = ecTotalBlocks - blocksInGroup2
-
-  var totalCodewordsInGroup1 = Math.floor(totalCodewords / ecTotalBlocks)
-
-  var dataCodewordsInGroup1 = Math.floor(dataTotalCodewords / ecTotalBlocks)
-  var dataCodewordsInGroup2 = dataCodewordsInGroup1 + 1
-
-  // Number of EC codewords is the same for both groups
-  var ecCount = totalCodewordsInGroup1 - dataCodewordsInGroup1
-
-  // Initialize a Reed-Solomon encoder with a generator polynomial of degree ecCount
-  var rs = new ReedSolomonEncoder(ecCount)
-
-  var offset = 0
-  var dcData = new Array(ecTotalBlocks)
-  var ecData = new Array(ecTotalBlocks)
-  var maxDataSize = 0
-  var buffer = BufferUtil.from(bitBuffer.buffer)
-
-  // Divide the buffer into the required number of blocks
-  for (var b = 0; b < ecTotalBlocks; b++) {
-    var dataSize = b < blocksInGroup1 ? dataCodewordsInGroup1 : dataCodewordsInGroup2
-
-    // extract a block of data from buffer
-    dcData[b] = buffer.slice(offset, offset + dataSize)
-
-    // Calculate EC codewords for this data block
-    ecData[b] = rs.encode(dcData[b])
-
-    offset += dataSize
-    maxDataSize = Math.max(maxDataSize, dataSize)
-  }
-
-  // Create final data
-  // Interleave the data and error correction codewords from each block
-  var data = BufferUtil.alloc(totalCodewords)
-  var index = 0
-  var i, r
-
-  // Add data codewords
-  for (i = 0; i < maxDataSize; i++) {
-    for (r = 0; r < ecTotalBlocks; r++) {
-      if (i < dcData[r].length) {
-        data[index++] = dcData[r][i]
-      }
-    }
-  }
-
-  // Apped EC codewords
-  for (i = 0; i < ecCount; i++) {
-    for (r = 0; r < ecTotalBlocks; r++) {
-      data[index++] = ecData[r][i]
-    }
-  }
-
-  return data
-}
-
-/**
- * Build QR Code symbol
- *
- * @param  {String} data                 Input string
- * @param  {Number} version              QR Code version
- * @param  {ErrorCorretionLevel} errorCorrectionLevel Error level
- * @param  {MaskPattern} maskPattern     Mask pattern
- * @return {Object}                      Object containing symbol data
- */
-function createSymbol (data, version, errorCorrectionLevel, maskPattern) {
-  var segments
-
-  if (isArray(data)) {
-    segments = Segments.fromArray(data)
-  } else if (typeof data === 'string') {
-    var estimatedVersion = version
-
-    if (!estimatedVersion) {
-      var rawSegments = Segments.rawSplit(data)
-
-      // Estimate best version that can contain raw splitted segments
-      estimatedVersion = Version.getBestVersionForData(rawSegments,
-        errorCorrectionLevel)
-    }
-
-    // Build optimized segments
-    // If estimated version is undefined, try with the highest version
-    segments = Segments.fromString(data, estimatedVersion || 40)
-  } else {
-    throw new Error('Invalid data')
-  }
-
-  // Get the min version that can contain data
-  var bestVersion = Version.getBestVersionForData(segments,
-      errorCorrectionLevel)
-
-  // If no version is found, data cannot be stored
-  if (!bestVersion) {
-    throw new Error('The amount of data is too big to be stored in a QR Code')
-  }
-
-  // If not specified, use min version as default
-  if (!version) {
-    version = bestVersion
-
-  // Check if the specified version can contain the data
-  } else if (version < bestVersion) {
-    throw new Error('\n' +
-      'The chosen QR Code version cannot contain this amount of data.\n' +
-      'Minimum version required to store current data is: ' + bestVersion + '.\n'
-    )
-  }
-
-  var dataBits = createData(version, errorCorrectionLevel, segments)
-
-  // Allocate matrix buffer
-  var moduleCount = Utils.getSymbolSize(version)
-  var modules = new BitMatrix(moduleCount)
-
-  // Add function modules
-  setupFinderPattern(modules, version)
-  setupTimingPattern(modules)
-  setupAlignmentPattern(modules, version)
-
-  // Add temporary dummy bits for format info just to set them as reserved.
-  // This is needed to prevent these bits from being masked by {@link MaskPattern.applyMask}
-  // since the masking operation must be performed only on the encoding region.
-  // These blocks will be replaced with correct values later in code.
-  setupFormatInfo(modules, errorCorrectionLevel, 0)
-
-  if (version >= 7) {
-    setupVersionInfo(modules, version)
-  }
-
-  // Add data codewords
-  setupData(modules, dataBits)
-
-  if (isNaN(maskPattern)) {
-    // Find best mask pattern
-    maskPattern = MaskPattern.getBestMask(modules,
-      setupFormatInfo.bind(null, modules, errorCorrectionLevel))
-  }
-
-  // Apply mask pattern
-  MaskPattern.applyMask(maskPattern, modules)
-
-  // Replace format info bits with correct values
-  setupFormatInfo(modules, errorCorrectionLevel, maskPattern)
-
-  return {
-    modules: modules,
-    version: version,
-    errorCorrectionLevel: errorCorrectionLevel,
-    maskPattern: maskPattern,
-    segments: segments
-  }
-}
-
-/**
- * QR Code
- *
- * @param {String | Array} data                 Input data
- * @param {Object} options                      Optional configurations
- * @param {Number} options.version              QR Code version
- * @param {String} options.errorCorrectionLevel Error correction level
- * @param {Function} options.toSJISFunc         Helper func to convert utf8 to sjis
- */
-exports.create = function create (data, options) {
-  if (typeof data === 'undefined' || data === '') {
-    throw new Error('No input text')
-  }
-
-  var errorCorrectionLevel = ECLevel.M
-  var version
-  var mask
-
-  if (typeof options !== 'undefined') {
-    // Use higher error correction level as default
-    errorCorrectionLevel = ECLevel.from(options.errorCorrectionLevel, ECLevel.M)
-    version = Version.from(options.version)
-    mask = MaskPattern.from(options.maskPattern)
-
-    if (options.toSJISFunc) {
-      Utils.setToSJISFunction(options.toSJISFunc)
-    }
-  }
-
-  return createSymbol(data, version, errorCorrectionLevel, mask)
-}
-
-
-/***/ }),
-
-/***/ "5cd0":
-/***/ (function(module, exports, __webpack_require__) {
-
-var NATIVE_SYMBOL = __webpack_require__("2e32");
-
-module.exports = NATIVE_SYMBOL
-  // eslint-disable-next-line no-undef
-  && !Symbol.sham
-  // eslint-disable-next-line no-undef
-  && typeof Symbol.iterator == 'symbol';
-
-
-/***/ }),
-
-/***/ "60d3":
-/***/ (function(module, exports, __webpack_require__) {
-
-var DESCRIPTORS = __webpack_require__("e49d");
-var propertyIsEnumerableModule = __webpack_require__("64aa");
-var createPropertyDescriptor = __webpack_require__("d480");
-var toIndexedObject = __webpack_require__("f08e");
-var toPrimitive = __webpack_require__("bca5");
-var has = __webpack_require__("379c");
-var IE8_DOM_DEFINE = __webpack_require__("9323");
-
-var nativeGetOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-
-// `Object.getOwnPropertyDescriptor` method
-// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
-exports.f = DESCRIPTORS ? nativeGetOwnPropertyDescriptor : function getOwnPropertyDescriptor(O, P) {
-  O = toIndexedObject(O);
-  P = toPrimitive(P, true);
-  if (IE8_DOM_DEFINE) try {
-    return nativeGetOwnPropertyDescriptor(O, P);
-  } catch (error) { /* empty */ }
-  if (has(O, P)) return createPropertyDescriptor(!propertyIsEnumerableModule.f.call(O, P), O[P]);
-};
-
-
-/***/ }),
-
-/***/ "64aa":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var nativePropertyIsEnumerable = {}.propertyIsEnumerable;
-var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
-
-// Nashorn ~ JDK8 bug
-var NASHORN_BUG = getOwnPropertyDescriptor && !nativePropertyIsEnumerable.call({ 1: 2 }, 1);
-
-// `Object.prototype.propertyIsEnumerable` method implementation
-// https://tc39.github.io/ecma262/#sec-object.prototype.propertyisenumerable
-exports.f = NASHORN_BUG ? function propertyIsEnumerable(V) {
-  var descriptor = getOwnPropertyDescriptor(this, V);
-  return !!descriptor && descriptor.enumerable;
-} : nativePropertyIsEnumerable;
-
-
-/***/ }),
-
-/***/ "6509":
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-
-/***/ }),
-
-/***/ "651d":
-/***/ (function(module, exports, __webpack_require__) {
-
-var Utils = __webpack_require__("c811")
-var ECCode = __webpack_require__("9f0b")
-var ECLevel = __webpack_require__("1024")
-var Mode = __webpack_require__("2600")
-var VersionCheck = __webpack_require__("a77a")
-var isArray = __webpack_require__("465e")
-
-// Generator polynomial used to encode version information
-var G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0)
-var G18_BCH = Utils.getBCHDigit(G18)
-
-function getBestVersionForDataLength (mode, length, errorCorrectionLevel) {
-  for (var currentVersion = 1; currentVersion <= 40; currentVersion++) {
-    if (length <= exports.getCapacity(currentVersion, errorCorrectionLevel, mode)) {
-      return currentVersion
-    }
-  }
-
-  return undefined
-}
-
-function getReservedBitsCount (mode, version) {
-  // Character count indicator + mode indicator bits
-  return Mode.getCharCountIndicator(mode, version) + 4
-}
-
-function getTotalBitsFromDataArray (segments, version) {
-  var totalBits = 0
-
-  segments.forEach(function (data) {
-    var reservedBits = getReservedBitsCount(data.mode, version)
-    totalBits += reservedBits + data.getBitsLength()
-  })
-
-  return totalBits
-}
-
-function getBestVersionForMixedData (segments, errorCorrectionLevel) {
-  for (var currentVersion = 1; currentVersion <= 40; currentVersion++) {
-    var length = getTotalBitsFromDataArray(segments, currentVersion)
-    if (length <= exports.getCapacity(currentVersion, errorCorrectionLevel, Mode.MIXED)) {
-      return currentVersion
-    }
-  }
-
-  return undefined
-}
-
-/**
- * Returns version number from a value.
- * If value is not a valid version, returns defaultValue
- *
- * @param  {Number|String} value        QR Code version
- * @param  {Number}        defaultValue Fallback value
- * @return {Number}                     QR Code version number
- */
-exports.from = function from (value, defaultValue) {
-  if (VersionCheck.isValid(value)) {
-    return parseInt(value, 10)
-  }
-
-  return defaultValue
-}
-
-/**
- * Returns how much data can be stored with the specified QR code version
- * and error correction level
- *
- * @param  {Number} version              QR Code version (1-40)
- * @param  {Number} errorCorrectionLevel Error correction level
- * @param  {Mode}   mode                 Data mode
- * @return {Number}                      Quantity of storable data
- */
-exports.getCapacity = function getCapacity (version, errorCorrectionLevel, mode) {
-  if (!VersionCheck.isValid(version)) {
-    throw new Error('Invalid QR Code version')
-  }
-
-  // Use Byte mode as default
-  if (typeof mode === 'undefined') mode = Mode.BYTE
-
-  // Total codewords for this QR code version (Data + Error correction)
-  var totalCodewords = Utils.getSymbolTotalCodewords(version)
-
-  // Total number of error correction codewords
-  var ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel)
-
-  // Total number of data codewords
-  var dataTotalCodewordsBits = (totalCodewords - ecTotalCodewords) * 8
-
-  if (mode === Mode.MIXED) return dataTotalCodewordsBits
-
-  var usableBits = dataTotalCodewordsBits - getReservedBitsCount(mode, version)
-
-  // Return max number of storable codewords
-  switch (mode) {
-    case Mode.NUMERIC:
-      return Math.floor((usableBits / 10) * 3)
-
-    case Mode.ALPHANUMERIC:
-      return Math.floor((usableBits / 11) * 2)
-
-    case Mode.KANJI:
-      return Math.floor(usableBits / 13)
-
-    case Mode.BYTE:
-    default:
-      return Math.floor(usableBits / 8)
-  }
-}
-
-/**
- * Returns the minimum version needed to contain the amount of data
- *
- * @param  {Segment} data                    Segment of data
- * @param  {Number} [errorCorrectionLevel=H] Error correction level
- * @param  {Mode} mode                       Data mode
- * @return {Number}                          QR Code version
- */
-exports.getBestVersionForData = function getBestVersionForData (data, errorCorrectionLevel) {
-  var seg
-
-  var ecl = ECLevel.from(errorCorrectionLevel, ECLevel.M)
-
-  if (isArray(data)) {
-    if (data.length > 1) {
-      return getBestVersionForMixedData(data, ecl)
-    }
-
-    if (data.length === 0) {
-      return 1
-    }
-
-    seg = data[0]
-  } else {
-    seg = data
-  }
-
-  return getBestVersionForDataLength(seg.mode, seg.getLength(), ecl)
-}
-
-/**
- * Returns version information with relative error correction bits
- *
- * The version information is included in QR Code symbols of version 7 or larger.
- * It consists of an 18-bit sequence containing 6 data bits,
- * with 12 error correction bits calculated using the (18, 6) Golay code.
- *
- * @param  {Number} version QR Code version
- * @return {Number}         Encoded version info bits
- */
-exports.getEncodedBits = function getEncodedBits (version) {
-  if (!VersionCheck.isValid(version) || version < 7) {
-    throw new Error('Invalid QR Code version')
-  }
-
-  var d = version << 12
-
-  while (Utils.getBCHDigit(d) - G18_BCH >= 0) {
-    d ^= (G18 << (Utils.getBCHDigit(d) - G18_BCH))
-  }
-
-  return (version << 12) | d
-}
-
-
-/***/ }),
-
-/***/ "68d4":
-/***/ (function(module, exports, __webpack_require__) {
-
-var wellKnownSymbol = __webpack_require__("465f");
-
-var TO_STRING_TAG = wellKnownSymbol('toStringTag');
-var test = {};
-
-test[TO_STRING_TAG] = 'z';
-
-module.exports = String(test) === '[object z]';
-
-
-/***/ }),
-
-/***/ "6910":
-/***/ (function(module, exports, __webpack_require__) {
-
-var DESCRIPTORS = __webpack_require__("e49d");
-var definePropertyModule = __webpack_require__("74fa");
-var anObject = __webpack_require__("c3f2");
-var objectKeys = __webpack_require__("324f");
-
-// `Object.defineProperties` method
-// https://tc39.github.io/ecma262/#sec-object.defineproperties
-module.exports = DESCRIPTORS ? Object.defineProperties : function defineProperties(O, Properties) {
-  anObject(O);
-  var keys = objectKeys(Properties);
-  var length = keys.length;
-  var index = 0;
-  var key;
-  while (length > index) definePropertyModule.f(O, key = keys[index++], Properties[key]);
-  return O;
-};
-
-
-/***/ }),
-
-/***/ "6950":
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__("34f3");
-
-module.exports = global;
-
-
-/***/ }),
-
-/***/ "6d3d":
-/***/ (function(module, exports, __webpack_require__) {
-
-var BufferUtil = __webpack_require__("ebb4")
-var GF = __webpack_require__("afd9")
-
-/**
- * Multiplies two polynomials inside Galois Field
- *
- * @param  {Buffer} p1 Polynomial
- * @param  {Buffer} p2 Polynomial
- * @return {Buffer}    Product of p1 and p2
- */
-exports.mul = function mul (p1, p2) {
-  var coeff = BufferUtil.alloc(p1.length + p2.length - 1)
-
-  for (var i = 0; i < p1.length; i++) {
-    for (var j = 0; j < p2.length; j++) {
-      coeff[i + j] ^= GF.mul(p1[i], p2[j])
-    }
-  }
-
-  return coeff
-}
-
-/**
- * Calculate the remainder of polynomials division
- *
- * @param  {Buffer} divident Polynomial
- * @param  {Buffer} divisor  Polynomial
- * @return {Buffer}          Remainder
- */
-exports.mod = function mod (divident, divisor) {
-  var result = BufferUtil.from(divident)
-
-  while ((result.length - divisor.length) >= 0) {
-    var coeff = result[0]
-
-    for (var i = 0; i < divisor.length; i++) {
-      result[i] ^= GF.mul(divisor[i], coeff)
-    }
-
-    // remove all zeros from buffer head
-    var offset = 0
-    while (offset < result.length && result[offset] === 0) offset++
-    result = result.slice(offset)
-  }
-
-  return result
-}
-
-/**
- * Generate an irreducible generator polynomial of specified degree
- * (used by Reed-Solomon encoder)
- *
- * @param  {Number} degree Degree of the generator polynomial
- * @return {Buffer}        Buffer containing polynomial coefficients
- */
-exports.generateECPolynomial = function generateECPolynomial (degree) {
-  var poly = BufferUtil.from([1])
-  for (var i = 0; i < degree; i++) {
-    poly = exports.mul(poly, [1, GF.exp(i)])
-  }
-
-  return poly
-}
-
-
-/***/ }),
-
-/***/ "6d4c":
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__("34f3");
-var createNonEnumerableProperty = __webpack_require__("0ab2");
-var has = __webpack_require__("379c");
-var setGlobal = __webpack_require__("ee03");
-var inspectSource = __webpack_require__("fa00");
-var InternalStateModule = __webpack_require__("bece");
-
-var getInternalState = InternalStateModule.get;
-var enforceInternalState = InternalStateModule.enforce;
-var TEMPLATE = String(String).split('String');
-
-(module.exports = function (O, key, value, options) {
-  var unsafe = options ? !!options.unsafe : false;
-  var simple = options ? !!options.enumerable : false;
-  var noTargetGet = options ? !!options.noTargetGet : false;
-  if (typeof value == 'function') {
-    if (typeof key == 'string' && !has(value, 'name')) createNonEnumerableProperty(value, 'name', key);
-    enforceInternalState(value).source = TEMPLATE.join(typeof key == 'string' ? key : '');
-  }
-  if (O === global) {
-    if (simple) O[key] = value;
-    else setGlobal(key, value);
-    return;
-  } else if (!unsafe) {
-    delete O[key];
-  } else if (!noTargetGet && O[key]) {
-    simple = true;
-  }
-  if (simple) O[key] = value;
-  else createNonEnumerableProperty(O, key, value);
-// add fake Function#toString for correct work wrapped methods / constructors with methods like LoDash isNative
-})(Function.prototype, 'toString', function toString() {
-  return typeof this == 'function' && getInternalState(this).source || inspectSource(this);
-});
-
-
-/***/ }),
-
-/***/ "6fd9":
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = function (it) {
-  return toString.call(it).slice(8, -1);
-};
-
-
-/***/ }),
-
-/***/ "6ffb":
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-
-/***/ "7235":
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mode = __webpack_require__("2600")
-var Utils = __webpack_require__("c811")
-
-function KanjiData (data) {
-  this.mode = Mode.KANJI
-  this.data = data
-}
-
-KanjiData.getBitsLength = function getBitsLength (length) {
-  return length * 13
-}
-
-KanjiData.prototype.getLength = function getLength () {
-  return this.data.length
-}
-
-KanjiData.prototype.getBitsLength = function getBitsLength () {
-  return KanjiData.getBitsLength(this.data.length)
-}
-
-KanjiData.prototype.write = function (bitBuffer) {
-  var i
-
-  // In the Shift JIS system, Kanji characters are represented by a two byte combination.
-  // These byte values are shifted from the JIS X 0208 values.
-  // JIS X 0208 gives details of the shift coded representation.
-  for (i = 0; i < this.data.length; i++) {
-    var value = Utils.toSJIS(this.data[i])
-
-    // For characters with Shift JIS values from 0x8140 to 0x9FFC:
-    if (value >= 0x8140 && value <= 0x9FFC) {
-      // Subtract 0x8140 from Shift JIS value
-      value -= 0x8140
-
-    // For characters with Shift JIS values from 0xE040 to 0xEBBF
-    } else if (value >= 0xE040 && value <= 0xEBBF) {
-      // Subtract 0xC140 from Shift JIS value
-      value -= 0xC140
-    } else {
-      throw new Error(
-        'Invalid SJIS character: ' + this.data[i] + '\n' +
-        'Make sure your charset is UTF-8')
-    }
-
-    // Multiply most significant byte of result by 0xC0
-    // and add least significant byte to product
-    value = (((value >>> 8) & 0xff) * 0xC0) + (value & 0xff)
-
-    // Convert result to a 13-bit binary string
-    bitBuffer.put(value, 13)
-  }
-}
-
-module.exports = KanjiData
-
-
-/***/ }),
-
-/***/ "74fa":
-/***/ (function(module, exports, __webpack_require__) {
-
-var DESCRIPTORS = __webpack_require__("e49d");
-var IE8_DOM_DEFINE = __webpack_require__("9323");
-var anObject = __webpack_require__("c3f2");
-var toPrimitive = __webpack_require__("bca5");
-
-var nativeDefineProperty = Object.defineProperty;
-
-// `Object.defineProperty` method
-// https://tc39.github.io/ecma262/#sec-object.defineproperty
-exports.f = DESCRIPTORS ? nativeDefineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return nativeDefineProperty(O, P, Attributes);
-  } catch (error) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ }),
-
-/***/ "7993":
-/***/ (function(module, exports, __webpack_require__) {
-
-var IS_PURE = __webpack_require__("5b2a");
-var store = __webpack_require__("f3bd");
-
-(module.exports = function (key, value) {
-  return store[key] || (store[key] = value !== undefined ? value : {});
-})('versions', []).push({
-  version: '3.6.4',
-  mode: IS_PURE ? 'pure' : 'global',
-  copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
-});
-
-
-/***/ }),
-
-/***/ "7e15":
-/***/ (function(module, exports, __webpack_require__) {
-
-var BufferUtil = __webpack_require__("ebb4")
-var Mode = __webpack_require__("2600")
-
-function ByteData (data) {
-  this.mode = Mode.BYTE
-  this.data = BufferUtil.from(data)
-}
-
-ByteData.getBitsLength = function getBitsLength (length) {
-  return length * 8
-}
-
-ByteData.prototype.getLength = function getLength () {
-  return this.data.length
-}
-
-ByteData.prototype.getBitsLength = function getBitsLength () {
-  return ByteData.getBitsLength(this.data.length)
-}
-
-ByteData.prototype.write = function (bitBuffer) {
-  for (var i = 0, l = this.data.length; i < l; i++) {
-    bitBuffer.put(this.data[i], 8)
-  }
-}
-
-module.exports = ByteData
-
-
-/***/ }),
-
-/***/ "8903":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var anObject = __webpack_require__("c3f2");
-
-// `RegExp.prototype.flags` getter implementation
-// https://tc39.github.io/ecma262/#sec-get-regexp.prototype.flags
-module.exports = function () {
-  var that = anObject(this);
-  var result = '';
-  if (that.global) result += 'g';
-  if (that.ignoreCase) result += 'i';
-  if (that.multiline) result += 'm';
-  if (that.dotAll) result += 's';
-  if (that.unicode) result += 'u';
-  if (that.sticky) result += 'y';
-  return result;
-};
-
-
-/***/ }),
-
-/***/ "891a":
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mode = __webpack_require__("2600")
-var NumericData = __webpack_require__("ce0e0")
-var AlphanumericData = __webpack_require__("485c")
-var ByteData = __webpack_require__("7e15")
-var KanjiData = __webpack_require__("7235")
-var Regex = __webpack_require__("e4e2")
-var Utils = __webpack_require__("c811")
-var dijkstra = __webpack_require__("3606")
-
-/**
- * Returns UTF8 byte length
- *
- * @param  {String} str Input string
- * @return {Number}     Number of byte
- */
-function getStringByteLength (str) {
-  return unescape(encodeURIComponent(str)).length
-}
-
-/**
- * Get a list of segments of the specified mode
- * from a string
- *
- * @param  {Mode}   mode Segment mode
- * @param  {String} str  String to process
- * @return {Array}       Array of object with segments data
- */
-function getSegments (regex, mode, str) {
-  var segments = []
-  var result
-
-  while ((result = regex.exec(str)) !== null) {
-    segments.push({
-      data: result[0],
-      index: result.index,
-      mode: mode,
-      length: result[0].length
-    })
-  }
-
-  return segments
-}
-
-/**
- * Extracts a series of segments with the appropriate
- * modes from a string
- *
- * @param  {String} dataStr Input string
- * @return {Array}          Array of object with segments data
- */
-function getSegmentsFromString (dataStr) {
-  var numSegs = getSegments(Regex.NUMERIC, Mode.NUMERIC, dataStr)
-  var alphaNumSegs = getSegments(Regex.ALPHANUMERIC, Mode.ALPHANUMERIC, dataStr)
-  var byteSegs
-  var kanjiSegs
-
-  if (Utils.isKanjiModeEnabled()) {
-    byteSegs = getSegments(Regex.BYTE, Mode.BYTE, dataStr)
-    kanjiSegs = getSegments(Regex.KANJI, Mode.KANJI, dataStr)
-  } else {
-    byteSegs = getSegments(Regex.BYTE_KANJI, Mode.BYTE, dataStr)
-    kanjiSegs = []
-  }
-
-  var segs = numSegs.concat(alphaNumSegs, byteSegs, kanjiSegs)
-
-  return segs
-    .sort(function (s1, s2) {
-      return s1.index - s2.index
-    })
-    .map(function (obj) {
-      return {
-        data: obj.data,
-        mode: obj.mode,
-        length: obj.length
-      }
-    })
-}
-
-/**
- * Returns how many bits are needed to encode a string of
- * specified length with the specified mode
- *
- * @param  {Number} length String length
- * @param  {Mode} mode     Segment mode
- * @return {Number}        Bit length
- */
-function getSegmentBitsLength (length, mode) {
-  switch (mode) {
-    case Mode.NUMERIC:
-      return NumericData.getBitsLength(length)
-    case Mode.ALPHANUMERIC:
-      return AlphanumericData.getBitsLength(length)
-    case Mode.KANJI:
-      return KanjiData.getBitsLength(length)
-    case Mode.BYTE:
-      return ByteData.getBitsLength(length)
-  }
-}
-
-/**
- * Merges adjacent segments which have the same mode
- *
- * @param  {Array} segs Array of object with segments data
- * @return {Array}      Array of object with segments data
- */
-function mergeSegments (segs) {
-  return segs.reduce(function (acc, curr) {
-    var prevSeg = acc.length - 1 >= 0 ? acc[acc.length - 1] : null
-    if (prevSeg && prevSeg.mode === curr.mode) {
-      acc[acc.length - 1].data += curr.data
-      return acc
-    }
-
-    acc.push(curr)
-    return acc
-  }, [])
-}
-
-/**
- * Generates a list of all possible nodes combination which
- * will be used to build a segments graph.
- *
- * Nodes are divided by groups. Each group will contain a list of all the modes
- * in which is possible to encode the given text.
- *
- * For example the text '12345' can be encoded as Numeric, Alphanumeric or Byte.
- * The group for '12345' will contain then 3 objects, one for each
- * possible encoding mode.
- *
- * Each node represents a possible segment.
- *
- * @param  {Array} segs Array of object with segments data
- * @return {Array}      Array of object with segments data
- */
-function buildNodes (segs) {
-  var nodes = []
-  for (var i = 0; i < segs.length; i++) {
-    var seg = segs[i]
-
-    switch (seg.mode) {
-      case Mode.NUMERIC:
-        nodes.push([seg,
-          { data: seg.data, mode: Mode.ALPHANUMERIC, length: seg.length },
-          { data: seg.data, mode: Mode.BYTE, length: seg.length }
-        ])
-        break
-      case Mode.ALPHANUMERIC:
-        nodes.push([seg,
-          { data: seg.data, mode: Mode.BYTE, length: seg.length }
-        ])
-        break
-      case Mode.KANJI:
-        nodes.push([seg,
-          { data: seg.data, mode: Mode.BYTE, length: getStringByteLength(seg.data) }
-        ])
-        break
-      case Mode.BYTE:
-        nodes.push([
-          { data: seg.data, mode: Mode.BYTE, length: getStringByteLength(seg.data) }
-        ])
-    }
-  }
-
-  return nodes
-}
-
-/**
- * Builds a graph from a list of nodes.
- * All segments in each node group will be connected with all the segments of
- * the next group and so on.
- *
- * At each connection will be assigned a weight depending on the
- * segment's byte length.
- *
- * @param  {Array} nodes    Array of object with segments data
- * @param  {Number} version QR Code version
- * @return {Object}         Graph of all possible segments
- */
-function buildGraph (nodes, version) {
-  var table = {}
-  var graph = {'start': {}}
-  var prevNodeIds = ['start']
-
-  for (var i = 0; i < nodes.length; i++) {
-    var nodeGroup = nodes[i]
-    var currentNodeIds = []
-
-    for (var j = 0; j < nodeGroup.length; j++) {
-      var node = nodeGroup[j]
-      var key = '' + i + j
-
-      currentNodeIds.push(key)
-      table[key] = { node: node, lastCount: 0 }
-      graph[key] = {}
-
-      for (var n = 0; n < prevNodeIds.length; n++) {
-        var prevNodeId = prevNodeIds[n]
-
-        if (table[prevNodeId] && table[prevNodeId].node.mode === node.mode) {
-          graph[prevNodeId][key] =
-            getSegmentBitsLength(table[prevNodeId].lastCount + node.length, node.mode) -
-            getSegmentBitsLength(table[prevNodeId].lastCount, node.mode)
-
-          table[prevNodeId].lastCount += node.length
-        } else {
-          if (table[prevNodeId]) table[prevNodeId].lastCount = node.length
-
-          graph[prevNodeId][key] = getSegmentBitsLength(node.length, node.mode) +
-            4 + Mode.getCharCountIndicator(node.mode, version) // switch cost
-        }
-      }
-    }
-
-    prevNodeIds = currentNodeIds
-  }
-
-  for (n = 0; n < prevNodeIds.length; n++) {
-    graph[prevNodeIds[n]]['end'] = 0
-  }
-
-  return { map: graph, table: table }
-}
-
-/**
- * Builds a segment from a specified data and mode.
- * If a mode is not specified, the more suitable will be used.
- *
- * @param  {String} data             Input data
- * @param  {Mode | String} modesHint Data mode
- * @return {Segment}                 Segment
- */
-function buildSingleSegment (data, modesHint) {
-  var mode
-  var bestMode = Mode.getBestModeForData(data)
-
-  mode = Mode.from(modesHint, bestMode)
-
-  // Make sure data can be encoded
-  if (mode !== Mode.BYTE && mode.bit < bestMode.bit) {
-    throw new Error('"' + data + '"' +
-      ' cannot be encoded with mode ' + Mode.toString(mode) +
-      '.\n Suggested mode is: ' + Mode.toString(bestMode))
-  }
-
-  // Use Mode.BYTE if Kanji support is disabled
-  if (mode === Mode.KANJI && !Utils.isKanjiModeEnabled()) {
-    mode = Mode.BYTE
-  }
-
-  switch (mode) {
-    case Mode.NUMERIC:
-      return new NumericData(data)
-
-    case Mode.ALPHANUMERIC:
-      return new AlphanumericData(data)
-
-    case Mode.KANJI:
-      return new KanjiData(data)
-
-    case Mode.BYTE:
-      return new ByteData(data)
-  }
-}
-
-/**
- * Builds a list of segments from an array.
- * Array can contain Strings or Objects with segment's info.
- *
- * For each item which is a string, will be generated a segment with the given
- * string and the more appropriate encoding mode.
- *
- * For each item which is an object, will be generated a segment with the given
- * data and mode.
- * Objects must contain at least the property "data".
- * If property "mode" is not present, the more suitable mode will be used.
- *
- * @param  {Array} array Array of objects with segments data
- * @return {Array}       Array of Segments
- */
-exports.fromArray = function fromArray (array) {
-  return array.reduce(function (acc, seg) {
-    if (typeof seg === 'string') {
-      acc.push(buildSingleSegment(seg, null))
-    } else if (seg.data) {
-      acc.push(buildSingleSegment(seg.data, seg.mode))
-    }
-
-    return acc
-  }, [])
-}
-
-/**
- * Builds an optimized sequence of segments from a string,
- * which will produce the shortest possible bitstream.
- *
- * @param  {String} data    Input string
- * @param  {Number} version QR Code version
- * @return {Array}          Array of segments
- */
-exports.fromString = function fromString (data, version) {
-  var segs = getSegmentsFromString(data, Utils.isKanjiModeEnabled())
-
-  var nodes = buildNodes(segs)
-  var graph = buildGraph(nodes, version)
-  var path = dijkstra.find_path(graph.map, 'start', 'end')
-
-  var optimizedSegs = []
-  for (var i = 1; i < path.length - 1; i++) {
-    optimizedSegs.push(graph.table[path[i]].node)
-  }
-
-  return exports.fromArray(mergeSegments(optimizedSegs))
-}
-
-/**
- * Splits a string in various segments with the modes which
- * best represent their content.
- * The produced segments are far from being optimized.
- * The output of this function is only used to estimate a QR Code version
- * which may contain the data.
- *
- * @param  {string} data Input string
- * @return {Array}       Array of segments
- */
-exports.rawSplit = function rawSplit (data) {
-  return exports.fromArray(
-    getSegmentsFromString(data, Utils.isKanjiModeEnabled())
-  )
-}
-
-
-/***/ }),
-
-/***/ "8e1b":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var redefine = __webpack_require__("6d4c");
-var anObject = __webpack_require__("c3f2");
-var fails = __webpack_require__("dcc0");
-var flags = __webpack_require__("8903");
-
-var TO_STRING = 'toString';
-var RegExpPrototype = RegExp.prototype;
-var nativeToString = RegExpPrototype[TO_STRING];
-
-var NOT_GENERIC = fails(function () { return nativeToString.call({ source: 'a', flags: 'b' }) != '/a/b'; });
-// FF44- RegExp#toString has a wrong name
-var INCORRECT_NAME = nativeToString.name != TO_STRING;
-
-// `RegExp.prototype.toString` method
-// https://tc39.github.io/ecma262/#sec-regexp.prototype.tostring
-if (NOT_GENERIC || INCORRECT_NAME) {
-  redefine(RegExp.prototype, TO_STRING, function toString() {
-    var R = anObject(this);
-    var p = String(R.source);
-    var rf = R.flags;
-    var f = String(rf === undefined && R instanceof RegExp && !('flags' in RegExpPrototype) ? flags.call(R) : rf);
-    return '/' + p + '/' + f;
-  }, { unsafe: true });
-}
-
-
-/***/ }),
-
-/***/ "9323":
-/***/ (function(module, exports, __webpack_require__) {
-
-var DESCRIPTORS = __webpack_require__("e49d");
-var fails = __webpack_require__("dcc0");
-var createElement = __webpack_require__("02df");
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !DESCRIPTORS && !fails(function () {
-  return Object.defineProperty(createElement('div'), 'a', {
-    get: function () { return 7; }
-  }).a != 7;
-});
-
-
-/***/ }),
-
-/***/ "9f0b":
-/***/ (function(module, exports, __webpack_require__) {
-
-var ECLevel = __webpack_require__("1024")
-
-var EC_BLOCKS_TABLE = [
-// L  M  Q  H
-  1, 1, 1, 1,
-  1, 1, 1, 1,
-  1, 1, 2, 2,
-  1, 2, 2, 4,
-  1, 2, 4, 4,
-  2, 4, 4, 4,
-  2, 4, 6, 5,
-  2, 4, 6, 6,
-  2, 5, 8, 8,
-  4, 5, 8, 8,
-  4, 5, 8, 11,
-  4, 8, 10, 11,
-  4, 9, 12, 16,
-  4, 9, 16, 16,
-  6, 10, 12, 18,
-  6, 10, 17, 16,
-  6, 11, 16, 19,
-  6, 13, 18, 21,
-  7, 14, 21, 25,
-  8, 16, 20, 25,
-  8, 17, 23, 25,
-  9, 17, 23, 34,
-  9, 18, 25, 30,
-  10, 20, 27, 32,
-  12, 21, 29, 35,
-  12, 23, 34, 37,
-  12, 25, 34, 40,
-  13, 26, 35, 42,
-  14, 28, 38, 45,
-  15, 29, 40, 48,
-  16, 31, 43, 51,
-  17, 33, 45, 54,
-  18, 35, 48, 57,
-  19, 37, 51, 60,
-  19, 38, 53, 63,
-  20, 40, 56, 66,
-  21, 43, 59, 70,
-  22, 45, 62, 74,
-  24, 47, 65, 77,
-  25, 49, 68, 81
-]
-
-var EC_CODEWORDS_TABLE = [
-// L  M  Q  H
-  7, 10, 13, 17,
-  10, 16, 22, 28,
-  15, 26, 36, 44,
-  20, 36, 52, 64,
-  26, 48, 72, 88,
-  36, 64, 96, 112,
-  40, 72, 108, 130,
-  48, 88, 132, 156,
-  60, 110, 160, 192,
-  72, 130, 192, 224,
-  80, 150, 224, 264,
-  96, 176, 260, 308,
-  104, 198, 288, 352,
-  120, 216, 320, 384,
-  132, 240, 360, 432,
-  144, 280, 408, 480,
-  168, 308, 448, 532,
-  180, 338, 504, 588,
-  196, 364, 546, 650,
-  224, 416, 600, 700,
-  224, 442, 644, 750,
-  252, 476, 690, 816,
-  270, 504, 750, 900,
-  300, 560, 810, 960,
-  312, 588, 870, 1050,
-  336, 644, 952, 1110,
-  360, 700, 1020, 1200,
-  390, 728, 1050, 1260,
-  420, 784, 1140, 1350,
-  450, 812, 1200, 1440,
-  480, 868, 1290, 1530,
-  510, 924, 1350, 1620,
-  540, 980, 1440, 1710,
-  570, 1036, 1530, 1800,
-  570, 1064, 1590, 1890,
-  600, 1120, 1680, 1980,
-  630, 1204, 1770, 2100,
-  660, 1260, 1860, 2220,
-  720, 1316, 1950, 2310,
-  750, 1372, 2040, 2430
-]
-
-/**
- * Returns the number of error correction block that the QR Code should contain
- * for the specified version and error correction level.
- *
- * @param  {Number} version              QR Code version
- * @param  {Number} errorCorrectionLevel Error correction level
- * @return {Number}                      Number of error correction blocks
- */
-exports.getBlocksCount = function getBlocksCount (version, errorCorrectionLevel) {
-  switch (errorCorrectionLevel) {
-    case ECLevel.L:
-      return EC_BLOCKS_TABLE[(version - 1) * 4 + 0]
-    case ECLevel.M:
-      return EC_BLOCKS_TABLE[(version - 1) * 4 + 1]
-    case ECLevel.Q:
-      return EC_BLOCKS_TABLE[(version - 1) * 4 + 2]
-    case ECLevel.H:
-      return EC_BLOCKS_TABLE[(version - 1) * 4 + 3]
-    default:
-      return undefined
-  }
-}
-
-/**
- * Returns the number of error correction codewords to use for the specified
- * version and error correction level.
- *
- * @param  {Number} version              QR Code version
- * @param  {Number} errorCorrectionLevel Error correction level
- * @return {Number}                      Number of error correction codewords
- */
-exports.getTotalCodewordsCount = function getTotalCodewordsCount (version, errorCorrectionLevel) {
-  switch (errorCorrectionLevel) {
-    case ECLevel.L:
-      return EC_CODEWORDS_TABLE[(version - 1) * 4 + 0]
-    case ECLevel.M:
-      return EC_CODEWORDS_TABLE[(version - 1) * 4 + 1]
-    case ECLevel.Q:
-      return EC_CODEWORDS_TABLE[(version - 1) * 4 + 2]
-    case ECLevel.H:
-      return EC_CODEWORDS_TABLE[(version - 1) * 4 + 3]
-    default:
-      return undefined
-  }
-}
-
-
-/***/ }),
-
-/***/ "a6d7":
-/***/ (function(module, exports) {
-
-// document.currentScript polyfill by Adam Miller
-
-// MIT license
-
-(function(document){
-  var currentScript = "currentScript",
-      scripts = document.getElementsByTagName('script'); // Live NodeList collection
-
-  // If browser needs currentScript polyfill, add get currentScript() to the document object
-  if (!(currentScript in document)) {
-    Object.defineProperty(document, currentScript, {
-      get: function(){
-
-        // IE 6-10 supports script readyState
-        // IE 10+ support stack trace
-        try { throw new Error(); }
-        catch (err) {
-
-          // Find the second match for the "at" string to get file src url from stack.
-          // Specifically works with the format of stack traces in IE.
-          var i, res = ((/.*at [^\(]*\((.*):.+:.+\)$/ig).exec(err.stack) || [false])[1];
-
-          // For all scripts on the page, if src matches or if ready state is interactive, return the script tag
-          for(i in scripts){
-            if(scripts[i].src == res || scripts[i].readyState == "interactive"){
-              return scripts[i];
-            }
-          }
-
-          // If no match, return null
-          return null;
-        }
-      }
-    });
-  }
-})(document);
-
-
-/***/ }),
-
-/***/ "a77a":
-/***/ (function(module, exports) {
-
-/**
- * Check if QR Code version is valid
- *
- * @param  {Number}  version QR Code version
- * @return {Boolean}         true if valid version, false otherwise
- */
-exports.isValid = function isValid (version) {
-  return !isNaN(version) && version >= 1 && version <= 40
-}
-
-
-/***/ }),
-
-/***/ "afd9":
-/***/ (function(module, exports, __webpack_require__) {
-
-var BufferUtil = __webpack_require__("ebb4")
-
-var EXP_TABLE = BufferUtil.alloc(512)
-var LOG_TABLE = BufferUtil.alloc(256)
-/**
- * Precompute the log and anti-log tables for faster computation later
- *
- * For each possible value in the galois field 2^8, we will pre-compute
- * the logarithm and anti-logarithm (exponential) of this value
- *
- * ref {@link https://en.wikiversity.org/wiki/Reed%E2%80%93Solomon_codes_for_coders#Introduction_to_mathematical_fields}
- */
-;(function initTables () {
-  var x = 1
-  for (var i = 0; i < 255; i++) {
-    EXP_TABLE[i] = x
-    LOG_TABLE[x] = i
-
-    x <<= 1 // multiply by 2
-
-    // The QR code specification says to use byte-wise modulo 100011101 arithmetic.
-    // This means that when a number is 256 or larger, it should be XORed with 0x11D.
-    if (x & 0x100) { // similar to x >= 256, but a lot faster (because 0x100 == 256)
-      x ^= 0x11D
-    }
-  }
-
-  // Optimization: double the size of the anti-log table so that we don't need to mod 255 to
-  // stay inside the bounds (because we will mainly use this table for the multiplication of
-  // two GF numbers, no more).
-  // @see {@link mul}
-  for (i = 255; i < 512; i++) {
-    EXP_TABLE[i] = EXP_TABLE[i - 255]
-  }
-}())
-
-/**
- * Returns log value of n inside Galois Field
- *
- * @param  {Number} n
- * @return {Number}
- */
-exports.log = function log (n) {
-  if (n < 1) throw new Error('log(' + n + ')')
-  return LOG_TABLE[n]
-}
-
-/**
- * Returns anti-log value of n inside Galois Field
- *
- * @param  {Number} n
- * @return {Number}
- */
-exports.exp = function exp (n) {
-  return EXP_TABLE[n]
-}
-
-/**
- * Multiplies two number inside Galois Field
- *
- * @param  {Number} x
- * @param  {Number} y
- * @return {Number}
- */
-exports.mul = function mul (x, y) {
-  if (x === 0 || y === 0) return 0
-
-  // should be EXP_TABLE[(LOG_TABLE[x] + LOG_TABLE[y]) % 255] if EXP_TABLE wasn't oversized
-  // @see {@link initTables}
-  return EXP_TABLE[LOG_TABLE[x] + LOG_TABLE[y]]
-}
-
-
-/***/ }),
-
-/***/ "b08f":
-/***/ (function(module, exports, __webpack_require__) {
-
-var toIndexedObject = __webpack_require__("f08e");
-var toLength = __webpack_require__("b14e");
-var toAbsoluteIndex = __webpack_require__("3526");
-
-// `Array.prototype.{ indexOf, includes }` methods implementation
-var createMethod = function (IS_INCLUDES) {
-  return function ($this, el, fromIndex) {
-    var O = toIndexedObject($this);
-    var length = toLength(O.length);
-    var index = toAbsoluteIndex(fromIndex, length);
-    var value;
-    // Array#includes uses SameValueZero equality algorithm
-    // eslint-disable-next-line no-self-compare
-    if (IS_INCLUDES && el != el) while (length > index) {
-      value = O[index++];
-      // eslint-disable-next-line no-self-compare
-      if (value != value) return true;
-    // Array#indexOf ignores holes, Array#includes - not
-    } else for (;length > index; index++) {
-      if ((IS_INCLUDES || index in O) && O[index] === el) return IS_INCLUDES || index || 0;
-    } return !IS_INCLUDES && -1;
-  };
-};
-
-module.exports = {
-  // `Array.prototype.includes` method
-  // https://tc39.github.io/ecma262/#sec-array.prototype.includes
-  includes: createMethod(true),
-  // `Array.prototype.indexOf` method
-  // https://tc39.github.io/ecma262/#sec-array.prototype.indexof
-  indexOf: createMethod(false)
-};
-
-
-/***/ }),
-
-/***/ "b14e":
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__("ea03");
-
-var min = Math.min;
-
-// `ToLength` abstract operation
-// https://tc39.github.io/ecma262/#sec-tolength
-module.exports = function (argument) {
-  return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
-};
-
-
-/***/ }),
-
-/***/ "bbd3":
-/***/ (function(module, exports) {
-
-// can-promise has a crash in some versions of react native that dont have
-// standard global objects
-// https://github.com/soldair/node-qrcode/issues/157
-
-module.exports = function () {
-  return typeof Promise === 'function' && Promise.prototype && Promise.prototype.then
-}
-
-
-/***/ }),
-
-/***/ "bca5":
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__("6ffb");
-
-// `ToPrimitive` abstract operation
-// https://tc39.github.io/ecma262/#sec-toprimitive
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (input, PREFERRED_STRING) {
-  if (!isObject(input)) return input;
-  var fn, val;
-  if (PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
-  if (typeof (fn = input.valueOf) == 'function' && !isObject(val = fn.call(input))) return val;
-  if (!PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ }),
-
-/***/ "be73":
-/***/ (function(module, exports) {
-
-exports.read = function (buffer, offset, isLE, mLen, nBytes) {
-  var e, m
-  var eLen = (nBytes * 8) - mLen - 1
-  var eMax = (1 << eLen) - 1
-  var eBias = eMax >> 1
-  var nBits = -7
-  var i = isLE ? (nBytes - 1) : 0
-  var d = isLE ? -1 : 1
-  var s = buffer[offset + i]
-
-  i += d
-
-  e = s & ((1 << (-nBits)) - 1)
-  s >>= (-nBits)
-  nBits += eLen
-  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
-
-  m = e & ((1 << (-nBits)) - 1)
-  e >>= (-nBits)
-  nBits += mLen
-  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
-
-  if (e === 0) {
-    e = 1 - eBias
-  } else if (e === eMax) {
-    return m ? NaN : ((s ? -1 : 1) * Infinity)
-  } else {
-    m = m + Math.pow(2, mLen)
-    e = e - eBias
-  }
-  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
-}
-
-exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
-  var e, m, c
-  var eLen = (nBytes * 8) - mLen - 1
-  var eMax = (1 << eLen) - 1
-  var eBias = eMax >> 1
-  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
-  var i = isLE ? 0 : (nBytes - 1)
-  var d = isLE ? 1 : -1
-  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
-
-  value = Math.abs(value)
-
-  if (isNaN(value) || value === Infinity) {
-    m = isNaN(value) ? 1 : 0
-    e = eMax
-  } else {
-    e = Math.floor(Math.log(value) / Math.LN2)
-    if (value * (c = Math.pow(2, -e)) < 1) {
-      e--
-      c *= 2
-    }
-    if (e + eBias >= 1) {
-      value += rt / c
-    } else {
-      value += rt * Math.pow(2, 1 - eBias)
-    }
-    if (value * c >= 2) {
-      e++
-      c /= 2
-    }
-
-    if (e + eBias >= eMax) {
-      m = 0
-      e = eMax
-    } else if (e + eBias >= 1) {
-      m = ((value * c) - 1) * Math.pow(2, mLen)
-      e = e + eBias
-    } else {
-      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
-      e = 0
-    }
-  }
-
-  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
-
-  e = (e << mLen) | m
-  eLen += mLen
-  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
-
-  buffer[offset + i - d] |= s * 128
-}
-
-
-/***/ }),
-
-/***/ "bece":
-/***/ (function(module, exports, __webpack_require__) {
-
-var NATIVE_WEAK_MAP = __webpack_require__("fdc6");
-var global = __webpack_require__("34f3");
-var isObject = __webpack_require__("6ffb");
-var createNonEnumerableProperty = __webpack_require__("0ab2");
-var objectHas = __webpack_require__("379c");
-var sharedKey = __webpack_require__("fc4f");
-var hiddenKeys = __webpack_require__("0bfd");
-
-var WeakMap = global.WeakMap;
-var set, get, has;
-
-var enforce = function (it) {
-  return has(it) ? get(it) : set(it, {});
-};
-
-var getterFor = function (TYPE) {
-  return function (it) {
-    var state;
-    if (!isObject(it) || (state = get(it)).type !== TYPE) {
-      throw TypeError('Incompatible receiver, ' + TYPE + ' required');
-    } return state;
-  };
-};
-
-if (NATIVE_WEAK_MAP) {
-  var store = new WeakMap();
-  var wmget = store.get;
-  var wmhas = store.has;
-  var wmset = store.set;
-  set = function (it, metadata) {
-    wmset.call(store, it, metadata);
-    return metadata;
-  };
-  get = function (it) {
-    return wmget.call(store, it) || {};
-  };
-  has = function (it) {
-    return wmhas.call(store, it);
-  };
-} else {
-  var STATE = sharedKey('state');
-  hiddenKeys[STATE] = true;
-  set = function (it, metadata) {
-    createNonEnumerableProperty(it, STATE, metadata);
-    return metadata;
-  };
-  get = function (it) {
-    return objectHas(it, STATE) ? it[STATE] : {};
-  };
-  has = function (it) {
-    return objectHas(it, STATE);
-  };
-}
-
-module.exports = {
-  set: set,
-  get: get,
-  has: has,
-  enforce: enforce,
-  getterFor: getterFor
-};
-
-
-/***/ }),
-
-/***/ "c022":
-/***/ (function(module, exports, __webpack_require__) {
-
-var BufferUtil = __webpack_require__("ebb4")
-var Polynomial = __webpack_require__("6d3d")
-var Buffer = __webpack_require__("d04e").Buffer
-
-function ReedSolomonEncoder (degree) {
-  this.genPoly = undefined
-  this.degree = degree
-
-  if (this.degree) this.initialize(this.degree)
-}
-
-/**
- * Initialize the encoder.
- * The input param should correspond to the number of error correction codewords.
- *
- * @param  {Number} degree
- */
-ReedSolomonEncoder.prototype.initialize = function initialize (degree) {
-  // create an irreducible generator polynomial
-  this.degree = degree
-  this.genPoly = Polynomial.generateECPolynomial(this.degree)
-}
-
-/**
- * Encodes a chunk of data
- *
- * @param  {Buffer} data Buffer containing input data
- * @return {Buffer}      Buffer containing encoded data
- */
-ReedSolomonEncoder.prototype.encode = function encode (data) {
-  if (!this.genPoly) {
-    throw new Error('Encoder not initialized')
-  }
-
-  // Calculate EC for this data block
-  // extends data size to data+genPoly size
-  var pad = BufferUtil.alloc(this.degree)
-  var paddedData = Buffer.concat([data, pad], data.length + this.degree)
-
-  // The error correction codewords are the remainder after dividing the data codewords
-  // by a generator polynomial
-  var remainder = Polynomial.mod(paddedData, this.genPoly)
-
-  // return EC data blocks (last n byte, where n is the degree of genPoly)
-  // If coefficients number in remainder are less than genPoly degree,
-  // pad with 0s to the left to reach the needed number of coefficients
-  var start = this.degree - remainder.length
-  if (start > 0) {
-    var buff = BufferUtil.alloc(this.degree)
-    remainder.copy(buff, start)
-
-    return buff
-  }
-
-  return remainder
-}
-
-module.exports = ReedSolomonEncoder
-
-
-/***/ }),
-
-/***/ "c3f2":
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__("6ffb");
-
-module.exports = function (it) {
-  if (!isObject(it)) {
-    throw TypeError(String(it) + ' is not an object');
-  } return it;
-};
-
-
-/***/ }),
-
-/***/ "c811":
-/***/ (function(module, exports) {
-
-var toSJISFunction
-var CODEWORDS_COUNT = [
-  0, // Not used
-  26, 44, 70, 100, 134, 172, 196, 242, 292, 346,
-  404, 466, 532, 581, 655, 733, 815, 901, 991, 1085,
-  1156, 1258, 1364, 1474, 1588, 1706, 1828, 1921, 2051, 2185,
-  2323, 2465, 2611, 2761, 2876, 3034, 3196, 3362, 3532, 3706
-]
-
-/**
- * Returns the QR Code size for the specified version
- *
- * @param  {Number} version QR Code version
- * @return {Number}         size of QR code
- */
-exports.getSymbolSize = function getSymbolSize (version) {
-  if (!version) throw new Error('"version" cannot be null or undefined')
-  if (version < 1 || version > 40) throw new Error('"version" should be in range from 1 to 40')
-  return version * 4 + 17
-}
-
-/**
- * Returns the total number of codewords used to store data and EC information.
- *
- * @param  {Number} version QR Code version
- * @return {Number}         Data length in bits
- */
-exports.getSymbolTotalCodewords = function getSymbolTotalCodewords (version) {
-  return CODEWORDS_COUNT[version]
-}
-
-/**
- * Encode data with Bose-Chaudhuri-Hocquenghem
- *
- * @param  {Number} data Value to encode
- * @return {Number}      Encoded value
- */
-exports.getBCHDigit = function (data) {
-  var digit = 0
-
-  while (data !== 0) {
-    digit++
-    data >>>= 1
-  }
-
-  return digit
-}
-
-exports.setToSJISFunction = function setToSJISFunction (f) {
-  if (typeof f !== 'function') {
-    throw new Error('"toSJISFunc" is not a valid function.')
-  }
-
-  toSJISFunction = f
-}
-
-exports.isKanjiModeEnabled = function () {
-  return typeof toSJISFunction !== 'undefined'
-}
-
-exports.toSJIS = function toSJIS (kanji) {
-  return toSJISFunction(kanji)
-}
-
-
-/***/ }),
-
-/***/ "c8e7":
-/***/ (function(module, exports, __webpack_require__) {
-
-var fails = __webpack_require__("dcc0");
-var classof = __webpack_require__("6fd9");
-
-var split = ''.split;
-
-// fallback for non-array-like ES3 and non-enumerable old V8 strings
-module.exports = fails(function () {
-  // throws an error in rhino, see https://github.com/mozilla/rhino/issues/346
-  // eslint-disable-next-line no-prototype-builtins
-  return !Object('z').propertyIsEnumerable(0);
-}) ? function (it) {
-  return classof(it) == 'String' ? split.call(it, '') : Object(it);
-} : Object;
-
-
-/***/ }),
-
-/***/ "ce0e":
-/***/ (function(module, exports) {
-
-var id = 0;
-var postfix = Math.random();
-
-module.exports = function (key) {
-  return 'Symbol(' + String(key === undefined ? '' : key) + ')_' + (++id + postfix).toString(36);
-};
-
-
-/***/ }),
-
-/***/ "ce0e0":
-/***/ (function(module, exports, __webpack_require__) {
-
-var Mode = __webpack_require__("2600")
-
-function NumericData (data) {
-  this.mode = Mode.NUMERIC
-  this.data = data.toString()
-}
-
-NumericData.getBitsLength = function getBitsLength (length) {
-  return 10 * Math.floor(length / 3) + ((length % 3) ? ((length % 3) * 3 + 1) : 0)
-}
-
-NumericData.prototype.getLength = function getLength () {
-  return this.data.length
-}
-
-NumericData.prototype.getBitsLength = function getBitsLength () {
-  return NumericData.getBitsLength(this.data.length)
-}
-
-NumericData.prototype.write = function write (bitBuffer) {
-  var i, group, value
-
-  // The input data string is divided into groups of three digits,
-  // and each group is converted to its 10-bit binary equivalent.
-  for (i = 0; i + 3 <= this.data.length; i += 3) {
-    group = this.data.substr(i, 3)
-    value = parseInt(group, 10)
-
-    bitBuffer.put(value, 10)
-  }
-
-  // If the number of input digits is not an exact multiple of three,
-  // the final one or two digits are converted to 4 or 7 bits respectively.
-  var remainingNum = this.data.length - i
-  if (remainingNum > 0) {
-    group = this.data.substr(i)
-    value = parseInt(group, 10)
-
-    bitBuffer.put(value, remainingNum * 3 + 1)
-  }
-}
-
-module.exports = NumericData
-
-
-/***/ }),
-
-/***/ "cf47":
-/***/ (function(module, exports) {
-
-// IE8- don't enum bug keys
-module.exports = [
-  'constructor',
-  'hasOwnProperty',
-  'isPrototypeOf',
-  'propertyIsEnumerable',
-  'toLocaleString',
-  'toString',
-  'valueOf'
-];
-
-
-/***/ }),
-
-/***/ "d04e":
+/***/ "22a3":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4290,9 +653,9 @@ module.exports = [
 
 
 
-var base64 = __webpack_require__("212a")
-var ieee754 = __webpack_require__("be73")
-var isArray = __webpack_require__("6509")
+var base64 = __webpack_require__("f916")
+var ieee754 = __webpack_require__("5d88")
+var isArray = __webpack_require__("678b")
 
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
@@ -6070,11 +2433,2478 @@ function isnan (val) {
   return val !== val // eslint-disable-line no-self-compare
 }
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("3426")))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("7234")))
 
 /***/ }),
 
-/***/ "d480":
+/***/ "2401":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__("cda6");
+var classof = __webpack_require__("a010");
+
+// `Object.prototype.toString` method implementation
+// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
+module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
+  return '[object ' + classof(this) + ']';
+};
+
+
+/***/ }),
+
+/***/ "250a":
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__("f738");
+var setGlobal = __webpack_require__("f845");
+
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || setGlobal(SHARED, {});
+
+module.exports = store;
+
+
+/***/ }),
+
+/***/ "2600":
+/***/ (function(module, exports, __webpack_require__) {
+
+var VersionCheck = __webpack_require__("a77a")
+var Regex = __webpack_require__("e4e2")
+
+/**
+ * Numeric mode encodes data from the decimal digit set (0 - 9)
+ * (byte values 30HEX to 39HEX).
+ * Normally, 3 data characters are represented by 10 bits.
+ *
+ * @type {Object}
+ */
+exports.NUMERIC = {
+  id: 'Numeric',
+  bit: 1 << 0,
+  ccBits: [10, 12, 14]
+}
+
+/**
+ * Alphanumeric mode encodes data from a set of 45 characters,
+ * i.e. 10 numeric digits (0 - 9),
+ *      26 alphabetic characters (A - Z),
+ *   and 9 symbols (SP, $, %, *, +, -, ., /, :).
+ * Normally, two input characters are represented by 11 bits.
+ *
+ * @type {Object}
+ */
+exports.ALPHANUMERIC = {
+  id: 'Alphanumeric',
+  bit: 1 << 1,
+  ccBits: [9, 11, 13]
+}
+
+/**
+ * In byte mode, data is encoded at 8 bits per character.
+ *
+ * @type {Object}
+ */
+exports.BYTE = {
+  id: 'Byte',
+  bit: 1 << 2,
+  ccBits: [8, 16, 16]
+}
+
+/**
+ * The Kanji mode efficiently encodes Kanji characters in accordance with
+ * the Shift JIS system based on JIS X 0208.
+ * The Shift JIS values are shifted from the JIS X 0208 values.
+ * JIS X 0208 gives details of the shift coded representation.
+ * Each two-byte character value is compacted to a 13-bit binary codeword.
+ *
+ * @type {Object}
+ */
+exports.KANJI = {
+  id: 'Kanji',
+  bit: 1 << 3,
+  ccBits: [8, 10, 12]
+}
+
+/**
+ * Mixed mode will contain a sequences of data in a combination of any of
+ * the modes described above
+ *
+ * @type {Object}
+ */
+exports.MIXED = {
+  bit: -1
+}
+
+/**
+ * Returns the number of bits needed to store the data length
+ * according to QR Code specifications.
+ *
+ * @param  {Mode}   mode    Data mode
+ * @param  {Number} version QR Code version
+ * @return {Number}         Number of bits
+ */
+exports.getCharCountIndicator = function getCharCountIndicator (mode, version) {
+  if (!mode.ccBits) throw new Error('Invalid mode: ' + mode)
+
+  if (!VersionCheck.isValid(version)) {
+    throw new Error('Invalid version: ' + version)
+  }
+
+  if (version >= 1 && version < 10) return mode.ccBits[0]
+  else if (version < 27) return mode.ccBits[1]
+  return mode.ccBits[2]
+}
+
+/**
+ * Returns the most efficient mode to store the specified data
+ *
+ * @param  {String} dataStr Input data string
+ * @return {Mode}           Best mode
+ */
+exports.getBestModeForData = function getBestModeForData (dataStr) {
+  if (Regex.testNumeric(dataStr)) return exports.NUMERIC
+  else if (Regex.testAlphanumeric(dataStr)) return exports.ALPHANUMERIC
+  else if (Regex.testKanji(dataStr)) return exports.KANJI
+  else return exports.BYTE
+}
+
+/**
+ * Return mode name as string
+ *
+ * @param {Mode} mode Mode object
+ * @returns {String}  Mode name
+ */
+exports.toString = function toString (mode) {
+  if (mode && mode.id) return mode.id
+  throw new Error('Invalid mode')
+}
+
+/**
+ * Check if input param is a valid mode object
+ *
+ * @param   {Mode}    mode Mode object
+ * @returns {Boolean} True if valid mode, false otherwise
+ */
+exports.isValid = function isValid (mode) {
+  return mode && mode.bit && mode.ccBits
+}
+
+/**
+ * Get mode object from its name
+ *
+ * @param   {String} string Mode name
+ * @returns {Mode}          Mode object
+ */
+function fromString (string) {
+  if (typeof string !== 'string') {
+    throw new Error('Param is not a string')
+  }
+
+  var lcStr = string.toLowerCase()
+
+  switch (lcStr) {
+    case 'numeric':
+      return exports.NUMERIC
+    case 'alphanumeric':
+      return exports.ALPHANUMERIC
+    case 'kanji':
+      return exports.KANJI
+    case 'byte':
+      return exports.BYTE
+    default:
+      throw new Error('Unknown mode: ' + string)
+  }
+}
+
+/**
+ * Returns mode from a value.
+ * If value is not a valid mode, returns defaultValue
+ *
+ * @param  {Mode|String} value        Encoding mode
+ * @param  {Mode}        defaultValue Fallback value
+ * @return {Mode}                     Encoding mode
+ */
+exports.from = function from (value, defaultValue) {
+  if (exports.isValid(value)) {
+    return value
+  }
+
+  try {
+    return fromString(value)
+  } catch (e) {
+    return defaultValue
+  }
+}
+
+
+/***/ }),
+
+/***/ "29b0":
+/***/ (function(module, exports, __webpack_require__) {
+
+var toInteger = __webpack_require__("548c");
+
+var min = Math.min;
+
+// `ToLength` abstract operation
+// https://tc39.github.io/ecma262/#sec-tolength
+module.exports = function (argument) {
+  return argument > 0 ? min(toInteger(argument), 0x1FFFFFFFFFFFFF) : 0; // 2 ** 53 - 1 == 9007199254740991
+};
+
+
+/***/ }),
+
+/***/ "2a19":
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__("f738");
+var isObject = __webpack_require__("6eb5");
+
+var document = global.document;
+// typeof document.createElement is 'object' in old IE
+var EXISTS = isObject(document) && isObject(document.createElement);
+
+module.exports = function (it) {
+  return EXISTS ? document.createElement(it) : {};
+};
+
+
+/***/ }),
+
+/***/ "2f12":
+/***/ (function(module, exports) {
+
+function BitBuffer () {
+  this.buffer = []
+  this.length = 0
+}
+
+BitBuffer.prototype = {
+
+  get: function (index) {
+    var bufIndex = Math.floor(index / 8)
+    return ((this.buffer[bufIndex] >>> (7 - index % 8)) & 1) === 1
+  },
+
+  put: function (num, length) {
+    for (var i = 0; i < length; i++) {
+      this.putBit(((num >>> (length - i - 1)) & 1) === 1)
+    }
+  },
+
+  getLengthInBits: function () {
+    return this.length
+  },
+
+  putBit: function (bit) {
+    var bufIndex = Math.floor(this.length / 8)
+    if (this.buffer.length <= bufIndex) {
+      this.buffer.push(0)
+    }
+
+    if (bit) {
+      this.buffer[bufIndex] |= (0x80 >>> (this.length % 8))
+    }
+
+    this.length++
+  }
+}
+
+module.exports = BitBuffer
+
+
+/***/ }),
+
+/***/ "2f7e":
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__("8d9d");
+
+var replacement = /#|\.prototype\./;
+
+var isForced = function (feature, detection) {
+  var value = data[normalize(feature)];
+  return value == POLYFILL ? true
+    : value == NATIVE ? false
+    : typeof detection == 'function' ? fails(detection)
+    : !!detection;
+};
+
+var normalize = isForced.normalize = function (string) {
+  return String(string).replace(replacement, '.').toLowerCase();
+};
+
+var data = isForced.data = {};
+var NATIVE = isForced.NATIVE = 'N';
+var POLYFILL = isForced.POLYFILL = 'P';
+
+module.exports = isForced;
+
+
+/***/ }),
+
+/***/ "3606":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/******************************************************************************
+ * Created 2008-08-19.
+ *
+ * Dijkstra path-finding functions. Adapted from the Dijkstar Python project.
+ *
+ * Copyright (C) 2008
+ *   Wyatt Baldwin <self@wyattbaldwin.com>
+ *   All rights reserved
+ *
+ * Licensed under the MIT license.
+ *
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *****************************************************************************/
+var dijkstra = {
+  single_source_shortest_paths: function(graph, s, d) {
+    // Predecessor map for each node that has been encountered.
+    // node ID => predecessor node ID
+    var predecessors = {};
+
+    // Costs of shortest paths from s to all nodes encountered.
+    // node ID => cost
+    var costs = {};
+    costs[s] = 0;
+
+    // Costs of shortest paths from s to all nodes encountered; differs from
+    // `costs` in that it provides easy access to the node that currently has
+    // the known shortest path from s.
+    // XXX: Do we actually need both `costs` and `open`?
+    var open = dijkstra.PriorityQueue.make();
+    open.push(s, 0);
+
+    var closest,
+        u, v,
+        cost_of_s_to_u,
+        adjacent_nodes,
+        cost_of_e,
+        cost_of_s_to_u_plus_cost_of_e,
+        cost_of_s_to_v,
+        first_visit;
+    while (!open.empty()) {
+      // In the nodes remaining in graph that have a known cost from s,
+      // find the node, u, that currently has the shortest path from s.
+      closest = open.pop();
+      u = closest.value;
+      cost_of_s_to_u = closest.cost;
+
+      // Get nodes adjacent to u...
+      adjacent_nodes = graph[u] || {};
+
+      // ...and explore the edges that connect u to those nodes, updating
+      // the cost of the shortest paths to any or all of those nodes as
+      // necessary. v is the node across the current edge from u.
+      for (v in adjacent_nodes) {
+        if (adjacent_nodes.hasOwnProperty(v)) {
+          // Get the cost of the edge running from u to v.
+          cost_of_e = adjacent_nodes[v];
+
+          // Cost of s to u plus the cost of u to v across e--this is *a*
+          // cost from s to v that may or may not be less than the current
+          // known cost to v.
+          cost_of_s_to_u_plus_cost_of_e = cost_of_s_to_u + cost_of_e;
+
+          // If we haven't visited v yet OR if the current known cost from s to
+          // v is greater than the new cost we just found (cost of s to u plus
+          // cost of u to v across e), update v's cost in the cost list and
+          // update v's predecessor in the predecessor list (it's now u).
+          cost_of_s_to_v = costs[v];
+          first_visit = (typeof costs[v] === 'undefined');
+          if (first_visit || cost_of_s_to_v > cost_of_s_to_u_plus_cost_of_e) {
+            costs[v] = cost_of_s_to_u_plus_cost_of_e;
+            open.push(v, cost_of_s_to_u_plus_cost_of_e);
+            predecessors[v] = u;
+          }
+        }
+      }
+    }
+
+    if (typeof d !== 'undefined' && typeof costs[d] === 'undefined') {
+      var msg = ['Could not find a path from ', s, ' to ', d, '.'].join('');
+      throw new Error(msg);
+    }
+
+    return predecessors;
+  },
+
+  extract_shortest_path_from_predecessor_list: function(predecessors, d) {
+    var nodes = [];
+    var u = d;
+    var predecessor;
+    while (u) {
+      nodes.push(u);
+      predecessor = predecessors[u];
+      u = predecessors[u];
+    }
+    nodes.reverse();
+    return nodes;
+  },
+
+  find_path: function(graph, s, d) {
+    var predecessors = dijkstra.single_source_shortest_paths(graph, s, d);
+    return dijkstra.extract_shortest_path_from_predecessor_list(
+      predecessors, d);
+  },
+
+  /**
+   * A very naive priority queue implementation.
+   */
+  PriorityQueue: {
+    make: function (opts) {
+      var T = dijkstra.PriorityQueue,
+          t = {},
+          key;
+      opts = opts || {};
+      for (key in T) {
+        if (T.hasOwnProperty(key)) {
+          t[key] = T[key];
+        }
+      }
+      t.queue = [];
+      t.sorter = opts.sorter || T.default_sorter;
+      return t;
+    },
+
+    default_sorter: function (a, b) {
+      return a.cost - b.cost;
+    },
+
+    /**
+     * Add a new item to the queue and ensure the highest priority element
+     * is at the front of the queue.
+     */
+    push: function (value, cost) {
+      var item = {value: value, cost: cost};
+      this.queue.push(item);
+      this.queue.sort(this.sorter);
+    },
+
+    /**
+     * Return the highest priority element in the queue.
+     */
+    pop: function () {
+      return this.queue.shift();
+    },
+
+    empty: function () {
+      return this.queue.length === 0;
+    }
+  }
+};
+
+
+// node.js module exports
+if (true) {
+  module.exports = dijkstra;
+}
+
+
+/***/ }),
+
+/***/ "3871":
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var canPromise = __webpack_require__("bbd3")
+
+var QRCode = __webpack_require__("5b3b")
+var CanvasRenderer = __webpack_require__("d5a8")
+var SvgRenderer = __webpack_require__("4ee3")
+
+function renderCanvas (renderFunc, canvas, text, opts, cb) {
+  var args = [].slice.call(arguments, 1)
+  var argsNum = args.length
+  var isLastArgCb = typeof args[argsNum - 1] === 'function'
+
+  if (!isLastArgCb && !canPromise()) {
+    throw new Error('Callback required as last argument')
+  }
+
+  if (isLastArgCb) {
+    if (argsNum < 2) {
+      throw new Error('Too few arguments provided')
+    }
+
+    if (argsNum === 2) {
+      cb = text
+      text = canvas
+      canvas = opts = undefined
+    } else if (argsNum === 3) {
+      if (canvas.getContext && typeof cb === 'undefined') {
+        cb = opts
+        opts = undefined
+      } else {
+        cb = opts
+        opts = text
+        text = canvas
+        canvas = undefined
+      }
+    }
+  } else {
+    if (argsNum < 1) {
+      throw new Error('Too few arguments provided')
+    }
+
+    if (argsNum === 1) {
+      text = canvas
+      canvas = opts = undefined
+    } else if (argsNum === 2 && !canvas.getContext) {
+      opts = text
+      text = canvas
+      canvas = undefined
+    }
+
+    return new Promise(function (resolve, reject) {
+      try {
+        var data = QRCode.create(text, opts)
+        resolve(renderFunc(data, canvas, opts))
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
+
+  try {
+    var data = QRCode.create(text, opts)
+    cb(null, renderFunc(data, canvas, opts))
+  } catch (e) {
+    cb(e)
+  }
+}
+
+exports.create = QRCode.create
+exports.toCanvas = renderCanvas.bind(null, CanvasRenderer.render)
+exports.toDataURL = renderCanvas.bind(null, CanvasRenderer.renderToDataURL)
+
+// only svg for now.
+exports.toString = renderCanvas.bind(null, function (data, _, opts) {
+  return SvgRenderer.render(data, opts)
+})
+
+
+/***/ }),
+
+/***/ "39de":
+/***/ (function(module, exports, __webpack_require__) {
+
+var getBuiltIn = __webpack_require__("18c1");
+
+module.exports = getBuiltIn('document', 'documentElement');
+
+
+/***/ }),
+
+/***/ "3a93":
+/***/ (function(module, exports) {
+
+/**
+ * Data mask pattern reference
+ * @type {Object}
+ */
+exports.Patterns = {
+  PATTERN000: 0,
+  PATTERN001: 1,
+  PATTERN010: 2,
+  PATTERN011: 3,
+  PATTERN100: 4,
+  PATTERN101: 5,
+  PATTERN110: 6,
+  PATTERN111: 7
+}
+
+/**
+ * Weighted penalty scores for the undesirable features
+ * @type {Object}
+ */
+var PenaltyScores = {
+  N1: 3,
+  N2: 3,
+  N3: 40,
+  N4: 10
+}
+
+/**
+ * Check if mask pattern value is valid
+ *
+ * @param  {Number}  mask    Mask pattern
+ * @return {Boolean}         true if valid, false otherwise
+ */
+exports.isValid = function isValid (mask) {
+  return mask != null && mask !== '' && !isNaN(mask) && mask >= 0 && mask <= 7
+}
+
+/**
+ * Returns mask pattern from a value.
+ * If value is not valid, returns undefined
+ *
+ * @param  {Number|String} value        Mask pattern value
+ * @return {Number}                     Valid mask pattern or undefined
+ */
+exports.from = function from (value) {
+  return exports.isValid(value) ? parseInt(value, 10) : undefined
+}
+
+/**
+* Find adjacent modules in row/column with the same color
+* and assign a penalty value.
+*
+* Points: N1 + i
+* i is the amount by which the number of adjacent modules of the same color exceeds 5
+*/
+exports.getPenaltyN1 = function getPenaltyN1 (data) {
+  var size = data.size
+  var points = 0
+  var sameCountCol = 0
+  var sameCountRow = 0
+  var lastCol = null
+  var lastRow = null
+
+  for (var row = 0; row < size; row++) {
+    sameCountCol = sameCountRow = 0
+    lastCol = lastRow = null
+
+    for (var col = 0; col < size; col++) {
+      var module = data.get(row, col)
+      if (module === lastCol) {
+        sameCountCol++
+      } else {
+        if (sameCountCol >= 5) points += PenaltyScores.N1 + (sameCountCol - 5)
+        lastCol = module
+        sameCountCol = 1
+      }
+
+      module = data.get(col, row)
+      if (module === lastRow) {
+        sameCountRow++
+      } else {
+        if (sameCountRow >= 5) points += PenaltyScores.N1 + (sameCountRow - 5)
+        lastRow = module
+        sameCountRow = 1
+      }
+    }
+
+    if (sameCountCol >= 5) points += PenaltyScores.N1 + (sameCountCol - 5)
+    if (sameCountRow >= 5) points += PenaltyScores.N1 + (sameCountRow - 5)
+  }
+
+  return points
+}
+
+/**
+ * Find 2x2 blocks with the same color and assign a penalty value
+ *
+ * Points: N2 * (m - 1) * (n - 1)
+ */
+exports.getPenaltyN2 = function getPenaltyN2 (data) {
+  var size = data.size
+  var points = 0
+
+  for (var row = 0; row < size - 1; row++) {
+    for (var col = 0; col < size - 1; col++) {
+      var last = data.get(row, col) +
+        data.get(row, col + 1) +
+        data.get(row + 1, col) +
+        data.get(row + 1, col + 1)
+
+      if (last === 4 || last === 0) points++
+    }
+  }
+
+  return points * PenaltyScores.N2
+}
+
+/**
+ * Find 1:1:3:1:1 ratio (dark:light:dark:light:dark) pattern in row/column,
+ * preceded or followed by light area 4 modules wide
+ *
+ * Points: N3 * number of pattern found
+ */
+exports.getPenaltyN3 = function getPenaltyN3 (data) {
+  var size = data.size
+  var points = 0
+  var bitsCol = 0
+  var bitsRow = 0
+
+  for (var row = 0; row < size; row++) {
+    bitsCol = bitsRow = 0
+    for (var col = 0; col < size; col++) {
+      bitsCol = ((bitsCol << 1) & 0x7FF) | data.get(row, col)
+      if (col >= 10 && (bitsCol === 0x5D0 || bitsCol === 0x05D)) points++
+
+      bitsRow = ((bitsRow << 1) & 0x7FF) | data.get(col, row)
+      if (col >= 10 && (bitsRow === 0x5D0 || bitsRow === 0x05D)) points++
+    }
+  }
+
+  return points * PenaltyScores.N3
+}
+
+/**
+ * Calculate proportion of dark modules in entire symbol
+ *
+ * Points: N4 * k
+ *
+ * k is the rating of the deviation of the proportion of dark modules
+ * in the symbol from 50% in steps of 5%
+ */
+exports.getPenaltyN4 = function getPenaltyN4 (data) {
+  var darkCount = 0
+  var modulesCount = data.data.length
+
+  for (var i = 0; i < modulesCount; i++) darkCount += data.data[i]
+
+  var k = Math.abs(Math.ceil((darkCount * 100 / modulesCount) / 5) - 10)
+
+  return k * PenaltyScores.N4
+}
+
+/**
+ * Return mask value at given position
+ *
+ * @param  {Number} maskPattern Pattern reference value
+ * @param  {Number} i           Row
+ * @param  {Number} j           Column
+ * @return {Boolean}            Mask value
+ */
+function getMaskAt (maskPattern, i, j) {
+  switch (maskPattern) {
+    case exports.Patterns.PATTERN000: return (i + j) % 2 === 0
+    case exports.Patterns.PATTERN001: return i % 2 === 0
+    case exports.Patterns.PATTERN010: return j % 3 === 0
+    case exports.Patterns.PATTERN011: return (i + j) % 3 === 0
+    case exports.Patterns.PATTERN100: return (Math.floor(i / 2) + Math.floor(j / 3)) % 2 === 0
+    case exports.Patterns.PATTERN101: return (i * j) % 2 + (i * j) % 3 === 0
+    case exports.Patterns.PATTERN110: return ((i * j) % 2 + (i * j) % 3) % 2 === 0
+    case exports.Patterns.PATTERN111: return ((i * j) % 3 + (i + j) % 2) % 2 === 0
+
+    default: throw new Error('bad maskPattern:' + maskPattern)
+  }
+}
+
+/**
+ * Apply a mask pattern to a BitMatrix
+ *
+ * @param  {Number}    pattern Pattern reference number
+ * @param  {BitMatrix} data    BitMatrix data
+ */
+exports.applyMask = function applyMask (pattern, data) {
+  var size = data.size
+
+  for (var col = 0; col < size; col++) {
+    for (var row = 0; row < size; row++) {
+      if (data.isReserved(row, col)) continue
+      data.xor(row, col, getMaskAt(pattern, row, col))
+    }
+  }
+}
+
+/**
+ * Returns the best mask pattern for data
+ *
+ * @param  {BitMatrix} data
+ * @return {Number} Mask pattern reference number
+ */
+exports.getBestMask = function getBestMask (data, setupFormatFunc) {
+  var numPatterns = Object.keys(exports.Patterns).length
+  var bestPattern = 0
+  var lowerPenalty = Infinity
+
+  for (var p = 0; p < numPatterns; p++) {
+    setupFormatFunc(p)
+    exports.applyMask(p, data)
+
+    // Calculate penalty
+    var penalty =
+      exports.getPenaltyN1(data) +
+      exports.getPenaltyN2(data) +
+      exports.getPenaltyN3(data) +
+      exports.getPenaltyN4(data)
+
+    // Undo previously applied mask
+    exports.applyMask(p, data)
+
+    if (penalty < lowerPenalty) {
+      lowerPenalty = penalty
+      bestPattern = p
+    }
+  }
+
+  return bestPattern
+}
+
+
+/***/ }),
+
+/***/ "3bb8":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var redefine = __webpack_require__("adcf");
+var anObject = __webpack_require__("a548");
+var fails = __webpack_require__("8d9d");
+var flags = __webpack_require__("ca12");
+
+var TO_STRING = 'toString';
+var RegExpPrototype = RegExp.prototype;
+var nativeToString = RegExpPrototype[TO_STRING];
+
+var NOT_GENERIC = fails(function () { return nativeToString.call({ source: 'a', flags: 'b' }) != '/a/b'; });
+// FF44- RegExp#toString has a wrong name
+var INCORRECT_NAME = nativeToString.name != TO_STRING;
+
+// `RegExp.prototype.toString` method
+// https://tc39.github.io/ecma262/#sec-regexp.prototype.tostring
+if (NOT_GENERIC || INCORRECT_NAME) {
+  redefine(RegExp.prototype, TO_STRING, function toString() {
+    var R = anObject(this);
+    var p = String(R.source);
+    var rf = R.flags;
+    var f = String(rf === undefined && R instanceof RegExp && !('flags' in RegExpPrototype) ? flags.call(R) : rf);
+    return '/' + p + '/' + f;
+  }, { unsafe: true });
+}
+
+
+/***/ }),
+
+/***/ "3ea4":
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Alignment pattern are fixed reference pattern in defined positions
+ * in a matrix symbology, which enables the decode software to re-synchronise
+ * the coordinate mapping of the image modules in the event of moderate amounts
+ * of distortion of the image.
+ *
+ * Alignment patterns are present only in QR Code symbols of version 2 or larger
+ * and their number depends on the symbol version.
+ */
+
+var getSymbolSize = __webpack_require__("c811").getSymbolSize
+
+/**
+ * Calculate the row/column coordinates of the center module of each alignment pattern
+ * for the specified QR Code version.
+ *
+ * The alignment patterns are positioned symmetrically on either side of the diagonal
+ * running from the top left corner of the symbol to the bottom right corner.
+ *
+ * Since positions are simmetrical only half of the coordinates are returned.
+ * Each item of the array will represent in turn the x and y coordinate.
+ * @see {@link getPositions}
+ *
+ * @param  {Number} version QR Code version
+ * @return {Array}          Array of coordinate
+ */
+exports.getRowColCoords = function getRowColCoords (version) {
+  if (version === 1) return []
+
+  var posCount = Math.floor(version / 7) + 2
+  var size = getSymbolSize(version)
+  var intervals = size === 145 ? 26 : Math.ceil((size - 13) / (2 * posCount - 2)) * 2
+  var positions = [size - 7] // Last coord is always (size - 7)
+
+  for (var i = 1; i < posCount - 1; i++) {
+    positions[i] = positions[i - 1] - intervals
+  }
+
+  positions.push(6) // First coord is always 6
+
+  return positions.reverse()
+}
+
+/**
+ * Returns an array containing the positions of each alignment pattern.
+ * Each array's element represent the center point of the pattern as (x, y) coordinates
+ *
+ * Coordinates are calculated expanding the row/column coordinates returned by {@link getRowColCoords}
+ * and filtering out the items that overlaps with finder pattern
+ *
+ * @example
+ * For a Version 7 symbol {@link getRowColCoords} returns values 6, 22 and 38.
+ * The alignment patterns, therefore, are to be centered on (row, column)
+ * positions (6,22), (22,6), (22,22), (22,38), (38,22), (38,38).
+ * Note that the coordinates (6,6), (6,38), (38,6) are occupied by finder patterns
+ * and are not therefore used for alignment patterns.
+ *
+ * var pos = getPositions(7)
+ * // [[6,22], [22,6], [22,22], [22,38], [38,22], [38,38]]
+ *
+ * @param  {Number} version QR Code version
+ * @return {Array}          Array of coordinates
+ */
+exports.getPositions = function getPositions (version) {
+  var coords = []
+  var pos = exports.getRowColCoords(version)
+  var posLength = pos.length
+
+  for (var i = 0; i < posLength; i++) {
+    for (var j = 0; j < posLength; j++) {
+      // Skip if position is occupied by finder patterns
+      if ((i === 0 && j === 0) ||             // top-left
+          (i === 0 && j === posLength - 1) || // bottom-left
+          (i === posLength - 1 && j === 0)) { // top-right
+        continue
+      }
+
+      coords.push([pos[i], pos[j]])
+    }
+  }
+
+  return coords
+}
+
+
+/***/ }),
+
+/***/ "485c":
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mode = __webpack_require__("2600")
+
+/**
+ * Array of characters available in alphanumeric mode
+ *
+ * As per QR Code specification, to each character
+ * is assigned a value from 0 to 44 which in this case coincides
+ * with the array index
+ *
+ * @type {Array}
+ */
+var ALPHA_NUM_CHARS = [
+  '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+  'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+  'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+  ' ', '$', '%', '*', '+', '-', '.', '/', ':'
+]
+
+function AlphanumericData (data) {
+  this.mode = Mode.ALPHANUMERIC
+  this.data = data
+}
+
+AlphanumericData.getBitsLength = function getBitsLength (length) {
+  return 11 * Math.floor(length / 2) + 6 * (length % 2)
+}
+
+AlphanumericData.prototype.getLength = function getLength () {
+  return this.data.length
+}
+
+AlphanumericData.prototype.getBitsLength = function getBitsLength () {
+  return AlphanumericData.getBitsLength(this.data.length)
+}
+
+AlphanumericData.prototype.write = function write (bitBuffer) {
+  var i
+
+  // Input data characters are divided into groups of two characters
+  // and encoded as 11-bit binary codes.
+  for (i = 0; i + 2 <= this.data.length; i += 2) {
+    // The character value of the first character is multiplied by 45
+    var value = ALPHA_NUM_CHARS.indexOf(this.data[i]) * 45
+
+    // The character value of the second digit is added to the product
+    value += ALPHA_NUM_CHARS.indexOf(this.data[i + 1])
+
+    // The sum is then stored as 11-bit binary number
+    bitBuffer.put(value, 11)
+  }
+
+  // If the number of input data characters is not a multiple of two,
+  // the character value of the final character is encoded as a 6-bit binary number.
+  if (this.data.length % 2) {
+    bitBuffer.put(ALPHA_NUM_CHARS.indexOf(this.data[i]), 6)
+  }
+}
+
+module.exports = AlphanumericData
+
+
+/***/ }),
+
+/***/ "4b1f":
+/***/ (function(module, exports) {
+
+// IE8- don't enum bug keys
+module.exports = [
+  'constructor',
+  'hasOwnProperty',
+  'isPrototypeOf',
+  'propertyIsEnumerable',
+  'toLocaleString',
+  'toString',
+  'valueOf'
+];
+
+
+/***/ }),
+
+/***/ "4b6f":
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__("a548");
+var defineProperties = __webpack_require__("83bb");
+var enumBugKeys = __webpack_require__("4b1f");
+var hiddenKeys = __webpack_require__("ac39");
+var html = __webpack_require__("39de");
+var documentCreateElement = __webpack_require__("2a19");
+var sharedKey = __webpack_require__("51db");
+
+var GT = '>';
+var LT = '<';
+var PROTOTYPE = 'prototype';
+var SCRIPT = 'script';
+var IE_PROTO = sharedKey('IE_PROTO');
+
+var EmptyConstructor = function () { /* empty */ };
+
+var scriptTag = function (content) {
+  return LT + SCRIPT + GT + content + LT + '/' + SCRIPT + GT;
+};
+
+// Create object with fake `null` prototype: use ActiveX Object with cleared prototype
+var NullProtoObjectViaActiveX = function (activeXDocument) {
+  activeXDocument.write(scriptTag(''));
+  activeXDocument.close();
+  var temp = activeXDocument.parentWindow.Object;
+  activeXDocument = null; // avoid memory leak
+  return temp;
+};
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var NullProtoObjectViaIFrame = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = documentCreateElement('iframe');
+  var JS = 'java' + SCRIPT + ':';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  html.appendChild(iframe);
+  // https://github.com/zloirock/core-js/issues/475
+  iframe.src = String(JS);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(scriptTag('document.F=Object'));
+  iframeDocument.close();
+  return iframeDocument.F;
+};
+
+// Check for document.domain and active x support
+// No need to use active x approach when document.domain is not set
+// see https://github.com/es-shims/es5-shim/issues/150
+// variation of https://github.com/kitcambridge/es5-shim/commit/4f738ac066346
+// avoid IE GC bug
+var activeXDocument;
+var NullProtoObject = function () {
+  try {
+    /* global ActiveXObject */
+    activeXDocument = document.domain && new ActiveXObject('htmlfile');
+  } catch (error) { /* ignore */ }
+  NullProtoObject = activeXDocument ? NullProtoObjectViaActiveX(activeXDocument) : NullProtoObjectViaIFrame();
+  var length = enumBugKeys.length;
+  while (length--) delete NullProtoObject[PROTOTYPE][enumBugKeys[length]];
+  return NullProtoObject();
+};
+
+hiddenKeys[IE_PROTO] = true;
+
+// `Object.create` method
+// https://tc39.github.io/ecma262/#sec-object.create
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    EmptyConstructor[PROTOTYPE] = anObject(O);
+    result = new EmptyConstructor();
+    EmptyConstructor[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = NullProtoObject();
+  return Properties === undefined ? result : defineProperties(result, Properties);
+};
+
+
+/***/ }),
+
+/***/ "4ee3":
+/***/ (function(module, exports, __webpack_require__) {
+
+var Utils = __webpack_require__("5538")
+
+function getColorAttrib (color, attrib) {
+  var alpha = color.a / 255
+  var str = attrib + '="' + color.hex + '"'
+
+  return alpha < 1
+    ? str + ' ' + attrib + '-opacity="' + alpha.toFixed(2).slice(1) + '"'
+    : str
+}
+
+function svgCmd (cmd, x, y) {
+  var str = cmd + x
+  if (typeof y !== 'undefined') str += ' ' + y
+
+  return str
+}
+
+function qrToPath (data, size, margin) {
+  var path = ''
+  var moveBy = 0
+  var newRow = false
+  var lineLength = 0
+
+  for (var i = 0; i < data.length; i++) {
+    var col = Math.floor(i % size)
+    var row = Math.floor(i / size)
+
+    if (!col && !newRow) newRow = true
+
+    if (data[i]) {
+      lineLength++
+
+      if (!(i > 0 && col > 0 && data[i - 1])) {
+        path += newRow
+          ? svgCmd('M', col + margin, 0.5 + row + margin)
+          : svgCmd('m', moveBy, 0)
+
+        moveBy = 0
+        newRow = false
+      }
+
+      if (!(col + 1 < size && data[i + 1])) {
+        path += svgCmd('h', lineLength)
+        lineLength = 0
+      }
+    } else {
+      moveBy++
+    }
+  }
+
+  return path
+}
+
+exports.render = function render (qrData, options, cb) {
+  var opts = Utils.getOptions(options)
+  var size = qrData.modules.size
+  var data = qrData.modules.data
+  var qrcodesize = size + opts.margin * 2
+
+  var bg = !opts.color.light.a
+    ? ''
+    : '<path ' + getColorAttrib(opts.color.light, 'fill') +
+      ' d="M0 0h' + qrcodesize + 'v' + qrcodesize + 'H0z"/>'
+
+  var path =
+    '<path ' + getColorAttrib(opts.color.dark, 'stroke') +
+    ' d="' + qrToPath(data, size, opts.margin) + '"/>'
+
+  var viewBox = 'viewBox="' + '0 0 ' + qrcodesize + ' ' + qrcodesize + '"'
+
+  var width = !opts.width ? '' : 'width="' + opts.width + '" height="' + opts.width + '" '
+
+  var svgTag = '<svg xmlns="http://www.w3.org/2000/svg" ' + width + viewBox + ' shape-rendering="crispEdges">' + bg + path + '</svg>\n'
+
+  if (typeof cb === 'function') {
+    cb(null, svgTag)
+  }
+
+  return svgTag
+}
+
+
+/***/ }),
+
+/***/ "51db":
+/***/ (function(module, exports, __webpack_require__) {
+
+var shared = __webpack_require__("a0c8");
+var uid = __webpack_require__("ba70");
+
+var keys = shared('keys');
+
+module.exports = function (key) {
+  return keys[key] || (keys[key] = uid(key));
+};
+
+
+/***/ }),
+
+/***/ "548c":
+/***/ (function(module, exports) {
+
+var ceil = Math.ceil;
+var floor = Math.floor;
+
+// `ToInteger` abstract operation
+// https://tc39.github.io/ecma262/#sec-tointeger
+module.exports = function (argument) {
+  return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
+};
+
+
+/***/ }),
+
+/***/ "5538":
+/***/ (function(module, exports) {
+
+function hex2rgba (hex) {
+  if (typeof hex === 'number') {
+    hex = hex.toString()
+  }
+
+  if (typeof hex !== 'string') {
+    throw new Error('Color should be defined as hex string')
+  }
+
+  var hexCode = hex.slice().replace('#', '').split('')
+  if (hexCode.length < 3 || hexCode.length === 5 || hexCode.length > 8) {
+    throw new Error('Invalid hex color: ' + hex)
+  }
+
+  // Convert from short to long form (fff -> ffffff)
+  if (hexCode.length === 3 || hexCode.length === 4) {
+    hexCode = Array.prototype.concat.apply([], hexCode.map(function (c) {
+      return [c, c]
+    }))
+  }
+
+  // Add default alpha value
+  if (hexCode.length === 6) hexCode.push('F', 'F')
+
+  var hexValue = parseInt(hexCode.join(''), 16)
+
+  return {
+    r: (hexValue >> 24) & 255,
+    g: (hexValue >> 16) & 255,
+    b: (hexValue >> 8) & 255,
+    a: hexValue & 255,
+    hex: '#' + hexCode.slice(0, 6).join('')
+  }
+}
+
+exports.getOptions = function getOptions (options) {
+  if (!options) options = {}
+  if (!options.color) options.color = {}
+
+  var margin = typeof options.margin === 'undefined' ||
+    options.margin === null ||
+    options.margin < 0 ? 4 : options.margin
+
+  var width = options.width && options.width >= 21 ? options.width : undefined
+  var scale = options.scale || 4
+
+  return {
+    width: width,
+    scale: width ? 4 : scale,
+    margin: margin,
+    color: {
+      dark: hex2rgba(options.color.dark || '#000000ff'),
+      light: hex2rgba(options.color.light || '#ffffffff')
+    },
+    type: options.type,
+    rendererOpts: options.rendererOpts || {}
+  }
+}
+
+exports.getScale = function getScale (qrSize, opts) {
+  return opts.width && opts.width >= qrSize + opts.margin * 2
+    ? opts.width / (qrSize + opts.margin * 2)
+    : opts.scale
+}
+
+exports.getImageWidth = function getImageWidth (qrSize, opts) {
+  var scale = exports.getScale(qrSize, opts)
+  return Math.floor((qrSize + opts.margin * 2) * scale)
+}
+
+exports.qrToImageData = function qrToImageData (imgData, qr, opts) {
+  var size = qr.modules.size
+  var data = qr.modules.data
+  var scale = exports.getScale(size, opts)
+  var symbolSize = Math.floor((size + opts.margin * 2) * scale)
+  var scaledMargin = opts.margin * scale
+  var palette = [opts.color.light, opts.color.dark]
+
+  for (var i = 0; i < symbolSize; i++) {
+    for (var j = 0; j < symbolSize; j++) {
+      var posDst = (i * symbolSize + j) * 4
+      var pxColor = opts.color.light
+
+      if (i >= scaledMargin && j >= scaledMargin &&
+        i < symbolSize - scaledMargin && j < symbolSize - scaledMargin) {
+        var iSrc = Math.floor((i - scaledMargin) / scale)
+        var jSrc = Math.floor((j - scaledMargin) / scale)
+        pxColor = palette[data[iSrc * size + jSrc] ? 1 : 0]
+      }
+
+      imgData[posDst++] = pxColor.r
+      imgData[posDst++] = pxColor.g
+      imgData[posDst++] = pxColor.b
+      imgData[posDst] = pxColor.a
+    }
+  }
+}
+
+
+/***/ }),
+
+/***/ "5b3b":
+/***/ (function(module, exports, __webpack_require__) {
+
+var BufferUtil = __webpack_require__("ebb4")
+var Utils = __webpack_require__("c811")
+var ECLevel = __webpack_require__("1024")
+var BitBuffer = __webpack_require__("2f12")
+var BitMatrix = __webpack_require__("d7cf")
+var AlignmentPattern = __webpack_require__("3ea4")
+var FinderPattern = __webpack_require__("1e72")
+var MaskPattern = __webpack_require__("3a93")
+var ECCode = __webpack_require__("9f0b")
+var ReedSolomonEncoder = __webpack_require__("c022")
+var Version = __webpack_require__("651d")
+var FormatInfo = __webpack_require__("0269")
+var Mode = __webpack_require__("2600")
+var Segments = __webpack_require__("891a")
+var isArray = __webpack_require__("07d3")
+
+/**
+ * QRCode for JavaScript
+ *
+ * modified by Ryan Day for nodejs support
+ * Copyright (c) 2011 Ryan Day
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+//---------------------------------------------------------------------
+// QRCode for JavaScript
+//
+// Copyright (c) 2009 Kazuhiko Arase
+//
+// URL: http://www.d-project.com/
+//
+// Licensed under the MIT license:
+//   http://www.opensource.org/licenses/mit-license.php
+//
+// The word "QR Code" is registered trademark of
+// DENSO WAVE INCORPORATED
+//   http://www.denso-wave.com/qrcode/faqpatent-e.html
+//
+//---------------------------------------------------------------------
+*/
+
+/**
+ * Add finder patterns bits to matrix
+ *
+ * @param  {BitMatrix} matrix  Modules matrix
+ * @param  {Number}    version QR Code version
+ */
+function setupFinderPattern (matrix, version) {
+  var size = matrix.size
+  var pos = FinderPattern.getPositions(version)
+
+  for (var i = 0; i < pos.length; i++) {
+    var row = pos[i][0]
+    var col = pos[i][1]
+
+    for (var r = -1; r <= 7; r++) {
+      if (row + r <= -1 || size <= row + r) continue
+
+      for (var c = -1; c <= 7; c++) {
+        if (col + c <= -1 || size <= col + c) continue
+
+        if ((r >= 0 && r <= 6 && (c === 0 || c === 6)) ||
+          (c >= 0 && c <= 6 && (r === 0 || r === 6)) ||
+          (r >= 2 && r <= 4 && c >= 2 && c <= 4)) {
+          matrix.set(row + r, col + c, true, true)
+        } else {
+          matrix.set(row + r, col + c, false, true)
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Add timing pattern bits to matrix
+ *
+ * Note: this function must be called before {@link setupAlignmentPattern}
+ *
+ * @param  {BitMatrix} matrix Modules matrix
+ */
+function setupTimingPattern (matrix) {
+  var size = matrix.size
+
+  for (var r = 8; r < size - 8; r++) {
+    var value = r % 2 === 0
+    matrix.set(r, 6, value, true)
+    matrix.set(6, r, value, true)
+  }
+}
+
+/**
+ * Add alignment patterns bits to matrix
+ *
+ * Note: this function must be called after {@link setupTimingPattern}
+ *
+ * @param  {BitMatrix} matrix  Modules matrix
+ * @param  {Number}    version QR Code version
+ */
+function setupAlignmentPattern (matrix, version) {
+  var pos = AlignmentPattern.getPositions(version)
+
+  for (var i = 0; i < pos.length; i++) {
+    var row = pos[i][0]
+    var col = pos[i][1]
+
+    for (var r = -2; r <= 2; r++) {
+      for (var c = -2; c <= 2; c++) {
+        if (r === -2 || r === 2 || c === -2 || c === 2 ||
+          (r === 0 && c === 0)) {
+          matrix.set(row + r, col + c, true, true)
+        } else {
+          matrix.set(row + r, col + c, false, true)
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Add version info bits to matrix
+ *
+ * @param  {BitMatrix} matrix  Modules matrix
+ * @param  {Number}    version QR Code version
+ */
+function setupVersionInfo (matrix, version) {
+  var size = matrix.size
+  var bits = Version.getEncodedBits(version)
+  var row, col, mod
+
+  for (var i = 0; i < 18; i++) {
+    row = Math.floor(i / 3)
+    col = i % 3 + size - 8 - 3
+    mod = ((bits >> i) & 1) === 1
+
+    matrix.set(row, col, mod, true)
+    matrix.set(col, row, mod, true)
+  }
+}
+
+/**
+ * Add format info bits to matrix
+ *
+ * @param  {BitMatrix} matrix               Modules matrix
+ * @param  {ErrorCorrectionLevel}    errorCorrectionLevel Error correction level
+ * @param  {Number}    maskPattern          Mask pattern reference value
+ */
+function setupFormatInfo (matrix, errorCorrectionLevel, maskPattern) {
+  var size = matrix.size
+  var bits = FormatInfo.getEncodedBits(errorCorrectionLevel, maskPattern)
+  var i, mod
+
+  for (i = 0; i < 15; i++) {
+    mod = ((bits >> i) & 1) === 1
+
+    // vertical
+    if (i < 6) {
+      matrix.set(i, 8, mod, true)
+    } else if (i < 8) {
+      matrix.set(i + 1, 8, mod, true)
+    } else {
+      matrix.set(size - 15 + i, 8, mod, true)
+    }
+
+    // horizontal
+    if (i < 8) {
+      matrix.set(8, size - i - 1, mod, true)
+    } else if (i < 9) {
+      matrix.set(8, 15 - i - 1 + 1, mod, true)
+    } else {
+      matrix.set(8, 15 - i - 1, mod, true)
+    }
+  }
+
+  // fixed module
+  matrix.set(size - 8, 8, 1, true)
+}
+
+/**
+ * Add encoded data bits to matrix
+ *
+ * @param  {BitMatrix} matrix Modules matrix
+ * @param  {Buffer}    data   Data codewords
+ */
+function setupData (matrix, data) {
+  var size = matrix.size
+  var inc = -1
+  var row = size - 1
+  var bitIndex = 7
+  var byteIndex = 0
+
+  for (var col = size - 1; col > 0; col -= 2) {
+    if (col === 6) col--
+
+    while (true) {
+      for (var c = 0; c < 2; c++) {
+        if (!matrix.isReserved(row, col - c)) {
+          var dark = false
+
+          if (byteIndex < data.length) {
+            dark = (((data[byteIndex] >>> bitIndex) & 1) === 1)
+          }
+
+          matrix.set(row, col - c, dark)
+          bitIndex--
+
+          if (bitIndex === -1) {
+            byteIndex++
+            bitIndex = 7
+          }
+        }
+      }
+
+      row += inc
+
+      if (row < 0 || size <= row) {
+        row -= inc
+        inc = -inc
+        break
+      }
+    }
+  }
+}
+
+/**
+ * Create encoded codewords from data input
+ *
+ * @param  {Number}   version              QR Code version
+ * @param  {ErrorCorrectionLevel}   errorCorrectionLevel Error correction level
+ * @param  {ByteData} data                 Data input
+ * @return {Buffer}                        Buffer containing encoded codewords
+ */
+function createData (version, errorCorrectionLevel, segments) {
+  // Prepare data buffer
+  var buffer = new BitBuffer()
+
+  segments.forEach(function (data) {
+    // prefix data with mode indicator (4 bits)
+    buffer.put(data.mode.bit, 4)
+
+    // Prefix data with character count indicator.
+    // The character count indicator is a string of bits that represents the
+    // number of characters that are being encoded.
+    // The character count indicator must be placed after the mode indicator
+    // and must be a certain number of bits long, depending on the QR version
+    // and data mode
+    // @see {@link Mode.getCharCountIndicator}.
+    buffer.put(data.getLength(), Mode.getCharCountIndicator(data.mode, version))
+
+    // add binary data sequence to buffer
+    data.write(buffer)
+  })
+
+  // Calculate required number of bits
+  var totalCodewords = Utils.getSymbolTotalCodewords(version)
+  var ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel)
+  var dataTotalCodewordsBits = (totalCodewords - ecTotalCodewords) * 8
+
+  // Add a terminator.
+  // If the bit string is shorter than the total number of required bits,
+  // a terminator of up to four 0s must be added to the right side of the string.
+  // If the bit string is more than four bits shorter than the required number of bits,
+  // add four 0s to the end.
+  if (buffer.getLengthInBits() + 4 <= dataTotalCodewordsBits) {
+    buffer.put(0, 4)
+  }
+
+  // If the bit string is fewer than four bits shorter, add only the number of 0s that
+  // are needed to reach the required number of bits.
+
+  // After adding the terminator, if the number of bits in the string is not a multiple of 8,
+  // pad the string on the right with 0s to make the string's length a multiple of 8.
+  while (buffer.getLengthInBits() % 8 !== 0) {
+    buffer.putBit(0)
+  }
+
+  // Add pad bytes if the string is still shorter than the total number of required bits.
+  // Extend the buffer to fill the data capacity of the symbol corresponding to
+  // the Version and Error Correction Level by adding the Pad Codewords 11101100 (0xEC)
+  // and 00010001 (0x11) alternately.
+  var remainingByte = (dataTotalCodewordsBits - buffer.getLengthInBits()) / 8
+  for (var i = 0; i < remainingByte; i++) {
+    buffer.put(i % 2 ? 0x11 : 0xEC, 8)
+  }
+
+  return createCodewords(buffer, version, errorCorrectionLevel)
+}
+
+/**
+ * Encode input data with Reed-Solomon and return codewords with
+ * relative error correction bits
+ *
+ * @param  {BitBuffer} bitBuffer            Data to encode
+ * @param  {Number}    version              QR Code version
+ * @param  {ErrorCorrectionLevel} errorCorrectionLevel Error correction level
+ * @return {Buffer}                         Buffer containing encoded codewords
+ */
+function createCodewords (bitBuffer, version, errorCorrectionLevel) {
+  // Total codewords for this QR code version (Data + Error correction)
+  var totalCodewords = Utils.getSymbolTotalCodewords(version)
+
+  // Total number of error correction codewords
+  var ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel)
+
+  // Total number of data codewords
+  var dataTotalCodewords = totalCodewords - ecTotalCodewords
+
+  // Total number of blocks
+  var ecTotalBlocks = ECCode.getBlocksCount(version, errorCorrectionLevel)
+
+  // Calculate how many blocks each group should contain
+  var blocksInGroup2 = totalCodewords % ecTotalBlocks
+  var blocksInGroup1 = ecTotalBlocks - blocksInGroup2
+
+  var totalCodewordsInGroup1 = Math.floor(totalCodewords / ecTotalBlocks)
+
+  var dataCodewordsInGroup1 = Math.floor(dataTotalCodewords / ecTotalBlocks)
+  var dataCodewordsInGroup2 = dataCodewordsInGroup1 + 1
+
+  // Number of EC codewords is the same for both groups
+  var ecCount = totalCodewordsInGroup1 - dataCodewordsInGroup1
+
+  // Initialize a Reed-Solomon encoder with a generator polynomial of degree ecCount
+  var rs = new ReedSolomonEncoder(ecCount)
+
+  var offset = 0
+  var dcData = new Array(ecTotalBlocks)
+  var ecData = new Array(ecTotalBlocks)
+  var maxDataSize = 0
+  var buffer = BufferUtil.from(bitBuffer.buffer)
+
+  // Divide the buffer into the required number of blocks
+  for (var b = 0; b < ecTotalBlocks; b++) {
+    var dataSize = b < blocksInGroup1 ? dataCodewordsInGroup1 : dataCodewordsInGroup2
+
+    // extract a block of data from buffer
+    dcData[b] = buffer.slice(offset, offset + dataSize)
+
+    // Calculate EC codewords for this data block
+    ecData[b] = rs.encode(dcData[b])
+
+    offset += dataSize
+    maxDataSize = Math.max(maxDataSize, dataSize)
+  }
+
+  // Create final data
+  // Interleave the data and error correction codewords from each block
+  var data = BufferUtil.alloc(totalCodewords)
+  var index = 0
+  var i, r
+
+  // Add data codewords
+  for (i = 0; i < maxDataSize; i++) {
+    for (r = 0; r < ecTotalBlocks; r++) {
+      if (i < dcData[r].length) {
+        data[index++] = dcData[r][i]
+      }
+    }
+  }
+
+  // Apped EC codewords
+  for (i = 0; i < ecCount; i++) {
+    for (r = 0; r < ecTotalBlocks; r++) {
+      data[index++] = ecData[r][i]
+    }
+  }
+
+  return data
+}
+
+/**
+ * Build QR Code symbol
+ *
+ * @param  {String} data                 Input string
+ * @param  {Number} version              QR Code version
+ * @param  {ErrorCorretionLevel} errorCorrectionLevel Error level
+ * @param  {MaskPattern} maskPattern     Mask pattern
+ * @return {Object}                      Object containing symbol data
+ */
+function createSymbol (data, version, errorCorrectionLevel, maskPattern) {
+  var segments
+
+  if (isArray(data)) {
+    segments = Segments.fromArray(data)
+  } else if (typeof data === 'string') {
+    var estimatedVersion = version
+
+    if (!estimatedVersion) {
+      var rawSegments = Segments.rawSplit(data)
+
+      // Estimate best version that can contain raw splitted segments
+      estimatedVersion = Version.getBestVersionForData(rawSegments,
+        errorCorrectionLevel)
+    }
+
+    // Build optimized segments
+    // If estimated version is undefined, try with the highest version
+    segments = Segments.fromString(data, estimatedVersion || 40)
+  } else {
+    throw new Error('Invalid data')
+  }
+
+  // Get the min version that can contain data
+  var bestVersion = Version.getBestVersionForData(segments,
+      errorCorrectionLevel)
+
+  // If no version is found, data cannot be stored
+  if (!bestVersion) {
+    throw new Error('The amount of data is too big to be stored in a QR Code')
+  }
+
+  // If not specified, use min version as default
+  if (!version) {
+    version = bestVersion
+
+  // Check if the specified version can contain the data
+  } else if (version < bestVersion) {
+    throw new Error('\n' +
+      'The chosen QR Code version cannot contain this amount of data.\n' +
+      'Minimum version required to store current data is: ' + bestVersion + '.\n'
+    )
+  }
+
+  var dataBits = createData(version, errorCorrectionLevel, segments)
+
+  // Allocate matrix buffer
+  var moduleCount = Utils.getSymbolSize(version)
+  var modules = new BitMatrix(moduleCount)
+
+  // Add function modules
+  setupFinderPattern(modules, version)
+  setupTimingPattern(modules)
+  setupAlignmentPattern(modules, version)
+
+  // Add temporary dummy bits for format info just to set them as reserved.
+  // This is needed to prevent these bits from being masked by {@link MaskPattern.applyMask}
+  // since the masking operation must be performed only on the encoding region.
+  // These blocks will be replaced with correct values later in code.
+  setupFormatInfo(modules, errorCorrectionLevel, 0)
+
+  if (version >= 7) {
+    setupVersionInfo(modules, version)
+  }
+
+  // Add data codewords
+  setupData(modules, dataBits)
+
+  if (isNaN(maskPattern)) {
+    // Find best mask pattern
+    maskPattern = MaskPattern.getBestMask(modules,
+      setupFormatInfo.bind(null, modules, errorCorrectionLevel))
+  }
+
+  // Apply mask pattern
+  MaskPattern.applyMask(maskPattern, modules)
+
+  // Replace format info bits with correct values
+  setupFormatInfo(modules, errorCorrectionLevel, maskPattern)
+
+  return {
+    modules: modules,
+    version: version,
+    errorCorrectionLevel: errorCorrectionLevel,
+    maskPattern: maskPattern,
+    segments: segments
+  }
+}
+
+/**
+ * QR Code
+ *
+ * @param {String | Array} data                 Input data
+ * @param {Object} options                      Optional configurations
+ * @param {Number} options.version              QR Code version
+ * @param {String} options.errorCorrectionLevel Error correction level
+ * @param {Function} options.toSJISFunc         Helper func to convert utf8 to sjis
+ */
+exports.create = function create (data, options) {
+  if (typeof data === 'undefined' || data === '') {
+    throw new Error('No input text')
+  }
+
+  var errorCorrectionLevel = ECLevel.M
+  var version
+  var mask
+
+  if (typeof options !== 'undefined') {
+    // Use higher error correction level as default
+    errorCorrectionLevel = ECLevel.from(options.errorCorrectionLevel, ECLevel.M)
+    version = Version.from(options.version)
+    mask = MaskPattern.from(options.maskPattern)
+
+    if (options.toSJISFunc) {
+      Utils.setToSJISFunction(options.toSJISFunc)
+    }
+  }
+
+  return createSymbol(data, version, errorCorrectionLevel, mask)
+}
+
+
+/***/ }),
+
+/***/ "5d88":
+/***/ (function(module, exports) {
+
+exports.read = function (buffer, offset, isLE, mLen, nBytes) {
+  var e, m
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var nBits = -7
+  var i = isLE ? (nBytes - 1) : 0
+  var d = isLE ? -1 : 1
+  var s = buffer[offset + i]
+
+  i += d
+
+  e = s & ((1 << (-nBits)) - 1)
+  s >>= (-nBits)
+  nBits += eLen
+  for (; nBits > 0; e = (e * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  m = e & ((1 << (-nBits)) - 1)
+  e >>= (-nBits)
+  nBits += mLen
+  for (; nBits > 0; m = (m * 256) + buffer[offset + i], i += d, nBits -= 8) {}
+
+  if (e === 0) {
+    e = 1 - eBias
+  } else if (e === eMax) {
+    return m ? NaN : ((s ? -1 : 1) * Infinity)
+  } else {
+    m = m + Math.pow(2, mLen)
+    e = e - eBias
+  }
+  return (s ? -1 : 1) * m * Math.pow(2, e - mLen)
+}
+
+exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
+  var e, m, c
+  var eLen = (nBytes * 8) - mLen - 1
+  var eMax = (1 << eLen) - 1
+  var eBias = eMax >> 1
+  var rt = (mLen === 23 ? Math.pow(2, -24) - Math.pow(2, -77) : 0)
+  var i = isLE ? 0 : (nBytes - 1)
+  var d = isLE ? 1 : -1
+  var s = value < 0 || (value === 0 && 1 / value < 0) ? 1 : 0
+
+  value = Math.abs(value)
+
+  if (isNaN(value) || value === Infinity) {
+    m = isNaN(value) ? 1 : 0
+    e = eMax
+  } else {
+    e = Math.floor(Math.log(value) / Math.LN2)
+    if (value * (c = Math.pow(2, -e)) < 1) {
+      e--
+      c *= 2
+    }
+    if (e + eBias >= 1) {
+      value += rt / c
+    } else {
+      value += rt * Math.pow(2, 1 - eBias)
+    }
+    if (value * c >= 2) {
+      e++
+      c /= 2
+    }
+
+    if (e + eBias >= eMax) {
+      m = 0
+      e = eMax
+    } else if (e + eBias >= 1) {
+      m = ((value * c) - 1) * Math.pow(2, mLen)
+      e = e + eBias
+    } else {
+      m = value * Math.pow(2, eBias - 1) * Math.pow(2, mLen)
+      e = 0
+    }
+  }
+
+  for (; mLen >= 8; buffer[offset + i] = m & 0xff, i += d, m /= 256, mLen -= 8) {}
+
+  e = (e << mLen) | m
+  eLen += mLen
+  for (; eLen > 0; buffer[offset + i] = e & 0xff, i += d, e /= 256, eLen -= 8) {}
+
+  buffer[offset + i - d] |= s * 128
+}
+
+
+/***/ }),
+
+/***/ "6263":
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__("6eb5");
+
+// `ToPrimitive` abstract operation
+// https://tc39.github.io/ecma262/#sec-toprimitive
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (input, PREFERRED_STRING) {
+  if (!isObject(input)) return input;
+  var fn, val;
+  if (PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
+  if (typeof (fn = input.valueOf) == 'function' && !isObject(val = fn.call(input))) return val;
+  if (!PREFERRED_STRING && typeof (fn = input.toString) == 'function' && !isObject(val = fn.call(input))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+
+/***/ "651d":
+/***/ (function(module, exports, __webpack_require__) {
+
+var Utils = __webpack_require__("c811")
+var ECCode = __webpack_require__("9f0b")
+var ECLevel = __webpack_require__("1024")
+var Mode = __webpack_require__("2600")
+var VersionCheck = __webpack_require__("a77a")
+var isArray = __webpack_require__("07d3")
+
+// Generator polynomial used to encode version information
+var G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0)
+var G18_BCH = Utils.getBCHDigit(G18)
+
+function getBestVersionForDataLength (mode, length, errorCorrectionLevel) {
+  for (var currentVersion = 1; currentVersion <= 40; currentVersion++) {
+    if (length <= exports.getCapacity(currentVersion, errorCorrectionLevel, mode)) {
+      return currentVersion
+    }
+  }
+
+  return undefined
+}
+
+function getReservedBitsCount (mode, version) {
+  // Character count indicator + mode indicator bits
+  return Mode.getCharCountIndicator(mode, version) + 4
+}
+
+function getTotalBitsFromDataArray (segments, version) {
+  var totalBits = 0
+
+  segments.forEach(function (data) {
+    var reservedBits = getReservedBitsCount(data.mode, version)
+    totalBits += reservedBits + data.getBitsLength()
+  })
+
+  return totalBits
+}
+
+function getBestVersionForMixedData (segments, errorCorrectionLevel) {
+  for (var currentVersion = 1; currentVersion <= 40; currentVersion++) {
+    var length = getTotalBitsFromDataArray(segments, currentVersion)
+    if (length <= exports.getCapacity(currentVersion, errorCorrectionLevel, Mode.MIXED)) {
+      return currentVersion
+    }
+  }
+
+  return undefined
+}
+
+/**
+ * Returns version number from a value.
+ * If value is not a valid version, returns defaultValue
+ *
+ * @param  {Number|String} value        QR Code version
+ * @param  {Number}        defaultValue Fallback value
+ * @return {Number}                     QR Code version number
+ */
+exports.from = function from (value, defaultValue) {
+  if (VersionCheck.isValid(value)) {
+    return parseInt(value, 10)
+  }
+
+  return defaultValue
+}
+
+/**
+ * Returns how much data can be stored with the specified QR code version
+ * and error correction level
+ *
+ * @param  {Number} version              QR Code version (1-40)
+ * @param  {Number} errorCorrectionLevel Error correction level
+ * @param  {Mode}   mode                 Data mode
+ * @return {Number}                      Quantity of storable data
+ */
+exports.getCapacity = function getCapacity (version, errorCorrectionLevel, mode) {
+  if (!VersionCheck.isValid(version)) {
+    throw new Error('Invalid QR Code version')
+  }
+
+  // Use Byte mode as default
+  if (typeof mode === 'undefined') mode = Mode.BYTE
+
+  // Total codewords for this QR code version (Data + Error correction)
+  var totalCodewords = Utils.getSymbolTotalCodewords(version)
+
+  // Total number of error correction codewords
+  var ecTotalCodewords = ECCode.getTotalCodewordsCount(version, errorCorrectionLevel)
+
+  // Total number of data codewords
+  var dataTotalCodewordsBits = (totalCodewords - ecTotalCodewords) * 8
+
+  if (mode === Mode.MIXED) return dataTotalCodewordsBits
+
+  var usableBits = dataTotalCodewordsBits - getReservedBitsCount(mode, version)
+
+  // Return max number of storable codewords
+  switch (mode) {
+    case Mode.NUMERIC:
+      return Math.floor((usableBits / 10) * 3)
+
+    case Mode.ALPHANUMERIC:
+      return Math.floor((usableBits / 11) * 2)
+
+    case Mode.KANJI:
+      return Math.floor(usableBits / 13)
+
+    case Mode.BYTE:
+    default:
+      return Math.floor(usableBits / 8)
+  }
+}
+
+/**
+ * Returns the minimum version needed to contain the amount of data
+ *
+ * @param  {Segment} data                    Segment of data
+ * @param  {Number} [errorCorrectionLevel=H] Error correction level
+ * @param  {Mode} mode                       Data mode
+ * @return {Number}                          QR Code version
+ */
+exports.getBestVersionForData = function getBestVersionForData (data, errorCorrectionLevel) {
+  var seg
+
+  var ecl = ECLevel.from(errorCorrectionLevel, ECLevel.M)
+
+  if (isArray(data)) {
+    if (data.length > 1) {
+      return getBestVersionForMixedData(data, ecl)
+    }
+
+    if (data.length === 0) {
+      return 1
+    }
+
+    seg = data[0]
+  } else {
+    seg = data
+  }
+
+  return getBestVersionForDataLength(seg.mode, seg.getLength(), ecl)
+}
+
+/**
+ * Returns version information with relative error correction bits
+ *
+ * The version information is included in QR Code symbols of version 7 or larger.
+ * It consists of an 18-bit sequence containing 6 data bits,
+ * with 12 error correction bits calculated using the (18, 6) Golay code.
+ *
+ * @param  {Number} version QR Code version
+ * @return {Number}         Encoded version info bits
+ */
+exports.getEncodedBits = function getEncodedBits (version) {
+  if (!VersionCheck.isValid(version) || version < 7) {
+    throw new Error('Invalid QR Code version')
+  }
+
+  var d = version << 12
+
+  while (Utils.getBCHDigit(d) - G18_BCH >= 0) {
+    d ^= (G18 << (Utils.getBCHDigit(d) - G18_BCH))
+  }
+
+  return (version << 12) | d
+}
+
+
+/***/ }),
+
+/***/ "66f4":
+/***/ (function(module, exports) {
+
+var hasOwnProperty = {}.hasOwnProperty;
+
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+
+/***/ }),
+
+/***/ "678b":
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
+
+
+/***/ }),
+
+/***/ "6d3d":
+/***/ (function(module, exports, __webpack_require__) {
+
+var BufferUtil = __webpack_require__("ebb4")
+var GF = __webpack_require__("afd9")
+
+/**
+ * Multiplies two polynomials inside Galois Field
+ *
+ * @param  {Buffer} p1 Polynomial
+ * @param  {Buffer} p2 Polynomial
+ * @return {Buffer}    Product of p1 and p2
+ */
+exports.mul = function mul (p1, p2) {
+  var coeff = BufferUtil.alloc(p1.length + p2.length - 1)
+
+  for (var i = 0; i < p1.length; i++) {
+    for (var j = 0; j < p2.length; j++) {
+      coeff[i + j] ^= GF.mul(p1[i], p2[j])
+    }
+  }
+
+  return coeff
+}
+
+/**
+ * Calculate the remainder of polynomials division
+ *
+ * @param  {Buffer} divident Polynomial
+ * @param  {Buffer} divisor  Polynomial
+ * @return {Buffer}          Remainder
+ */
+exports.mod = function mod (divident, divisor) {
+  var result = BufferUtil.from(divident)
+
+  while ((result.length - divisor.length) >= 0) {
+    var coeff = result[0]
+
+    for (var i = 0; i < divisor.length; i++) {
+      result[i] ^= GF.mul(divisor[i], coeff)
+    }
+
+    // remove all zeros from buffer head
+    var offset = 0
+    while (offset < result.length && result[offset] === 0) offset++
+    result = result.slice(offset)
+  }
+
+  return result
+}
+
+/**
+ * Generate an irreducible generator polynomial of specified degree
+ * (used by Reed-Solomon encoder)
+ *
+ * @param  {Number} degree Degree of the generator polynomial
+ * @return {Buffer}        Buffer containing polynomial coefficients
+ */
+exports.generateECPolynomial = function generateECPolynomial (degree) {
+  var poly = BufferUtil.from([1])
+  for (var i = 0; i < degree; i++) {
+    poly = exports.mul(poly, [1, GF.exp(i)])
+  }
+
+  return poly
+}
+
+
+/***/ }),
+
+/***/ "6eb5":
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+
+/***/ "7234":
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || new Function("return this")();
+} catch (e) {
+	// This works if the window reference is available
+	if (typeof window === "object") g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ "7235":
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mode = __webpack_require__("2600")
+var Utils = __webpack_require__("c811")
+
+function KanjiData (data) {
+  this.mode = Mode.KANJI
+  this.data = data
+}
+
+KanjiData.getBitsLength = function getBitsLength (length) {
+  return length * 13
+}
+
+KanjiData.prototype.getLength = function getLength () {
+  return this.data.length
+}
+
+KanjiData.prototype.getBitsLength = function getBitsLength () {
+  return KanjiData.getBitsLength(this.data.length)
+}
+
+KanjiData.prototype.write = function (bitBuffer) {
+  var i
+
+  // In the Shift JIS system, Kanji characters are represented by a two byte combination.
+  // These byte values are shifted from the JIS X 0208 values.
+  // JIS X 0208 gives details of the shift coded representation.
+  for (i = 0; i < this.data.length; i++) {
+    var value = Utils.toSJIS(this.data[i])
+
+    // For characters with Shift JIS values from 0x8140 to 0x9FFC:
+    if (value >= 0x8140 && value <= 0x9FFC) {
+      // Subtract 0x8140 from Shift JIS value
+      value -= 0x8140
+
+    // For characters with Shift JIS values from 0xE040 to 0xEBBF
+    } else if (value >= 0xE040 && value <= 0xEBBF) {
+      // Subtract 0xC140 from Shift JIS value
+      value -= 0xC140
+    } else {
+      throw new Error(
+        'Invalid SJIS character: ' + this.data[i] + '\n' +
+        'Make sure your charset is UTF-8')
+    }
+
+    // Multiply most significant byte of result by 0xC0
+    // and add least significant byte to product
+    value = (((value >>> 8) & 0xff) * 0xC0) + (value & 0xff)
+
+    // Convert result to a 13-bit binary string
+    bitBuffer.put(value, 13)
+  }
+}
+
+module.exports = KanjiData
+
+
+/***/ }),
+
+/***/ "7238":
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__("a548");
+var aPossiblePrototype = __webpack_require__("e06c");
+
+// `Object.setPrototypeOf` method
+// https://tc39.github.io/ecma262/#sec-object.setprototypeof
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+/* eslint-disable no-proto */
+module.exports = Object.setPrototypeOf || ('__proto__' in {} ? function () {
+  var CORRECT_SETTER = false;
+  var test = {};
+  var setter;
+  try {
+    setter = Object.getOwnPropertyDescriptor(Object.prototype, '__proto__').set;
+    setter.call(test, []);
+    CORRECT_SETTER = test instanceof Array;
+  } catch (error) { /* empty */ }
+  return function setPrototypeOf(O, proto) {
+    anObject(O);
+    aPossiblePrototype(proto);
+    if (CORRECT_SETTER) setter.call(O, proto);
+    else O.__proto__ = proto;
+    return O;
+  };
+}() : undefined);
+
+
+/***/ }),
+
+/***/ "7355":
+/***/ (function(module, exports) {
+
+module.exports = false;
+
+
+/***/ }),
+
+/***/ "78b6":
+/***/ (function(module, exports, __webpack_require__) {
+
+var NATIVE_SYMBOL = __webpack_require__("c763");
+
+module.exports = NATIVE_SYMBOL
+  // eslint-disable-next-line no-undef
+  && !Symbol.sham
+  // eslint-disable-next-line no-undef
+  && typeof Symbol.iterator == 'symbol';
+
+
+/***/ }),
+
+/***/ "7b8c":
+/***/ (function(module, exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__("f402");
+var IE8_DOM_DEFINE = __webpack_require__("ccfc");
+var anObject = __webpack_require__("a548");
+var toPrimitive = __webpack_require__("6263");
+
+var nativeDefineProperty = Object.defineProperty;
+
+// `Object.defineProperty` method
+// https://tc39.github.io/ecma262/#sec-object.defineproperty
+exports.f = DESCRIPTORS ? nativeDefineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return nativeDefineProperty(O, P, Attributes);
+  } catch (error) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+
+/***/ }),
+
+/***/ "7e15":
+/***/ (function(module, exports, __webpack_require__) {
+
+var BufferUtil = __webpack_require__("ebb4")
+var Mode = __webpack_require__("2600")
+
+function ByteData (data) {
+  this.mode = Mode.BYTE
+  this.data = BufferUtil.from(data)
+}
+
+ByteData.getBitsLength = function getBitsLength (length) {
+  return length * 8
+}
+
+ByteData.prototype.getLength = function getLength () {
+  return this.data.length
+}
+
+ByteData.prototype.getBitsLength = function getBitsLength () {
+  return ByteData.getBitsLength(this.data.length)
+}
+
+ByteData.prototype.write = function (bitBuffer) {
+  for (var i = 0, l = this.data.length; i < l; i++) {
+    bitBuffer.put(this.data[i], 8)
+  }
+}
+
+module.exports = ByteData
+
+
+/***/ }),
+
+/***/ "8055":
+/***/ (function(module, exports, __webpack_require__) {
+
+var toInteger = __webpack_require__("548c");
+
+var max = Math.max;
+var min = Math.min;
+
+// Helper for a popular repeating case of the spec:
+// Let integer be ? ToInteger(index).
+// If integer < 0, let result be max((length + integer), 0); else let result be min(integer, length).
+module.exports = function (index, length) {
+  var integer = toInteger(index);
+  return integer < 0 ? max(integer + length, 0) : min(integer, length);
+};
+
+
+/***/ }),
+
+/***/ "83bb":
+/***/ (function(module, exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__("f402");
+var definePropertyModule = __webpack_require__("7b8c");
+var anObject = __webpack_require__("a548");
+var objectKeys = __webpack_require__("08a1");
+
+// `Object.defineProperties` method
+// https://tc39.github.io/ecma262/#sec-object.defineproperties
+module.exports = DESCRIPTORS ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var keys = objectKeys(Properties);
+  var length = keys.length;
+  var index = 0;
+  var key;
+  while (length > index) definePropertyModule.f(O, key = keys[index++], Properties[key]);
+  return O;
+};
+
+
+/***/ }),
+
+/***/ "83e1":
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -6085,6 +4915,1365 @@ module.exports = function (bitmap, value) {
     value: value
   };
 };
+
+
+/***/ }),
+
+/***/ "8611":
+/***/ (function(module, exports, __webpack_require__) {
+
+var toIndexedObject = __webpack_require__("934d");
+var toLength = __webpack_require__("29b0");
+var toAbsoluteIndex = __webpack_require__("8055");
+
+// `Array.prototype.{ indexOf, includes }` methods implementation
+var createMethod = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIndexedObject($this);
+    var length = toLength(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) {
+      if ((IS_INCLUDES || index in O) && O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+
+module.exports = {
+  // `Array.prototype.includes` method
+  // https://tc39.github.io/ecma262/#sec-array.prototype.includes
+  includes: createMethod(true),
+  // `Array.prototype.indexOf` method
+  // https://tc39.github.io/ecma262/#sec-array.prototype.indexof
+  indexOf: createMethod(false)
+};
+
+
+/***/ }),
+
+/***/ "8667":
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__("8d9d");
+var classof = __webpack_require__("0102");
+
+var split = ''.split;
+
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+module.exports = fails(function () {
+  // throws an error in rhino, see https://github.com/mozilla/rhino/issues/346
+  // eslint-disable-next-line no-prototype-builtins
+  return !Object('z').propertyIsEnumerable(0);
+}) ? function (it) {
+  return classof(it) == 'String' ? split.call(it, '') : Object(it);
+} : Object;
+
+
+/***/ }),
+
+/***/ "891a":
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mode = __webpack_require__("2600")
+var NumericData = __webpack_require__("ce0e")
+var AlphanumericData = __webpack_require__("485c")
+var ByteData = __webpack_require__("7e15")
+var KanjiData = __webpack_require__("7235")
+var Regex = __webpack_require__("e4e2")
+var Utils = __webpack_require__("c811")
+var dijkstra = __webpack_require__("3606")
+
+/**
+ * Returns UTF8 byte length
+ *
+ * @param  {String} str Input string
+ * @return {Number}     Number of byte
+ */
+function getStringByteLength (str) {
+  return unescape(encodeURIComponent(str)).length
+}
+
+/**
+ * Get a list of segments of the specified mode
+ * from a string
+ *
+ * @param  {Mode}   mode Segment mode
+ * @param  {String} str  String to process
+ * @return {Array}       Array of object with segments data
+ */
+function getSegments (regex, mode, str) {
+  var segments = []
+  var result
+
+  while ((result = regex.exec(str)) !== null) {
+    segments.push({
+      data: result[0],
+      index: result.index,
+      mode: mode,
+      length: result[0].length
+    })
+  }
+
+  return segments
+}
+
+/**
+ * Extracts a series of segments with the appropriate
+ * modes from a string
+ *
+ * @param  {String} dataStr Input string
+ * @return {Array}          Array of object with segments data
+ */
+function getSegmentsFromString (dataStr) {
+  var numSegs = getSegments(Regex.NUMERIC, Mode.NUMERIC, dataStr)
+  var alphaNumSegs = getSegments(Regex.ALPHANUMERIC, Mode.ALPHANUMERIC, dataStr)
+  var byteSegs
+  var kanjiSegs
+
+  if (Utils.isKanjiModeEnabled()) {
+    byteSegs = getSegments(Regex.BYTE, Mode.BYTE, dataStr)
+    kanjiSegs = getSegments(Regex.KANJI, Mode.KANJI, dataStr)
+  } else {
+    byteSegs = getSegments(Regex.BYTE_KANJI, Mode.BYTE, dataStr)
+    kanjiSegs = []
+  }
+
+  var segs = numSegs.concat(alphaNumSegs, byteSegs, kanjiSegs)
+
+  return segs
+    .sort(function (s1, s2) {
+      return s1.index - s2.index
+    })
+    .map(function (obj) {
+      return {
+        data: obj.data,
+        mode: obj.mode,
+        length: obj.length
+      }
+    })
+}
+
+/**
+ * Returns how many bits are needed to encode a string of
+ * specified length with the specified mode
+ *
+ * @param  {Number} length String length
+ * @param  {Mode} mode     Segment mode
+ * @return {Number}        Bit length
+ */
+function getSegmentBitsLength (length, mode) {
+  switch (mode) {
+    case Mode.NUMERIC:
+      return NumericData.getBitsLength(length)
+    case Mode.ALPHANUMERIC:
+      return AlphanumericData.getBitsLength(length)
+    case Mode.KANJI:
+      return KanjiData.getBitsLength(length)
+    case Mode.BYTE:
+      return ByteData.getBitsLength(length)
+  }
+}
+
+/**
+ * Merges adjacent segments which have the same mode
+ *
+ * @param  {Array} segs Array of object with segments data
+ * @return {Array}      Array of object with segments data
+ */
+function mergeSegments (segs) {
+  return segs.reduce(function (acc, curr) {
+    var prevSeg = acc.length - 1 >= 0 ? acc[acc.length - 1] : null
+    if (prevSeg && prevSeg.mode === curr.mode) {
+      acc[acc.length - 1].data += curr.data
+      return acc
+    }
+
+    acc.push(curr)
+    return acc
+  }, [])
+}
+
+/**
+ * Generates a list of all possible nodes combination which
+ * will be used to build a segments graph.
+ *
+ * Nodes are divided by groups. Each group will contain a list of all the modes
+ * in which is possible to encode the given text.
+ *
+ * For example the text '12345' can be encoded as Numeric, Alphanumeric or Byte.
+ * The group for '12345' will contain then 3 objects, one for each
+ * possible encoding mode.
+ *
+ * Each node represents a possible segment.
+ *
+ * @param  {Array} segs Array of object with segments data
+ * @return {Array}      Array of object with segments data
+ */
+function buildNodes (segs) {
+  var nodes = []
+  for (var i = 0; i < segs.length; i++) {
+    var seg = segs[i]
+
+    switch (seg.mode) {
+      case Mode.NUMERIC:
+        nodes.push([seg,
+          { data: seg.data, mode: Mode.ALPHANUMERIC, length: seg.length },
+          { data: seg.data, mode: Mode.BYTE, length: seg.length }
+        ])
+        break
+      case Mode.ALPHANUMERIC:
+        nodes.push([seg,
+          { data: seg.data, mode: Mode.BYTE, length: seg.length }
+        ])
+        break
+      case Mode.KANJI:
+        nodes.push([seg,
+          { data: seg.data, mode: Mode.BYTE, length: getStringByteLength(seg.data) }
+        ])
+        break
+      case Mode.BYTE:
+        nodes.push([
+          { data: seg.data, mode: Mode.BYTE, length: getStringByteLength(seg.data) }
+        ])
+    }
+  }
+
+  return nodes
+}
+
+/**
+ * Builds a graph from a list of nodes.
+ * All segments in each node group will be connected with all the segments of
+ * the next group and so on.
+ *
+ * At each connection will be assigned a weight depending on the
+ * segment's byte length.
+ *
+ * @param  {Array} nodes    Array of object with segments data
+ * @param  {Number} version QR Code version
+ * @return {Object}         Graph of all possible segments
+ */
+function buildGraph (nodes, version) {
+  var table = {}
+  var graph = {'start': {}}
+  var prevNodeIds = ['start']
+
+  for (var i = 0; i < nodes.length; i++) {
+    var nodeGroup = nodes[i]
+    var currentNodeIds = []
+
+    for (var j = 0; j < nodeGroup.length; j++) {
+      var node = nodeGroup[j]
+      var key = '' + i + j
+
+      currentNodeIds.push(key)
+      table[key] = { node: node, lastCount: 0 }
+      graph[key] = {}
+
+      for (var n = 0; n < prevNodeIds.length; n++) {
+        var prevNodeId = prevNodeIds[n]
+
+        if (table[prevNodeId] && table[prevNodeId].node.mode === node.mode) {
+          graph[prevNodeId][key] =
+            getSegmentBitsLength(table[prevNodeId].lastCount + node.length, node.mode) -
+            getSegmentBitsLength(table[prevNodeId].lastCount, node.mode)
+
+          table[prevNodeId].lastCount += node.length
+        } else {
+          if (table[prevNodeId]) table[prevNodeId].lastCount = node.length
+
+          graph[prevNodeId][key] = getSegmentBitsLength(node.length, node.mode) +
+            4 + Mode.getCharCountIndicator(node.mode, version) // switch cost
+        }
+      }
+    }
+
+    prevNodeIds = currentNodeIds
+  }
+
+  for (n = 0; n < prevNodeIds.length; n++) {
+    graph[prevNodeIds[n]]['end'] = 0
+  }
+
+  return { map: graph, table: table }
+}
+
+/**
+ * Builds a segment from a specified data and mode.
+ * If a mode is not specified, the more suitable will be used.
+ *
+ * @param  {String} data             Input data
+ * @param  {Mode | String} modesHint Data mode
+ * @return {Segment}                 Segment
+ */
+function buildSingleSegment (data, modesHint) {
+  var mode
+  var bestMode = Mode.getBestModeForData(data)
+
+  mode = Mode.from(modesHint, bestMode)
+
+  // Make sure data can be encoded
+  if (mode !== Mode.BYTE && mode.bit < bestMode.bit) {
+    throw new Error('"' + data + '"' +
+      ' cannot be encoded with mode ' + Mode.toString(mode) +
+      '.\n Suggested mode is: ' + Mode.toString(bestMode))
+  }
+
+  // Use Mode.BYTE if Kanji support is disabled
+  if (mode === Mode.KANJI && !Utils.isKanjiModeEnabled()) {
+    mode = Mode.BYTE
+  }
+
+  switch (mode) {
+    case Mode.NUMERIC:
+      return new NumericData(data)
+
+    case Mode.ALPHANUMERIC:
+      return new AlphanumericData(data)
+
+    case Mode.KANJI:
+      return new KanjiData(data)
+
+    case Mode.BYTE:
+      return new ByteData(data)
+  }
+}
+
+/**
+ * Builds a list of segments from an array.
+ * Array can contain Strings or Objects with segment's info.
+ *
+ * For each item which is a string, will be generated a segment with the given
+ * string and the more appropriate encoding mode.
+ *
+ * For each item which is an object, will be generated a segment with the given
+ * data and mode.
+ * Objects must contain at least the property "data".
+ * If property "mode" is not present, the more suitable mode will be used.
+ *
+ * @param  {Array} array Array of objects with segments data
+ * @return {Array}       Array of Segments
+ */
+exports.fromArray = function fromArray (array) {
+  return array.reduce(function (acc, seg) {
+    if (typeof seg === 'string') {
+      acc.push(buildSingleSegment(seg, null))
+    } else if (seg.data) {
+      acc.push(buildSingleSegment(seg.data, seg.mode))
+    }
+
+    return acc
+  }, [])
+}
+
+/**
+ * Builds an optimized sequence of segments from a string,
+ * which will produce the shortest possible bitstream.
+ *
+ * @param  {String} data    Input string
+ * @param  {Number} version QR Code version
+ * @return {Array}          Array of segments
+ */
+exports.fromString = function fromString (data, version) {
+  var segs = getSegmentsFromString(data, Utils.isKanjiModeEnabled())
+
+  var nodes = buildNodes(segs)
+  var graph = buildGraph(nodes, version)
+  var path = dijkstra.find_path(graph.map, 'start', 'end')
+
+  var optimizedSegs = []
+  for (var i = 1; i < path.length - 1; i++) {
+    optimizedSegs.push(graph.table[path[i]].node)
+  }
+
+  return exports.fromArray(mergeSegments(optimizedSegs))
+}
+
+/**
+ * Splits a string in various segments with the modes which
+ * best represent their content.
+ * The produced segments are far from being optimized.
+ * The output of this function is only used to estimate a QR Code version
+ * which may contain the data.
+ *
+ * @param  {string} data Input string
+ * @return {Array}       Array of segments
+ */
+exports.rawSplit = function rawSplit (data) {
+  return exports.fromArray(
+    getSegmentsFromString(data, Utils.isKanjiModeEnabled())
+  )
+}
+
+
+/***/ }),
+
+/***/ "8b6b":
+/***/ (function(module, exports) {
+
+// a string of all valid unicode whitespaces
+// eslint-disable-next-line max-len
+module.exports = '\u0009\u000A\u000B\u000C\u000D\u0020\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+
+/***/ }),
+
+/***/ "8d9d":
+/***/ (function(module, exports) {
+
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (error) {
+    return true;
+  }
+};
+
+
+/***/ }),
+
+/***/ "8faf":
+/***/ (function(module, exports, __webpack_require__) {
+
+var NATIVE_WEAK_MAP = __webpack_require__("b8ca");
+var global = __webpack_require__("f738");
+var isObject = __webpack_require__("6eb5");
+var createNonEnumerableProperty = __webpack_require__("b09e");
+var objectHas = __webpack_require__("66f4");
+var sharedKey = __webpack_require__("51db");
+var hiddenKeys = __webpack_require__("ac39");
+
+var WeakMap = global.WeakMap;
+var set, get, has;
+
+var enforce = function (it) {
+  return has(it) ? get(it) : set(it, {});
+};
+
+var getterFor = function (TYPE) {
+  return function (it) {
+    var state;
+    if (!isObject(it) || (state = get(it)).type !== TYPE) {
+      throw TypeError('Incompatible receiver, ' + TYPE + ' required');
+    } return state;
+  };
+};
+
+if (NATIVE_WEAK_MAP) {
+  var store = new WeakMap();
+  var wmget = store.get;
+  var wmhas = store.has;
+  var wmset = store.set;
+  set = function (it, metadata) {
+    wmset.call(store, it, metadata);
+    return metadata;
+  };
+  get = function (it) {
+    return wmget.call(store, it) || {};
+  };
+  has = function (it) {
+    return wmhas.call(store, it);
+  };
+} else {
+  var STATE = sharedKey('state');
+  hiddenKeys[STATE] = true;
+  set = function (it, metadata) {
+    createNonEnumerableProperty(it, STATE, metadata);
+    return metadata;
+  };
+  get = function (it) {
+    return objectHas(it, STATE) ? it[STATE] : {};
+  };
+  has = function (it) {
+    return objectHas(it, STATE);
+  };
+}
+
+module.exports = {
+  set: set,
+  get: get,
+  has: has,
+  enforce: enforce,
+  getterFor: getterFor
+};
+
+
+/***/ }),
+
+/***/ "934d":
+/***/ (function(module, exports, __webpack_require__) {
+
+// toObject with fallback for non-array-like ES3 strings
+var IndexedObject = __webpack_require__("8667");
+var requireObjectCoercible = __webpack_require__("f8da");
+
+module.exports = function (it) {
+  return IndexedObject(requireObjectCoercible(it));
+};
+
+
+/***/ }),
+
+/***/ "9c7d":
+/***/ (function(module, exports, __webpack_require__) {
+
+var internalObjectKeys = __webpack_require__("cf25");
+var enumBugKeys = __webpack_require__("4b1f");
+
+var hiddenKeys = enumBugKeys.concat('length', 'prototype');
+
+// `Object.getOwnPropertyNames` method
+// https://tc39.github.io/ecma262/#sec-object.getownpropertynames
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return internalObjectKeys(O, hiddenKeys);
+};
+
+
+/***/ }),
+
+/***/ "9f0b":
+/***/ (function(module, exports, __webpack_require__) {
+
+var ECLevel = __webpack_require__("1024")
+
+var EC_BLOCKS_TABLE = [
+// L  M  Q  H
+  1, 1, 1, 1,
+  1, 1, 1, 1,
+  1, 1, 2, 2,
+  1, 2, 2, 4,
+  1, 2, 4, 4,
+  2, 4, 4, 4,
+  2, 4, 6, 5,
+  2, 4, 6, 6,
+  2, 5, 8, 8,
+  4, 5, 8, 8,
+  4, 5, 8, 11,
+  4, 8, 10, 11,
+  4, 9, 12, 16,
+  4, 9, 16, 16,
+  6, 10, 12, 18,
+  6, 10, 17, 16,
+  6, 11, 16, 19,
+  6, 13, 18, 21,
+  7, 14, 21, 25,
+  8, 16, 20, 25,
+  8, 17, 23, 25,
+  9, 17, 23, 34,
+  9, 18, 25, 30,
+  10, 20, 27, 32,
+  12, 21, 29, 35,
+  12, 23, 34, 37,
+  12, 25, 34, 40,
+  13, 26, 35, 42,
+  14, 28, 38, 45,
+  15, 29, 40, 48,
+  16, 31, 43, 51,
+  17, 33, 45, 54,
+  18, 35, 48, 57,
+  19, 37, 51, 60,
+  19, 38, 53, 63,
+  20, 40, 56, 66,
+  21, 43, 59, 70,
+  22, 45, 62, 74,
+  24, 47, 65, 77,
+  25, 49, 68, 81
+]
+
+var EC_CODEWORDS_TABLE = [
+// L  M  Q  H
+  7, 10, 13, 17,
+  10, 16, 22, 28,
+  15, 26, 36, 44,
+  20, 36, 52, 64,
+  26, 48, 72, 88,
+  36, 64, 96, 112,
+  40, 72, 108, 130,
+  48, 88, 132, 156,
+  60, 110, 160, 192,
+  72, 130, 192, 224,
+  80, 150, 224, 264,
+  96, 176, 260, 308,
+  104, 198, 288, 352,
+  120, 216, 320, 384,
+  132, 240, 360, 432,
+  144, 280, 408, 480,
+  168, 308, 448, 532,
+  180, 338, 504, 588,
+  196, 364, 546, 650,
+  224, 416, 600, 700,
+  224, 442, 644, 750,
+  252, 476, 690, 816,
+  270, 504, 750, 900,
+  300, 560, 810, 960,
+  312, 588, 870, 1050,
+  336, 644, 952, 1110,
+  360, 700, 1020, 1200,
+  390, 728, 1050, 1260,
+  420, 784, 1140, 1350,
+  450, 812, 1200, 1440,
+  480, 868, 1290, 1530,
+  510, 924, 1350, 1620,
+  540, 980, 1440, 1710,
+  570, 1036, 1530, 1800,
+  570, 1064, 1590, 1890,
+  600, 1120, 1680, 1980,
+  630, 1204, 1770, 2100,
+  660, 1260, 1860, 2220,
+  720, 1316, 1950, 2310,
+  750, 1372, 2040, 2430
+]
+
+/**
+ * Returns the number of error correction block that the QR Code should contain
+ * for the specified version and error correction level.
+ *
+ * @param  {Number} version              QR Code version
+ * @param  {Number} errorCorrectionLevel Error correction level
+ * @return {Number}                      Number of error correction blocks
+ */
+exports.getBlocksCount = function getBlocksCount (version, errorCorrectionLevel) {
+  switch (errorCorrectionLevel) {
+    case ECLevel.L:
+      return EC_BLOCKS_TABLE[(version - 1) * 4 + 0]
+    case ECLevel.M:
+      return EC_BLOCKS_TABLE[(version - 1) * 4 + 1]
+    case ECLevel.Q:
+      return EC_BLOCKS_TABLE[(version - 1) * 4 + 2]
+    case ECLevel.H:
+      return EC_BLOCKS_TABLE[(version - 1) * 4 + 3]
+    default:
+      return undefined
+  }
+}
+
+/**
+ * Returns the number of error correction codewords to use for the specified
+ * version and error correction level.
+ *
+ * @param  {Number} version              QR Code version
+ * @param  {Number} errorCorrectionLevel Error correction level
+ * @return {Number}                      Number of error correction codewords
+ */
+exports.getTotalCodewordsCount = function getTotalCodewordsCount (version, errorCorrectionLevel) {
+  switch (errorCorrectionLevel) {
+    case ECLevel.L:
+      return EC_CODEWORDS_TABLE[(version - 1) * 4 + 0]
+    case ECLevel.M:
+      return EC_CODEWORDS_TABLE[(version - 1) * 4 + 1]
+    case ECLevel.Q:
+      return EC_CODEWORDS_TABLE[(version - 1) * 4 + 2]
+    case ECLevel.H:
+      return EC_CODEWORDS_TABLE[(version - 1) * 4 + 3]
+    default:
+      return undefined
+  }
+}
+
+
+/***/ }),
+
+/***/ "a010":
+/***/ (function(module, exports, __webpack_require__) {
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__("cda6");
+var classofRaw = __webpack_require__("0102");
+var wellKnownSymbol = __webpack_require__("0fc8");
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+// ES3 wrong here
+var CORRECT_ARGUMENTS = classofRaw(function () { return arguments; }()) == 'Arguments';
+
+// fallback for IE11 Script Access Denied error
+var tryGet = function (it, key) {
+  try {
+    return it[key];
+  } catch (error) { /* empty */ }
+};
+
+// getting tag from ES6+ `Object.prototype.toString`
+module.exports = TO_STRING_TAG_SUPPORT ? classofRaw : function (it) {
+  var O, tag, result;
+  return it === undefined ? 'Undefined' : it === null ? 'Null'
+    // @@toStringTag case
+    : typeof (tag = tryGet(O = Object(it), TO_STRING_TAG)) == 'string' ? tag
+    // builtinTag case
+    : CORRECT_ARGUMENTS ? classofRaw(O)
+    // ES3 arguments fallback
+    : (result = classofRaw(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : result;
+};
+
+
+/***/ }),
+
+/***/ "a0c8":
+/***/ (function(module, exports, __webpack_require__) {
+
+var IS_PURE = __webpack_require__("7355");
+var store = __webpack_require__("250a");
+
+(module.exports = function (key, value) {
+  return store[key] || (store[key] = value !== undefined ? value : {});
+})('versions', []).push({
+  version: '3.6.4',
+  mode: IS_PURE ? 'pure' : 'global',
+  copyright: '© 2020 Denis Pushkarev (zloirock.ru)'
+});
+
+
+/***/ }),
+
+/***/ "a364":
+/***/ (function(module, exports, __webpack_require__) {
+
+var requireObjectCoercible = __webpack_require__("f8da");
+var whitespaces = __webpack_require__("8b6b");
+
+var whitespace = '[' + whitespaces + ']';
+var ltrim = RegExp('^' + whitespace + whitespace + '*');
+var rtrim = RegExp(whitespace + whitespace + '*$');
+
+// `String.prototype.{ trim, trimStart, trimEnd, trimLeft, trimRight }` methods implementation
+var createMethod = function (TYPE) {
+  return function ($this) {
+    var string = String(requireObjectCoercible($this));
+    if (TYPE & 1) string = string.replace(ltrim, '');
+    if (TYPE & 2) string = string.replace(rtrim, '');
+    return string;
+  };
+};
+
+module.exports = {
+  // `String.prototype.{ trimLeft, trimStart }` methods
+  // https://tc39.github.io/ecma262/#sec-string.prototype.trimstart
+  start: createMethod(1),
+  // `String.prototype.{ trimRight, trimEnd }` methods
+  // https://tc39.github.io/ecma262/#sec-string.prototype.trimend
+  end: createMethod(2),
+  // `String.prototype.trim` method
+  // https://tc39.github.io/ecma262/#sec-string.prototype.trim
+  trim: createMethod(3)
+};
+
+
+/***/ }),
+
+/***/ "a548":
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__("6eb5");
+
+module.exports = function (it) {
+  if (!isObject(it)) {
+    throw TypeError(String(it) + ' is not an object');
+  } return it;
+};
+
+
+/***/ }),
+
+/***/ "a77a":
+/***/ (function(module, exports) {
+
+/**
+ * Check if QR Code version is valid
+ *
+ * @param  {Number}  version QR Code version
+ * @return {Boolean}         true if valid version, false otherwise
+ */
+exports.isValid = function isValid (version) {
+  return !isNaN(version) && version >= 1 && version <= 40
+}
+
+
+/***/ }),
+
+/***/ "ac39":
+/***/ (function(module, exports) {
+
+module.exports = {};
+
+
+/***/ }),
+
+/***/ "adcf":
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__("f738");
+var createNonEnumerableProperty = __webpack_require__("b09e");
+var has = __webpack_require__("66f4");
+var setGlobal = __webpack_require__("f845");
+var inspectSource = __webpack_require__("f8a2");
+var InternalStateModule = __webpack_require__("8faf");
+
+var getInternalState = InternalStateModule.get;
+var enforceInternalState = InternalStateModule.enforce;
+var TEMPLATE = String(String).split('String');
+
+(module.exports = function (O, key, value, options) {
+  var unsafe = options ? !!options.unsafe : false;
+  var simple = options ? !!options.enumerable : false;
+  var noTargetGet = options ? !!options.noTargetGet : false;
+  if (typeof value == 'function') {
+    if (typeof key == 'string' && !has(value, 'name')) createNonEnumerableProperty(value, 'name', key);
+    enforceInternalState(value).source = TEMPLATE.join(typeof key == 'string' ? key : '');
+  }
+  if (O === global) {
+    if (simple) O[key] = value;
+    else setGlobal(key, value);
+    return;
+  } else if (!unsafe) {
+    delete O[key];
+  } else if (!noTargetGet && O[key]) {
+    simple = true;
+  }
+  if (simple) O[key] = value;
+  else createNonEnumerableProperty(O, key, value);
+// add fake Function#toString for correct work wrapped methods / constructors with methods like LoDash isNative
+})(Function.prototype, 'toString', function toString() {
+  return typeof this == 'function' && getInternalState(this).source || inspectSource(this);
+});
+
+
+/***/ }),
+
+/***/ "afd9":
+/***/ (function(module, exports, __webpack_require__) {
+
+var BufferUtil = __webpack_require__("ebb4")
+
+var EXP_TABLE = BufferUtil.alloc(512)
+var LOG_TABLE = BufferUtil.alloc(256)
+/**
+ * Precompute the log and anti-log tables for faster computation later
+ *
+ * For each possible value in the galois field 2^8, we will pre-compute
+ * the logarithm and anti-logarithm (exponential) of this value
+ *
+ * ref {@link https://en.wikiversity.org/wiki/Reed%E2%80%93Solomon_codes_for_coders#Introduction_to_mathematical_fields}
+ */
+;(function initTables () {
+  var x = 1
+  for (var i = 0; i < 255; i++) {
+    EXP_TABLE[i] = x
+    LOG_TABLE[x] = i
+
+    x <<= 1 // multiply by 2
+
+    // The QR code specification says to use byte-wise modulo 100011101 arithmetic.
+    // This means that when a number is 256 or larger, it should be XORed with 0x11D.
+    if (x & 0x100) { // similar to x >= 256, but a lot faster (because 0x100 == 256)
+      x ^= 0x11D
+    }
+  }
+
+  // Optimization: double the size of the anti-log table so that we don't need to mod 255 to
+  // stay inside the bounds (because we will mainly use this table for the multiplication of
+  // two GF numbers, no more).
+  // @see {@link mul}
+  for (i = 255; i < 512; i++) {
+    EXP_TABLE[i] = EXP_TABLE[i - 255]
+  }
+}())
+
+/**
+ * Returns log value of n inside Galois Field
+ *
+ * @param  {Number} n
+ * @return {Number}
+ */
+exports.log = function log (n) {
+  if (n < 1) throw new Error('log(' + n + ')')
+  return LOG_TABLE[n]
+}
+
+/**
+ * Returns anti-log value of n inside Galois Field
+ *
+ * @param  {Number} n
+ * @return {Number}
+ */
+exports.exp = function exp (n) {
+  return EXP_TABLE[n]
+}
+
+/**
+ * Multiplies two number inside Galois Field
+ *
+ * @param  {Number} x
+ * @param  {Number} y
+ * @return {Number}
+ */
+exports.mul = function mul (x, y) {
+  if (x === 0 || y === 0) return 0
+
+  // should be EXP_TABLE[(LOG_TABLE[x] + LOG_TABLE[y]) % 255] if EXP_TABLE wasn't oversized
+  // @see {@link initTables}
+  return EXP_TABLE[LOG_TABLE[x] + LOG_TABLE[y]]
+}
+
+
+/***/ }),
+
+/***/ "b09e":
+/***/ (function(module, exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__("f402");
+var definePropertyModule = __webpack_require__("7b8c");
+var createPropertyDescriptor = __webpack_require__("83e1");
+
+module.exports = DESCRIPTORS ? function (object, key, value) {
+  return definePropertyModule.f(object, key, createPropertyDescriptor(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+
+/***/ }),
+
+/***/ "b8ca":
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__("f738");
+var inspectSource = __webpack_require__("f8a2");
+
+var WeakMap = global.WeakMap;
+
+module.exports = typeof WeakMap === 'function' && /native code/.test(inspectSource(WeakMap));
+
+
+/***/ }),
+
+/***/ "ba70":
+/***/ (function(module, exports) {
+
+var id = 0;
+var postfix = Math.random();
+
+module.exports = function (key) {
+  return 'Symbol(' + String(key === undefined ? '' : key) + ')_' + (++id + postfix).toString(36);
+};
+
+
+/***/ }),
+
+/***/ "bbd3":
+/***/ (function(module, exports) {
+
+// can-promise has a crash in some versions of react native that dont have
+// standard global objects
+// https://github.com/soldair/node-qrcode/issues/157
+
+module.exports = function () {
+  return typeof Promise === 'function' && Promise.prototype && Promise.prototype.then
+}
+
+
+/***/ }),
+
+/***/ "bf74":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var DESCRIPTORS = __webpack_require__("f402");
+var global = __webpack_require__("f738");
+var isForced = __webpack_require__("2f7e");
+var redefine = __webpack_require__("adcf");
+var has = __webpack_require__("66f4");
+var classof = __webpack_require__("0102");
+var inheritIfRequired = __webpack_require__("d018");
+var toPrimitive = __webpack_require__("6263");
+var fails = __webpack_require__("8d9d");
+var create = __webpack_require__("4b6f");
+var getOwnPropertyNames = __webpack_require__("9c7d").f;
+var getOwnPropertyDescriptor = __webpack_require__("1c73").f;
+var defineProperty = __webpack_require__("7b8c").f;
+var trim = __webpack_require__("a364").trim;
+
+var NUMBER = 'Number';
+var NativeNumber = global[NUMBER];
+var NumberPrototype = NativeNumber.prototype;
+
+// Opera ~12 has broken Object#toString
+var BROKEN_CLASSOF = classof(create(NumberPrototype)) == NUMBER;
+
+// `ToNumber` abstract operation
+// https://tc39.github.io/ecma262/#sec-tonumber
+var toNumber = function (argument) {
+  var it = toPrimitive(argument, false);
+  var first, third, radix, maxCode, digits, length, index, code;
+  if (typeof it == 'string' && it.length > 2) {
+    it = trim(it);
+    first = it.charCodeAt(0);
+    if (first === 43 || first === 45) {
+      third = it.charCodeAt(2);
+      if (third === 88 || third === 120) return NaN; // Number('+0x1') should be NaN, old V8 fix
+    } else if (first === 48) {
+      switch (it.charCodeAt(1)) {
+        case 66: case 98: radix = 2; maxCode = 49; break; // fast equal of /^0b[01]+$/i
+        case 79: case 111: radix = 8; maxCode = 55; break; // fast equal of /^0o[0-7]+$/i
+        default: return +it;
+      }
+      digits = it.slice(2);
+      length = digits.length;
+      for (index = 0; index < length; index++) {
+        code = digits.charCodeAt(index);
+        // parseInt parses a string to a first unavailable symbol
+        // but ToNumber should return NaN if a string contains unavailable symbols
+        if (code < 48 || code > maxCode) return NaN;
+      } return parseInt(digits, radix);
+    }
+  } return +it;
+};
+
+// `Number` constructor
+// https://tc39.github.io/ecma262/#sec-number-constructor
+if (isForced(NUMBER, !NativeNumber(' 0o1') || !NativeNumber('0b1') || NativeNumber('+0x1'))) {
+  var NumberWrapper = function Number(value) {
+    var it = arguments.length < 1 ? 0 : value;
+    var dummy = this;
+    return dummy instanceof NumberWrapper
+      // check on 1..constructor(foo) case
+      && (BROKEN_CLASSOF ? fails(function () { NumberPrototype.valueOf.call(dummy); }) : classof(dummy) != NUMBER)
+        ? inheritIfRequired(new NativeNumber(toNumber(it)), dummy, NumberWrapper) : toNumber(it);
+  };
+  for (var keys = DESCRIPTORS ? getOwnPropertyNames(NativeNumber) : (
+    // ES3:
+    'MAX_VALUE,MIN_VALUE,NaN,NEGATIVE_INFINITY,POSITIVE_INFINITY,' +
+    // ES2015 (in case, if modules with ES2015 Number statics required before):
+    'EPSILON,isFinite,isInteger,isNaN,isSafeInteger,MAX_SAFE_INTEGER,' +
+    'MIN_SAFE_INTEGER,parseFloat,parseInt,isInteger'
+  ).split(','), j = 0, key; keys.length > j; j++) {
+    if (has(NativeNumber, key = keys[j]) && !has(NumberWrapper, key)) {
+      defineProperty(NumberWrapper, key, getOwnPropertyDescriptor(NativeNumber, key));
+    }
+  }
+  NumberWrapper.prototype = NumberPrototype;
+  NumberPrototype.constructor = NumberWrapper;
+  redefine(global, NUMBER, NumberWrapper);
+}
+
+
+/***/ }),
+
+/***/ "c022":
+/***/ (function(module, exports, __webpack_require__) {
+
+var BufferUtil = __webpack_require__("ebb4")
+var Polynomial = __webpack_require__("6d3d")
+var Buffer = __webpack_require__("22a3").Buffer
+
+function ReedSolomonEncoder (degree) {
+  this.genPoly = undefined
+  this.degree = degree
+
+  if (this.degree) this.initialize(this.degree)
+}
+
+/**
+ * Initialize the encoder.
+ * The input param should correspond to the number of error correction codewords.
+ *
+ * @param  {Number} degree
+ */
+ReedSolomonEncoder.prototype.initialize = function initialize (degree) {
+  // create an irreducible generator polynomial
+  this.degree = degree
+  this.genPoly = Polynomial.generateECPolynomial(this.degree)
+}
+
+/**
+ * Encodes a chunk of data
+ *
+ * @param  {Buffer} data Buffer containing input data
+ * @return {Buffer}      Buffer containing encoded data
+ */
+ReedSolomonEncoder.prototype.encode = function encode (data) {
+  if (!this.genPoly) {
+    throw new Error('Encoder not initialized')
+  }
+
+  // Calculate EC for this data block
+  // extends data size to data+genPoly size
+  var pad = BufferUtil.alloc(this.degree)
+  var paddedData = Buffer.concat([data, pad], data.length + this.degree)
+
+  // The error correction codewords are the remainder after dividing the data codewords
+  // by a generator polynomial
+  var remainder = Polynomial.mod(paddedData, this.genPoly)
+
+  // return EC data blocks (last n byte, where n is the degree of genPoly)
+  // If coefficients number in remainder are less than genPoly degree,
+  // pad with 0s to the left to reach the needed number of coefficients
+  var start = this.degree - remainder.length
+  if (start > 0) {
+    var buff = BufferUtil.alloc(this.degree)
+    remainder.copy(buff, start)
+
+    return buff
+  }
+
+  return remainder
+}
+
+module.exports = ReedSolomonEncoder
+
+
+/***/ }),
+
+/***/ "c763":
+/***/ (function(module, exports, __webpack_require__) {
+
+var fails = __webpack_require__("8d9d");
+
+module.exports = !!Object.getOwnPropertySymbols && !fails(function () {
+  // Chrome 38 Symbol has incorrect toString conversion
+  // eslint-disable-next-line no-undef
+  return !String(Symbol());
+});
+
+
+/***/ }),
+
+/***/ "c811":
+/***/ (function(module, exports) {
+
+var toSJISFunction
+var CODEWORDS_COUNT = [
+  0, // Not used
+  26, 44, 70, 100, 134, 172, 196, 242, 292, 346,
+  404, 466, 532, 581, 655, 733, 815, 901, 991, 1085,
+  1156, 1258, 1364, 1474, 1588, 1706, 1828, 1921, 2051, 2185,
+  2323, 2465, 2611, 2761, 2876, 3034, 3196, 3362, 3532, 3706
+]
+
+/**
+ * Returns the QR Code size for the specified version
+ *
+ * @param  {Number} version QR Code version
+ * @return {Number}         size of QR code
+ */
+exports.getSymbolSize = function getSymbolSize (version) {
+  if (!version) throw new Error('"version" cannot be null or undefined')
+  if (version < 1 || version > 40) throw new Error('"version" should be in range from 1 to 40')
+  return version * 4 + 17
+}
+
+/**
+ * Returns the total number of codewords used to store data and EC information.
+ *
+ * @param  {Number} version QR Code version
+ * @return {Number}         Data length in bits
+ */
+exports.getSymbolTotalCodewords = function getSymbolTotalCodewords (version) {
+  return CODEWORDS_COUNT[version]
+}
+
+/**
+ * Encode data with Bose-Chaudhuri-Hocquenghem
+ *
+ * @param  {Number} data Value to encode
+ * @return {Number}      Encoded value
+ */
+exports.getBCHDigit = function (data) {
+  var digit = 0
+
+  while (data !== 0) {
+    digit++
+    data >>>= 1
+  }
+
+  return digit
+}
+
+exports.setToSJISFunction = function setToSJISFunction (f) {
+  if (typeof f !== 'function') {
+    throw new Error('"toSJISFunc" is not a valid function.')
+  }
+
+  toSJISFunction = f
+}
+
+exports.isKanjiModeEnabled = function () {
+  return typeof toSJISFunction !== 'undefined'
+}
+
+exports.toSJIS = function toSJIS (kanji) {
+  return toSJISFunction(kanji)
+}
+
+
+/***/ }),
+
+/***/ "ca12":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var anObject = __webpack_require__("a548");
+
+// `RegExp.prototype.flags` getter implementation
+// https://tc39.github.io/ecma262/#sec-get-regexp.prototype.flags
+module.exports = function () {
+  var that = anObject(this);
+  var result = '';
+  if (that.global) result += 'g';
+  if (that.ignoreCase) result += 'i';
+  if (that.multiline) result += 'm';
+  if (that.dotAll) result += 's';
+  if (that.unicode) result += 'u';
+  if (that.sticky) result += 'y';
+  return result;
+};
+
+
+/***/ }),
+
+/***/ "ccfc":
+/***/ (function(module, exports, __webpack_require__) {
+
+var DESCRIPTORS = __webpack_require__("f402");
+var fails = __webpack_require__("8d9d");
+var createElement = __webpack_require__("2a19");
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !DESCRIPTORS && !fails(function () {
+  return Object.defineProperty(createElement('div'), 'a', {
+    get: function () { return 7; }
+  }).a != 7;
+});
+
+
+/***/ }),
+
+/***/ "cda6":
+/***/ (function(module, exports, __webpack_require__) {
+
+var wellKnownSymbol = __webpack_require__("0fc8");
+
+var TO_STRING_TAG = wellKnownSymbol('toStringTag');
+var test = {};
+
+test[TO_STRING_TAG] = 'z';
+
+module.exports = String(test) === '[object z]';
+
+
+/***/ }),
+
+/***/ "ce0e":
+/***/ (function(module, exports, __webpack_require__) {
+
+var Mode = __webpack_require__("2600")
+
+function NumericData (data) {
+  this.mode = Mode.NUMERIC
+  this.data = data.toString()
+}
+
+NumericData.getBitsLength = function getBitsLength (length) {
+  return 10 * Math.floor(length / 3) + ((length % 3) ? ((length % 3) * 3 + 1) : 0)
+}
+
+NumericData.prototype.getLength = function getLength () {
+  return this.data.length
+}
+
+NumericData.prototype.getBitsLength = function getBitsLength () {
+  return NumericData.getBitsLength(this.data.length)
+}
+
+NumericData.prototype.write = function write (bitBuffer) {
+  var i, group, value
+
+  // The input data string is divided into groups of three digits,
+  // and each group is converted to its 10-bit binary equivalent.
+  for (i = 0; i + 3 <= this.data.length; i += 3) {
+    group = this.data.substr(i, 3)
+    value = parseInt(group, 10)
+
+    bitBuffer.put(value, 10)
+  }
+
+  // If the number of input digits is not an exact multiple of three,
+  // the final one or two digits are converted to 4 or 7 bits respectively.
+  var remainingNum = this.data.length - i
+  if (remainingNum > 0) {
+    group = this.data.substr(i)
+    value = parseInt(group, 10)
+
+    bitBuffer.put(value, remainingNum * 3 + 1)
+  }
+}
+
+module.exports = NumericData
+
+
+/***/ }),
+
+/***/ "cf25":
+/***/ (function(module, exports, __webpack_require__) {
+
+var has = __webpack_require__("66f4");
+var toIndexedObject = __webpack_require__("934d");
+var indexOf = __webpack_require__("8611").indexOf;
+var hiddenKeys = __webpack_require__("ac39");
+
+module.exports = function (object, names) {
+  var O = toIndexedObject(object);
+  var i = 0;
+  var result = [];
+  var key;
+  for (key in O) !has(hiddenKeys, key) && has(O, key) && result.push(key);
+  // Don't enum bug & hidden keys
+  while (names.length > i) if (has(O, key = names[i++])) {
+    ~indexOf(result, key) || result.push(key);
+  }
+  return result;
+};
+
+
+/***/ }),
+
+/***/ "d018":
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__("6eb5");
+var setPrototypeOf = __webpack_require__("7238");
+
+// makes subclassing work correct for wrapped built-ins
+module.exports = function ($this, dummy, Wrapper) {
+  var NewTarget, NewTargetPrototype;
+  if (
+    // it can work only with native `setPrototypeOf`
+    setPrototypeOf &&
+    // we haven't completely correct pre-ES6 way for getting `new.target`, so use this
+    typeof (NewTarget = dummy.constructor) == 'function' &&
+    NewTarget !== Wrapper &&
+    isObject(NewTargetPrototype = NewTarget.prototype) &&
+    NewTargetPrototype !== Wrapper.prototype
+  ) setPrototypeOf($this, NewTargetPrototype);
+  return $this;
+};
+
+
+/***/ }),
+
+/***/ "d2f9":
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__("f738");
+
+module.exports = global;
 
 
 /***/ }),
@@ -6154,6 +6343,22 @@ exports.renderToDataURL = function renderToDataURL (qrData, canvas, options) {
   var rendererOpts = opts.rendererOpts || {}
 
   return canvasEl.toDataURL(type, rendererOpts.quality)
+}
+
+
+/***/ }),
+
+/***/ "d750":
+/***/ (function(module, exports, __webpack_require__) {
+
+var TO_STRING_TAG_SUPPORT = __webpack_require__("cda6");
+var redefine = __webpack_require__("adcf");
+var toString = __webpack_require__("2401");
+
+// `Object.prototype.toString` method
+// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
+if (!TO_STRING_TAG_SUPPORT) {
+  redefine(Object.prototype, 'toString', toString, { unsafe: true });
 }
 
 
@@ -6233,279 +6438,16 @@ module.exports = BitMatrix
 
 /***/ }),
 
-/***/ "dcc0":
-/***/ (function(module, exports) {
-
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (error) {
-    return true;
-  }
-};
-
-
-/***/ }),
-
-/***/ "ddbc":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_@vue_cli-service@4.2.3@@vue/cli-service/lib/commands/build/setPublicPath.js
-// This file is imported into lib/wc client bundles.
-
-if (typeof window !== 'undefined') {
-  if (true) {
-    __webpack_require__("a6d7")
-  }
-
-  var i
-  if ((i = window.document.currentScript) && (i = i.src.match(/(.+\/)[^/]+\.js(\?.*)?$/))) {
-    __webpack_require__.p = i[1] // eslint-disable-line
-  }
-}
-
-// Indicate to webpack that this file can be concatenated
-/* harmony default export */ var setPublicPath = (null);
-
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_cache-loader@4.1.0@cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4315e0ea-vue-loader-template"}!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_vue-loader@15.9.1@vue-loader/lib/loaders/templateLoader.js??vue-loader-options!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_cache-loader@4.1.0@cache-loader/dist/cjs.js??ref--0-0!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_vue-loader@15.9.1@vue-loader/lib??vue-loader-options!./src/Qrcode.vue?vue&type=template&id=e19956dc&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('canvas',{ref:"canvas",style:({ height: _vm.h, width: _vm.w }),attrs:{"url":_vm.url}})}
-var staticRenderFns = []
-
-
-// CONCATENATED MODULE: ./src/Qrcode.vue?vue&type=template&id=e19956dc&
-
-// EXTERNAL MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_core-js@3.6.4@core-js/modules/es.number.constructor.js
-var es_number_constructor = __webpack_require__("2e47");
-
-// EXTERNAL MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_core-js@3.6.4@core-js/modules/es.object.to-string.js
-var es_object_to_string = __webpack_require__("47d5");
-
-// EXTERNAL MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_core-js@3.6.4@core-js/modules/es.regexp.to-string.js
-var es_regexp_to_string = __webpack_require__("8e1b");
-
-// EXTERNAL MODULE: /Users/halobear/Desktop/yun-work/npm-packages/node_modules/qrcode/lib/browser.js
-var browser = __webpack_require__("3871");
-var browser_default = /*#__PURE__*/__webpack_require__.n(browser);
-
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_thread-loader@2.1.3@thread-loader/dist/cjs.js!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_babel-loader@8.1.0@babel-loader/lib??ref--12-1!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_cache-loader@4.1.0@cache-loader/dist/cjs.js??ref--0-0!/Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_vue-loader@15.9.1@vue-loader/lib??vue-loader-options!./src/Qrcode.vue?vue&type=script&lang=js&
-
-
-
-
-
-
-//
-//
-//
-//
-
-/* harmony default export */ var Qrcodevue_type_script_lang_js_ = ({
-  name: "qrcode",
-  props: {
-    url: {
-      type: String,
-      default: ""
-    },
-    width: {
-      type: [String, Number],
-      default: 200
-    },
-    height: {
-      type: [String, Number],
-      default: 200
-    }
-  },
-  computed: {
-    w: function w() {
-      var w = this.width.toString();
-
-      if (/^\d*$/.test(w)) {
-        return "".concat(w, "px");
-      }
-
-      return w;
-    },
-    h: function h() {
-      var h = this.height.toString();
-
-      if (/^\d*$/.test(h)) {
-        return "".concat(h, "px");
-      }
-
-      return h;
-    }
-  },
-  watch: {
-    url: function url() {
-      this.generateCode();
-    }
-  },
-  methods: {
-    generateCode: function generateCode() {
-      if (!this.url) return;
-      var canvas = this.$refs.canvas;
-      browser_default.a.toCanvas(canvas, this.url, {
-        width: this.width,
-        height: this.height,
-        margin: "1"
-      }, function (err) {
-        if (err) {
-          console.error(err);
-        }
-      });
-    }
-  },
-  mounted: function mounted() {
-    this.generateCode();
-  }
-});
-// CONCATENATED MODULE: ./src/Qrcode.vue?vue&type=script&lang=js&
- /* harmony default export */ var src_Qrcodevue_type_script_lang_js_ = (Qrcodevue_type_script_lang_js_); 
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_vue-loader@15.9.1@vue-loader/lib/runtime/componentNormalizer.js
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functional component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-// CONCATENATED MODULE: ./src/Qrcode.vue
-
-
-
-
-
-/* normalize component */
-
-var component = normalizeComponent(
-  src_Qrcodevue_type_script_lang_js_,
-  render,
-  staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* harmony default export */ var Qrcode = (component.exports);
-// CONCATENATED MODULE: ./index.js
-
-
-Qrcode.install = function (Vue) {
-  Vue.component('vue-qrcode', Qrcode);
-};
-
-/* harmony default export */ var index = (Qrcode);
-// CONCATENATED MODULE: /Users/halobear/.nvm/versions/node/v12.14.1/lib/node_modules/@vue/cli-service-global/node_modules/_@vue_cli-service@4.2.3@@vue/cli-service/lib/commands/build/entry-lib.js
-
-
-/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (index);
-
-
-
-/***/ }),
-
-/***/ "e49d":
+/***/ "e06c":
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__("dcc0");
+var isObject = __webpack_require__("6eb5");
 
-// Thank's IE8 for his funny defineProperty
-module.exports = !fails(function () {
-  return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
-});
+module.exports = function (it) {
+  if (!isObject(it) && it !== null) {
+    throw TypeError("Can't set " + String(it) + ' as a prototype');
+  } return it;
+};
 
 
 /***/ }),
@@ -6548,38 +6490,6 @@ exports.testAlphanumeric = function testAlphanumeric (str) {
 
 /***/ }),
 
-/***/ "e930":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var TO_STRING_TAG_SUPPORT = __webpack_require__("68d4");
-var classof = __webpack_require__("12b9");
-
-// `Object.prototype.toString` method implementation
-// https://tc39.github.io/ecma262/#sec-object.prototype.tostring
-module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
-  return '[object ' + classof(this) + ']';
-};
-
-
-/***/ }),
-
-/***/ "ea03":
-/***/ (function(module, exports) {
-
-var ceil = Math.ceil;
-var floor = Math.floor;
-
-// `ToInteger` abstract operation
-// https://tc39.github.io/ecma262/#sec-tointeger
-module.exports = function (argument) {
-  return isNaN(argument = +argument) ? 0 : (argument > 0 ? floor : ceil)(argument);
-};
-
-
-/***/ }),
-
 /***/ "ebb4":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6593,7 +6503,7 @@ module.exports = function (argument) {
 
 
 
-var isArray = __webpack_require__("465e")
+var isArray = __webpack_require__("07d3")
 
 function typedArraySupport () {
   // Can typed array instances be augmented?
@@ -7108,39 +7018,45 @@ module.exports.from = function (data) {
 
 /***/ }),
 
-/***/ "ec49":
+/***/ "f402":
 /***/ (function(module, exports, __webpack_require__) {
 
-var fails = __webpack_require__("dcc0");
+var fails = __webpack_require__("8d9d");
 
-var replacement = /#|\.prototype\./;
-
-var isForced = function (feature, detection) {
-  var value = data[normalize(feature)];
-  return value == POLYFILL ? true
-    : value == NATIVE ? false
-    : typeof detection == 'function' ? fails(detection)
-    : !!detection;
-};
-
-var normalize = isForced.normalize = function (string) {
-  return String(string).replace(replacement, '.').toLowerCase();
-};
-
-var data = isForced.data = {};
-var NATIVE = isForced.NATIVE = 'N';
-var POLYFILL = isForced.POLYFILL = 'P';
-
-module.exports = isForced;
+// Thank's IE8 for his funny defineProperty
+module.exports = !fails(function () {
+  return Object.defineProperty({}, 1, { get: function () { return 7; } })[1] != 7;
+});
 
 
 /***/ }),
 
-/***/ "ee03":
+/***/ "f738":
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__("34f3");
-var createNonEnumerableProperty = __webpack_require__("0ab2");
+/* WEBPACK VAR INJECTION */(function(global) {var check = function (it) {
+  return it && it.Math == Math && it;
+};
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+module.exports =
+  // eslint-disable-next-line no-undef
+  check(typeof globalThis == 'object' && globalThis) ||
+  check(typeof window == 'object' && window) ||
+  check(typeof self == 'object' && self) ||
+  check(typeof global == 'object' && global) ||
+  // eslint-disable-next-line no-new-func
+  Function('return this')();
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__("7234")))
+
+/***/ }),
+
+/***/ "f845":
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__("f738");
+var createNonEnumerableProperty = __webpack_require__("b09e");
 
 module.exports = function (key, value) {
   try {
@@ -7153,48 +7069,10 @@ module.exports = function (key, value) {
 
 /***/ }),
 
-/***/ "f08e":
+/***/ "f8a2":
 /***/ (function(module, exports, __webpack_require__) {
 
-// toObject with fallback for non-array-like ES3 strings
-var IndexedObject = __webpack_require__("c8e7");
-var requireObjectCoercible = __webpack_require__("3071");
-
-module.exports = function (it) {
-  return IndexedObject(requireObjectCoercible(it));
-};
-
-
-/***/ }),
-
-/***/ "f3bd":
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__("34f3");
-var setGlobal = __webpack_require__("ee03");
-
-var SHARED = '__core-js_shared__';
-var store = global[SHARED] || setGlobal(SHARED, {});
-
-module.exports = store;
-
-
-/***/ }),
-
-/***/ "f819":
-/***/ (function(module, exports, __webpack_require__) {
-
-var getBuiltIn = __webpack_require__("55ac");
-
-module.exports = getBuiltIn('document', 'documentElement');
-
-
-/***/ }),
-
-/***/ "fa00":
-/***/ (function(module, exports, __webpack_require__) {
-
-var store = __webpack_require__("f3bd");
+var store = __webpack_require__("250a");
 
 var functionToString = Function.toString;
 
@@ -7210,54 +7088,175 @@ module.exports = store.inspectSource;
 
 /***/ }),
 
-/***/ "fc4f":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "f8da":
+/***/ (function(module, exports) {
 
-var shared = __webpack_require__("7993");
-var uid = __webpack_require__("ce0e");
-
-var keys = shared('keys');
-
-module.exports = function (key) {
-  return keys[key] || (keys[key] = uid(key));
+// `RequireObjectCoercible` abstract operation
+// https://tc39.github.io/ecma262/#sec-requireobjectcoercible
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on " + it);
+  return it;
 };
 
 
 /***/ }),
 
-/***/ "fdc6":
+/***/ "f916":
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__("34f3");
-var inspectSource = __webpack_require__("fa00");
-
-var WeakMap = global.WeakMap;
-
-module.exports = typeof WeakMap === 'function' && /native code/.test(inspectSource(WeakMap));
+"use strict";
 
 
-/***/ }),
+exports.byteLength = byteLength
+exports.toByteArray = toByteArray
+exports.fromByteArray = fromByteArray
 
-/***/ "feb3":
-/***/ (function(module, exports, __webpack_require__) {
+var lookup = []
+var revLookup = []
+var Arr = typeof Uint8Array !== 'undefined' ? Uint8Array : Array
 
-var has = __webpack_require__("379c");
-var toIndexedObject = __webpack_require__("f08e");
-var indexOf = __webpack_require__("b08f").indexOf;
-var hiddenKeys = __webpack_require__("0bfd");
+var code = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+for (var i = 0, len = code.length; i < len; ++i) {
+  lookup[i] = code[i]
+  revLookup[code.charCodeAt(i)] = i
+}
 
-module.exports = function (object, names) {
-  var O = toIndexedObject(object);
-  var i = 0;
-  var result = [];
-  var key;
-  for (key in O) !has(hiddenKeys, key) && has(O, key) && result.push(key);
-  // Don't enum bug & hidden keys
-  while (names.length > i) if (has(O, key = names[i++])) {
-    ~indexOf(result, key) || result.push(key);
+// Support decoding URL-safe base64 strings, as Node.js does.
+// See: https://en.wikipedia.org/wiki/Base64#URL_applications
+revLookup['-'.charCodeAt(0)] = 62
+revLookup['_'.charCodeAt(0)] = 63
+
+function getLens (b64) {
+  var len = b64.length
+
+  if (len % 4 > 0) {
+    throw new Error('Invalid string. Length must be a multiple of 4')
   }
-  return result;
-};
+
+  // Trim off extra bytes after placeholder bytes are found
+  // See: https://github.com/beatgammit/base64-js/issues/42
+  var validLen = b64.indexOf('=')
+  if (validLen === -1) validLen = len
+
+  var placeHoldersLen = validLen === len
+    ? 0
+    : 4 - (validLen % 4)
+
+  return [validLen, placeHoldersLen]
+}
+
+// base64 is 4/3 + up to two characters of the original data
+function byteLength (b64) {
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function _byteLength (b64, validLen, placeHoldersLen) {
+  return ((validLen + placeHoldersLen) * 3 / 4) - placeHoldersLen
+}
+
+function toByteArray (b64) {
+  var tmp
+  var lens = getLens(b64)
+  var validLen = lens[0]
+  var placeHoldersLen = lens[1]
+
+  var arr = new Arr(_byteLength(b64, validLen, placeHoldersLen))
+
+  var curByte = 0
+
+  // if there are placeholders, only get up to the last complete 4 chars
+  var len = placeHoldersLen > 0
+    ? validLen - 4
+    : validLen
+
+  var i
+  for (i = 0; i < len; i += 4) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 18) |
+      (revLookup[b64.charCodeAt(i + 1)] << 12) |
+      (revLookup[b64.charCodeAt(i + 2)] << 6) |
+      revLookup[b64.charCodeAt(i + 3)]
+    arr[curByte++] = (tmp >> 16) & 0xFF
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 2) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 2) |
+      (revLookup[b64.charCodeAt(i + 1)] >> 4)
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  if (placeHoldersLen === 1) {
+    tmp =
+      (revLookup[b64.charCodeAt(i)] << 10) |
+      (revLookup[b64.charCodeAt(i + 1)] << 4) |
+      (revLookup[b64.charCodeAt(i + 2)] >> 2)
+    arr[curByte++] = (tmp >> 8) & 0xFF
+    arr[curByte++] = tmp & 0xFF
+  }
+
+  return arr
+}
+
+function tripletToBase64 (num) {
+  return lookup[num >> 18 & 0x3F] +
+    lookup[num >> 12 & 0x3F] +
+    lookup[num >> 6 & 0x3F] +
+    lookup[num & 0x3F]
+}
+
+function encodeChunk (uint8, start, end) {
+  var tmp
+  var output = []
+  for (var i = start; i < end; i += 3) {
+    tmp =
+      ((uint8[i] << 16) & 0xFF0000) +
+      ((uint8[i + 1] << 8) & 0xFF00) +
+      (uint8[i + 2] & 0xFF)
+    output.push(tripletToBase64(tmp))
+  }
+  return output.join('')
+}
+
+function fromByteArray (uint8) {
+  var tmp
+  var len = uint8.length
+  var extraBytes = len % 3 // if we have 1 byte left, pad 2 bytes
+  var parts = []
+  var maxChunkLength = 16383 // must be multiple of 3
+
+  // go through the array every three bytes, we'll deal with trailing stuff later
+  for (var i = 0, len2 = len - extraBytes; i < len2; i += maxChunkLength) {
+    parts.push(encodeChunk(
+      uint8, i, (i + maxChunkLength) > len2 ? len2 : (i + maxChunkLength)
+    ))
+  }
+
+  // pad the end with zeros, but make sure to not forget the extra bytes
+  if (extraBytes === 1) {
+    tmp = uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 2] +
+      lookup[(tmp << 4) & 0x3F] +
+      '=='
+    )
+  } else if (extraBytes === 2) {
+    tmp = (uint8[len - 2] << 8) + uint8[len - 1]
+    parts.push(
+      lookup[tmp >> 10] +
+      lookup[(tmp >> 4) & 0x3F] +
+      lookup[(tmp << 2) & 0x3F] +
+      '='
+    )
+  }
+
+  return parts.join('')
+}
 
 
 /***/ })
