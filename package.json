@@ -19,6 +19,7 @@
   "author": "luzhongk@126.com",
   "license": "ISC",
   "dependencies": {
+    "@halobear/layout-header": "file:packages/layout-header",
     "@halobear/vue": "file:packages/vue",
     "@halobear/vue-amap": "file:packages/vue-amap",
     "@halobear/vue-debug": "file:packages/vue-debug",
@@ -29,8 +30,7 @@
     "@halobear/vue-region": "file:packages/vue-region",
     "@halobear/vue-request": "file:packages/vue-request",
     "@halobear/vue-shape": "file:packages/vue-shape",
-    "@halobear/vue-upload": "file:packages/vue-upload",
-    "kuan-css": "^2.0.2"
+    "@halobear/vue-upload": "file:packages/vue-upload"
   },
   "devDependencies": {
     "@vue/babel-preset-app": "^4.0.5",

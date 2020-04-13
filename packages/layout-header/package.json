@@ -1,22 +1,21 @@
 {
-  "name": "@halobear/vue-region",
-  "version": "1.0.5",
-  "description": "中国城市选择",
+  "name": "@halobear/layout-header",
+  "version": "1.0.0",
+  "description": "运营管理后台公用头部",
   "keywords": [
     "vue"
   ],
   "scripts": {
-    "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js yarn serve",
-    "serve": "vue serve",
-    "build": "vue-cli-service build",
-    "build:lib": "vue build index.js -t lib -d lib -n vue-region",
+    "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js vue serve",
+    "build": "vue build",
+    "build:lib": "vue build index.js -t lib -d lib -n layout-header",
     "lint": "vue-cli-service lint",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --commit-path '.'"
   },
   "author": "luzhongkuan <luzhongk@126.com>",
-  "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-region",
+  "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/layout-header",
   "license": "ISC",
-  "main": "lib/vue-region.umd.min.js",
+  "main": "lib/layout-header.umd.min.js",
   "directories": {
     "lib": "lib"
   },
@@ -35,7 +34,8 @@
     "url": "https://github.com/halobear/npm-packages/issues"
   },
   "dependencies": {
-    "core-js": "^3.4.4",
-    "vue": "^2.6.10"
+    "swiper": "^5.3.6",
+    "vue": "^2.6.10",
+    "vue-awesome-swiper": "^4.1.0"
   }
 }

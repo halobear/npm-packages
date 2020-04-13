@@ -19,3 +19,4 @@ yarn add @halobear/vue
 - [@halobear/vue-upload](./vue-upload)
 - [@halobear/vue-amap](./vue-amap)
 - [@halobear/vue-region](./vue-region)
+- [@halobear/layout-header](./layout-header)
