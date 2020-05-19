@@ -13,7 +13,7 @@ const codeMessage = {
   500: '服务器发生错误',
   502: '网关错误',
   503: '服务不可用',
-  504: '网络超时'
+  504: '网络超时',
 }
 
 /**
@@ -23,8 +23,7 @@ const codeMessage = {
  */
 export function getErrMsg(error = {}) {
   const { status = '', data = {} } = error.response || {}
-  if (!status) return '网络超时'
-  return data.info || data.msg || codeMessage[status] || '请求失败'
+  return data.info || data.msg || codeMessage[status] || '网络超时'
 }
 
 // 获取接口Http状态码
