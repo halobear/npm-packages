@@ -1,11 +1,6 @@
 <template>
   <div :style="style" class="shape-container" :class="{disabled}">
-    <div
-      @mousedown="bindEvent($event, 's')"
-      :class="{draggable: draggable}"
-      class="shape-inner"
-      @click="toggle"
-    >
+    <div :class="{draggable: draggable}" class="shape-inner" @mousedown="bindEvent($event, 's')">
       <slot></slot>
     </div>
     <template v-if="!disabled">
@@ -47,10 +42,6 @@ export default {
       type: Number,
       default: 0
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     draggable: {
       type: Boolean,
       default: false
@@ -58,6 +49,8 @@ export default {
   },
   data() {
     return {
+      lastData: {},
+      disabled: false,
       dragging: false,
       width: this.w,
       height: this.h,
@@ -78,20 +71,20 @@ export default {
     };
   },
   computed: {
+    computedRotate() {
+      const r = this.rotate < -180 ? this.rotate + 360 : this.rotate;
+      return ~~r;
+    },
     style() {
-      const { width, height, left, top, rotate, dragging } = this;
+      const { width, height, left, top, computedRotate, dragging } = this;
       return {
         width: `${width}px`,
         height: `${height}px`,
         left: `${left}px`,
         top: `${top}px`,
-        transform: `rotate(${rotate}deg)`,
+        transform: `rotate(${computedRotate}deg)`,
         ...(dragging ? { "user-select": "none" } : {})
       };
-    },
-    computedRotate() {
-      const r = this.rotate < -180 ? this.rotate + 360 : this.rotate;
-      return ~~r;
     },
     centerPointer() {
       const { left, top, width, height } = this;
@@ -142,7 +135,14 @@ export default {
   },
   methods: {
     bindEvent(e, className) {
-      if (this.disabled) return;
+      if (this.disabled) return this.toggle();
+      this.lastData = {
+        x: this.left,
+        y: this.top,
+        w: this.width,
+        h: this.height,
+        r: this.computedRotate
+      };
       this.dragging = true;
       const { width, height, left, top } = this;
       // 鼠标按下时的位置
@@ -180,17 +180,37 @@ export default {
         document.onmousemove = null;
         document.onmouseup = null;
         this.dragging = false;
-        this.$emit("change", {
+        const newData = {
           x: this.left,
           y: this.top,
           w: Math.max(this.width, 50),
           h: Math.max(this.height, 50),
           r: this.computedRotate
-        });
+        };
+
+        if (objectEqual(newData, this.lastData)) {
+          this.toggle();
+        } else {
+          this.$emit("change", newData);
+        }
       };
+    },
+    toggle() {
+      this.disabled = !this.disabled;
     }
   }
 };
+
+function objectEqual(a = {}, b = {}) {
+  let isEqual = true;
+  for (let key in a) {
+    if (a[key] !== b[key]) {
+      isEqual = false;
+      break;
+    }
+  }
+  return isEqual;
+}
 </script>
 
 <style lang="less" scoped>
@@ -200,9 +220,11 @@ export default {
   height: 150px;
   top: 100px;
   left: 100px;
-  border: 1px solid #0185f2;
+  border: 1px solid rgba(1, 133, 242, 0.8);
+  cursor: pointer;
   &.disabled {
     border-color: transparent;
+    cursor: default;
   }
 }
 .shape-inner {
@@ -309,7 +331,7 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -84px;
+  bottom: -74px;
   margin: auto;
   color: white;
   font-family: PingFangSC-Regular, PingFang SC;
