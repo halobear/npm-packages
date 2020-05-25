@@ -54,12 +54,15 @@ export default {
     draggable: {
       type: Boolean,
       default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
     return {
       lastData: {},
-      disabled: false,
       dragging: false,
       width: this.w,
       height: this.h,
@@ -145,7 +148,11 @@ export default {
   },
   methods: {
     bindEvent(e, className) {
-      if (this.disabled) return this.toggle();
+      let hasChangeDisable = false;
+      if (this.disabled) {
+        hasChangeDisable = true;
+        this.toggle();
+      }
       this.lastData = {
         x: this.left,
         y: this.top,
@@ -201,14 +208,15 @@ export default {
         };
 
         if (objectEqual(newData, this.lastData)) {
-          this.toggle();
+          !hasChangeDisable && this.toggle();
         } else {
           this.$emit("change", newData);
         }
       };
     },
     toggle() {
-      this.disabled = !this.disabled;
+      const disabled = !this.disabled;
+      this.$emit("update:disabled", disabled);
     }
   }
 };
