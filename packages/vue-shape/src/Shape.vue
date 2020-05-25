@@ -1,5 +1,5 @@
 <template>
-  <div :style="style" class="shape-container" :class="{disabled}">
+  <div ref="container" :style="style" class="shape-container" :class="{disabled}">
     <div :class="{draggable: draggable}" class="shape-inner" @mousedown="bindEvent($event, 's')">
       <slot></slot>
     </div>
@@ -7,7 +7,7 @@
       <div
         v-for="item in actions"
         :key="item"
-        :style="item === 'ratote' ? {cursor: remoteCursor} : {}"
+        :style="item === 'rotate' ? {cursor: remoteCursor} : {}"
         :class="item"
         @mousedown="bindEvent($event, item)"
       ></div>
@@ -20,6 +20,15 @@
 </template>
 
 <script>
+import rotation_0 from "./images/rotation_0.png";
+import rotation_45 from "./images/rotation_45.png";
+import rotation_90 from "./images/rotation_90.png";
+import rotation_135 from "./images/rotation_135.png";
+import rotation_180 from "./images/rotation_180.png";
+import rotation2_45 from "./images/rotation2_45.png";
+import rotation2_90 from "./images/rotation2_90.png";
+import rotation2_135 from "./images/rotation2_135.png";
+
 export default {
   props: {
     w: {
@@ -28,7 +37,7 @@ export default {
     },
     h: {
       type: Number,
-      default: 1000
+      default: 100
     },
     x: {
       type: Number,
@@ -56,17 +65,17 @@ export default {
       height: this.h,
       left: this.x,
       top: this.y,
-      actions: ["t", "r", "b", "l", "tr", "tl", "br", "bl", "ratote"],
+      actions: ["t", "r", "b", "l", "tr", "tl", "br", "bl", "rotate"],
       rotate: this.r,
       rotateCursor: {
-        0: require("./images/rotation_0.svg"),
-        45: require("./images/rotation_45.svg"),
-        90: require("./images/rotation_90.svg"),
-        135: require("./images/rotation_135.svg"),
-        180: require("./images/rotation_180.svg"),
-        "-45": require("./images/rotation2_45.svg"),
-        "-90": require("./images/rotation2_90.svg"),
-        "-135": require("./images/rotation2_135.svg")
+        0: rotation_0,
+        45: rotation_45,
+        90: rotation_90,
+        135: rotation_135,
+        180: rotation_180,
+        "-45": rotation2_45,
+        "-90": rotation2_90,
+        "-135": rotation2_135
       }
     };
   },
@@ -113,7 +122,8 @@ export default {
       } else if (r >= -68 && r <= 23) {
         key = -45;
       }
-      return `url(${this.rotateCursor[key]}) 11 11,pointer`;
+      const img = this.rotateCursor[key];
+      return `url(${img}) 11 11,pointer`;
     }
   },
   watch: {
@@ -148,12 +158,14 @@ export default {
       // 鼠标按下时的位置
       const clientx = e.clientX;
       const clienty = e.clientY;
+      const parentPos = this.$refs.container.offsetParent.getBoundingClientRect();
+
       if (typeof document === "undefined") return;
       const min = 50;
       document.onmousemove = e => {
-        if (className === "ratote") {
-          const y = e.clientY - this.centerPointer.y;
-          const x = e.clientX - this.centerPointer.x;
+        if (className === "rotate") {
+          const y = e.clientY - this.centerPointer.y - parentPos.top;
+          const x = e.clientX - this.centerPointer.x - parentPos.left;
           this.rotate = Math.atan2(y, x) / (Math.PI / 180) - 90;
         } else if (className === "s") {
           if (this.draggable) return;
@@ -308,7 +320,7 @@ function objectEqual(a = {}, b = {}) {
   right: -5px;
   cursor: nwse-resize;
 }
-.ratote {
+.rotate {
   position: absolute;
   left: 0;
   right: 0;
