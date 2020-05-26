@@ -11,23 +11,20 @@
         :class="item"
         @mousedown="bindEvent($event, item)"
       ></div>
-      <div
-        class="rotate-num"
-        :style="{transform: `rotate(${360-computedRotate}deg)`}"
-      >{{computedRotate}}°</div>
+      <div class="rotate-num" :style="{transform: `rotate(${360-computedRotate}deg)`}">{{computedRotate}}°</div>
     </template>
   </div>
 </template>
 
 <script>
-import rotation_0 from "./images/rotation_0.png";
-import rotation_45 from "./images/rotation_45.png";
-import rotation_90 from "./images/rotation_90.png";
-import rotation_135 from "./images/rotation_135.png";
-import rotation_180 from "./images/rotation_180.png";
-import rotation2_45 from "./images/rotation2_45.png";
-import rotation2_90 from "./images/rotation2_90.png";
-import rotation2_135 from "./images/rotation2_135.png";
+import rotation_0 from './images/rotation_0.png';
+import rotation_45 from './images/rotation_45.png';
+import rotation_90 from './images/rotation_90.png';
+import rotation_135 from './images/rotation_135.png';
+import rotation_180 from './images/rotation_180.png';
+import rotation2_45 from './images/rotation2_45.png';
+import rotation2_90 from './images/rotation2_90.png';
+import rotation2_135 from './images/rotation2_135.png';
 
 export default {
   props: {
@@ -68,7 +65,7 @@ export default {
       height: this.h,
       left: this.x,
       top: this.y,
-      actions: ["t", "r", "b", "l", "tr", "tl", "br", "bl", "rotate"],
+      actions: ['t', 'r', 'b', 'l', 'tr', 'tl', 'br', 'bl', 'rotate'],
       rotate: this.r,
       rotateCursor: {
         0: rotation_0,
@@ -76,9 +73,9 @@ export default {
         90: rotation_90,
         135: rotation_135,
         180: rotation_180,
-        "-45": rotation2_45,
-        "-90": rotation2_90,
-        "-135": rotation2_135
+        '-45': rotation2_45,
+        '-90': rotation2_90,
+        '-135': rotation2_135
       }
     };
   },
@@ -95,7 +92,7 @@ export default {
         left: `${left}px`,
         top: `${top}px`,
         transform: `rotate(${computedRotate}deg)`,
-        ...(dragging ? { "user-select": "none" } : {})
+        ...(dragging ? { 'user-select': 'none' } : {})
       };
     },
     centerPointer() {
@@ -142,7 +139,7 @@ export default {
     h(h) {
       this.height = h;
     },
-    rotate(r) {
+    r(r) {
       this.rotate = r;
     }
   },
@@ -167,29 +164,29 @@ export default {
       const clienty = e.clientY;
       const parentPos = this.$refs.container.offsetParent.getBoundingClientRect();
 
-      if (typeof document === "undefined") return;
+      if (typeof document === 'undefined') return;
       const min = 3;
       document.onmousemove = e => {
-        if (className === "rotate") {
+        if (className === 'rotate') {
           const y = e.clientY - this.centerPointer.y - parentPos.top;
           const x = e.clientX - this.centerPointer.x - parentPos.left;
           this.rotate = Math.atan2(y, x) / (Math.PI / 180) - 90;
-        } else if (className === "s") {
+        } else if (className === 's') {
           if (this.draggable) return;
           this.top = top + e.clientY - clienty;
           this.left = left + (e.clientX - clientx);
         } else {
-          if (className.includes("t")) {
+          if (className.includes('t')) {
             this.height = Math.max(height + clienty - e.clientY, min);
             this.top = top + e.clientY - clienty;
           }
-          if (className.includes("b")) {
+          if (className.includes('b')) {
             this.height = Math.max(height + e.clientY - clienty, min);
           }
-          if (className.includes("r")) {
+          if (className.includes('r')) {
             this.width = Math.max(width + e.clientX - clientx, min);
           }
-          if (className.includes("l")) {
+          if (className.includes('l')) {
             this.width = Math.max(width + clientx - e.clientX, min);
             this.left = left + (e.clientX - clientx);
           }
@@ -210,13 +207,13 @@ export default {
         if (objectEqual(newData, this.lastData)) {
           !hasChangeDisable && this.toggle();
         } else {
-          this.$emit("change", newData);
+          this.$emit('change', newData);
         }
       };
     },
     toggle() {
       const disabled = !this.disabled;
-      this.$emit("update:disabled", disabled);
+      this.$emit('update:disabled', disabled);
     }
   }
 };
@@ -337,7 +334,7 @@ function objectEqual(a = {}, b = {}) {
   width: 18px;
   height: 18px;
   margin: auto;
-  background: white url("./images/rotate_icon.png") center center no-repeat;
+  background: white url('./images/rotate_icon.png') center center no-repeat;
   background-size: 12px 12px;
   border: 1px solid #979797;
   border-radius: 50%;
