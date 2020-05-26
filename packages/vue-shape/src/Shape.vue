@@ -33,11 +33,11 @@ export default {
   props: {
     w: {
       type: Number,
-      default: 100
+      default: 3
     },
     h: {
       type: Number,
-      default: 100
+      default: 3
     },
     x: {
       type: Number,
@@ -168,7 +168,7 @@ export default {
       const parentPos = this.$refs.container.offsetParent.getBoundingClientRect();
 
       if (typeof document === "undefined") return;
-      const min = 50;
+      const min = 3;
       document.onmousemove = e => {
         if (className === "rotate") {
           const y = e.clientY - this.centerPointer.y - parentPos.top;
@@ -202,8 +202,8 @@ export default {
         const newData = {
           x: this.left,
           y: this.top,
-          w: Math.max(this.width, 50),
-          h: Math.max(this.height, 50),
+          w: Math.max(this.width, 3),
+          h: Math.max(this.height, 3),
           r: this.computedRotate
         };
 
@@ -240,19 +240,19 @@ function objectEqual(a = {}, b = {}) {
   height: 150px;
   top: 100px;
   left: 100px;
-  border: 1px solid rgba(1, 133, 242, 0.8);
+  outline: 1px solid rgba(1, 133, 242, 0.8);
   cursor: pointer;
   &.disabled {
-    border-color: transparent;
+    outline-color: transparent;
     cursor: default;
   }
 }
 .shape-inner {
   position: absolute;
-  left: -1px;
-  right: -1px;
-  top: -1px;
-  bottom: -1px;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
   &.draggable {
     cursor: grab;
     &:active {
@@ -337,7 +337,7 @@ function objectEqual(a = {}, b = {}) {
   width: 18px;
   height: 18px;
   margin: auto;
-  background: url("./images/rotate_icon.png") center center no-repeat;
+  background: white url("./images/rotate_icon.png") center center no-repeat;
   background-size: 12px 12px;
   border: 1px solid #979797;
   border-radius: 50%;
