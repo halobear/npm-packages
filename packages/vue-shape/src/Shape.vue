@@ -50,7 +50,7 @@ export default {
     },
     draggable: {
       type: Boolean,
-      default: false
+      default: true
     },
     disabled: {
       type: Boolean,
@@ -166,30 +166,46 @@ export default {
 
       if (typeof document === 'undefined') return;
       const min = 3;
+      const originHeight = this.height;
+      const originWidth = this.width;
       document.onmousemove = e => {
+        if (!this.draggable) return;
         if (className === 'rotate') {
+          // 旋转
           const y = e.clientY - this.centerPointer.y - parentPos.top;
           const x = e.clientX - this.centerPointer.x - parentPos.left;
           this.rotate = Math.atan2(y, x) / (Math.PI / 180) - 90;
         } else if (className === 's') {
-          if (this.draggable) return;
+          // 拖动
           this.top = top + e.clientY - clienty;
           this.left = left + (e.clientX - clientx);
         } else {
+          let h;
+          let w;
+          // 变形
           if (className.includes('t')) {
-            this.height = Math.max(height + clienty - e.clientY, min);
-            this.top = top + e.clientY - clienty;
+            h = Math.max(height + clienty - e.clientY, min);
           }
           if (className.includes('b')) {
-            this.height = Math.max(height + e.clientY - clienty, min);
+            h = Math.max(height + e.clientY - clienty, min);
           }
           if (className.includes('r')) {
-            this.width = Math.max(width + e.clientX - clientx, min);
+            w = Math.max(width + e.clientX - clientx, min);
           }
           if (className.includes('l')) {
-            this.width = Math.max(width + clientx - e.clientX, min);
-            this.left = left + (e.clientX - clientx);
+            w = Math.max(width + clientx - e.clientX, min);
           }
+          if (h && w) {
+            const ratio = Math.min(h / originHeight, w / originWidth);
+            this.width = ratio * originWidth;
+            this.height = ratio * originHeight;
+          } else {
+            h && (this.height = h);
+            w && (this.width = w);
+          }
+
+          className.includes('t') && (this.top = top + originHeight - this.height);
+          className.includes('l') && (this.left = left - (this.width - originWidth));
         }
       };
       document.onmouseup = () => {
