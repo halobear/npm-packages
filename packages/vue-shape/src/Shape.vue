@@ -55,6 +55,10 @@ export default {
     disabled: {
       type: Boolean,
       default: true
+    },
+    min: {
+      type: Number,
+      default: 3
     }
   },
   data() {
@@ -165,7 +169,7 @@ export default {
       const parentPos = this.$refs.container.offsetParent.getBoundingClientRect();
 
       if (typeof document === 'undefined') return;
-      const min = 3;
+      const min = this.min;
       const originHeight = this.height;
       const originWidth = this.width;
       document.onmousemove = e => {
