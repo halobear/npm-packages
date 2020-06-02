@@ -1,10 +1,14 @@
 <template>
-  <div>
-    <vue-shape :disabled="false" :x="data.x" :y="data.y" :w="data.w" :h="data.h">
-      <h2
-        style="padding: 0;margin: 0;position: absolute: left: 0;top: 0;width: 100%; height: 100%; background: gray"
-      >默认内容</h2>
-    </vue-shape>
+  <div @click="disabled = true" class="test-container">
+    <div @click.stop>
+      <button @click="disabled = !disabled">锁定</button>
+      <button @click="draggable = !draggable">拖拽</button>
+    </div>
+    <div @click.stop>
+      <vue-shape :disabled.sync="disabled" :draggable.sync="draggable" :x="data.x" :y="data.y" :w="data.w" :h="data.h">
+        <h2 class="box">测试一</h2>
+      </vue-shape>
+    </div>
   </div>
 </template>
 
@@ -18,15 +22,30 @@ export default {
   data() {
     return {
       data: {
-        x: 300,
-        y: 300,
-        w: 300,
+        x: 100,
+        y: 100,
+        w: 200,
         h: 200
-      }
+      },
+      disabled: false,
+      draggable: true
     };
   }
 };
 </script>
 
-<style>
+<style lang="less" scoped>
+.test-container {
+  min-height: 100vh;
+}
+.box {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>

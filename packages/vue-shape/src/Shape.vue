@@ -1,18 +1,29 @@
 <template>
-  <div ref="container" :style="style" class="shape-container" :class="{disabled}">
-    <div :class="{draggable: draggable}" class="shape-inner" @mousedown="bindEvent($event, 's')">
+  <div ref="container" :style="style" class="shape-container" :class="{disabled, draggable}">
+    <div class="shape-inner" @mousedown="bindEvent($event, 's')">
       <slot></slot>
     </div>
     <template v-if="!disabled">
-      <div
-        v-for="item in actions"
-        :key="item"
-        :style="item === 'rotate' ? {cursor: remoteCursor} : {}"
-        :class="item"
-        @mousedown="bindEvent($event, item)"
-      ></div>
-      <div class="rotate-num" :style="{transform: `rotate(${360-computedRotate}deg)`}">{{computedRotate}}°</div>
+      <div class="action-box">
+        <div
+          v-for="item in actions"
+          :key="item"
+          :style="item === 'rotate' ? {cursor: remoteCursor} : {}"
+          :class="item"
+          @mousedown="bindEvent($event, item)"
+        ></div>
+        <div class="rotate-num" :style="lockStyle">{{computedRotate}}°</div>
+      </div>
     </template>
+    <div
+      v-if="!draggable"
+      class="lock-box balloon-bottom"
+      :style="lockStyle"
+      @click="changeDraggable"
+      data-balloon="点击解除锁定"
+    >
+      <img src="./images/lock.png" class="lock-icon" />
+    </div>
   </div>
 </template>
 
@@ -98,6 +109,9 @@ export default {
         transform: `rotate(${computedRotate}deg)`,
         ...(dragging ? { 'user-select': 'none' } : {})
       };
+    },
+    lockStyle() {
+      return { transform: `rotate(${360 - this.computedRotate}deg)` };
     },
     centerPointer() {
       const { left, top, width, height } = this;
@@ -234,6 +248,9 @@ export default {
     toggle() {
       const disabled = !this.disabled;
       this.$emit('update:disabled', disabled);
+    },
+    changeDraggable() {
+      this.$emit('update:draggable', true);
     }
   }
 };
@@ -251,6 +268,112 @@ function objectEqual(a = {}, b = {}) {
 </script>
 
 <style lang="less" scoped>
+.balloon(
+  @direction: top, 
+  @bg: rgba(0, 0, 0, 0.7), 
+  @trangle-height: 6px, 
+  @color: #fff, 
+  @font: 14px
+) {
+  position: relative;
+  &:before,
+  &:after {
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.18s ease-out 0.18s;
+    & when (@direction = top) {
+      left: 50%;
+      bottom: 100%;
+      transform: translate(-50%, 3px);
+    }
+    & when (@direction = bottom) {
+      left: 50%;
+      top: 100%;
+      transform: translate(-50%, 3px);
+    }
+    & when (@direction = left) {
+      top: 50%;
+      right: 100%;
+      transform: translate(3px, -50%);
+    }
+    & when (@direction = right) {
+      top: 50%;
+      left: 100%;
+      transform: translate(-3px, -50%);
+    }
+  }
+  &:before {
+    content: '';
+    & when (@direction = top) {
+      margin-bottom: 5px;
+      border-left: @trangle-height solid transparent;
+      border-right: @trangle-height solid transparent;
+      border-@{direction}: @trangle-height solid @bg;
+    }
+    & when (@direction = bottom) {
+      margin-top: 5px;
+      border-left: @trangle-height solid transparent;
+      border-right: @trangle-height solid transparent;
+      border-@{direction}: @trangle-height solid @bg;
+    }
+    & when (@direction = left) {
+      margin-right: 5px;
+      border-top: @trangle-height solid transparent;
+      border-bottom: @trangle-height solid transparent;
+      border-@{direction}: @trangle-height solid @bg;
+    }
+    & when (@direction = right) {
+      margin-left: 5px;
+      border-top: @trangle-height solid transparent;
+      border-bottom: @trangle-height solid transparent;
+      border-@{direction}: @trangle-height solid @bg;
+    }
+  }
+
+  &:after {
+    content: attr(data-balloon);
+    background: @bg;
+    border-radius: 4px;
+    color: @color;
+    font-size: @font;
+    padding: 0.6em 0.8em;
+    white-space: nowrap;
+    & when (@direction = top) {
+      margin-bottom: @trangle-height + 5px;
+    }
+    & when (@direction = bottom) {
+      margin-top: @trangle-height + 5px;
+    }
+    & when (@direction = left) {
+      margin-right: @trangle-height + 5px;
+    }
+    & when (@direction = right) {
+      margin-left: @trangle-height + 5px;
+    }
+  }
+  &:hover {
+    &:after,
+    &:before {
+      opacity: 1;
+      pointer-events: auto;
+      & when (@direction = top), (@direction = bottom) {
+        transform: translate(-50%, 0);
+      }
+      & when (@direction = left), (@direction = right) {
+        transform: translate(0, -50%);
+      }
+    }
+  }
+}
+
+.balloon-bottom {
+  display: inline-block;
+  cursor: pointer;
+  .balloon(bottom);
+}
+
 .shape-container {
   position: absolute;
   width: 150px;
@@ -262,6 +385,23 @@ function objectEqual(a = {}, b = {}) {
   &.disabled {
     outline-color: transparent;
     cursor: default;
+    .lock-box {
+      display: none;
+    }
+  }
+  &.draggable {
+    .action-box {
+      display: block;
+    }
+    &:active {
+      cursor: grabbing;
+    }
+    .lock-box {
+      display: none;
+    }
+  }
+  &:hover {
+    outline-color: rgba(1, 133, 242, 0.8);
   }
 }
 .shape-inner {
@@ -270,12 +410,6 @@ function objectEqual(a = {}, b = {}) {
   right: 0px;
   top: 0px;
   bottom: 0px;
-  &.draggable {
-    cursor: grab;
-    &:active {
-      cursor: grabbing;
-    }
-  }
 }
 .t,
 .l,
@@ -373,10 +507,30 @@ function objectEqual(a = {}, b = {}) {
   color: white;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  text-align: center;
   display: flex;
+  text-align: center;
   align-items: center;
   justify-content: center;
   font-size: 12px;
+}
+.lock-box {
+  position: absolute;
+  right: -11px;
+  bottom: -11px;
+  width: 22px;
+  height: 22px;
+  background: rgba(34, 34, 34, 1);
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  z-index: 10000;
+  display: flex;
+  .lock-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+.action-box {
+  display: none;
 }
 </style>
