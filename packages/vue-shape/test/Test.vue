@@ -2,11 +2,12 @@
   <div class="test-container" ref="container">
     <div>
       <button @click="disabled = !disabled">切换disabled</button>
+      <button @click="draggable = !draggable">切换dragaable</button>
       <input type="text" placeholder="x" v-model.number="data.x" />
       <input type="text" placeholder="r" v-model.number="data.r" />
     </div>
     <div @click.stop>
-      <vue-shape v-bind="data" :disabled.sync="disabled" :container="$refs.container" @change="changeData">
+      <vue-shape v-bind="data" :disabled.sync="disabled" :draggable.sync="draggable" :container="$refs.container" @change="changeData">
         <h2 class="box">测试一</h2>
       </vue-shape>
     </div>
@@ -29,8 +30,8 @@ export default {
         h: 200,
         r: 0
       },
-      disabled: true,
-      draggable: false
+      disabled: false,
+      draggable: true
     };
   },
   methods: {

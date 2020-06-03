@@ -1,13 +1,18 @@
 <template>
-  <div class="vue-shape" ref="container" :class="{disabled}" :style="style" @mousedown="mousedown">
+  <div class="vue-shape" ref="container" :class="{disabled}" :style="style" @mousedown="mousedown" v-on="$listeners">
     <slot></slot>
+    <lock-icon v-if="!draggable && !disabled" class="lock-icon" :style="{transform: `rotate(${360 - this.computedRotate}deg)`}" @click="changeDraggable" />
   </div>
 </template>
 
 <script>
 import resizeableAction from './utils/resizeableAction';
+import LockIcon from './components/LockIcon';
 
 export default {
+  components: {
+    LockIcon
+  },
   props: {
     w: {
       type: Number,
@@ -39,6 +44,10 @@ export default {
     },
     container: {
       type: Element
+    },
+    draggable: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -98,9 +107,15 @@ export default {
       this.rotate = r;
       resizeableAction.changeData(this.data);
     },
+    min(min) {
+      resizeableAction.changeData({ min });
+    },
     disabled(disabled) {
       this.changeActionVisible(disabled);
       resizeableAction.changeData({ disabled });
+    },
+    draggable() {
+      this.changeActionVisible(this.disabled);
     }
   },
   mounted() {
@@ -113,6 +128,7 @@ export default {
         this.$emit('update:disabled', false);
         await this.$nextTick();
       }
+      if (!this.draggable) return;
       const lastData = {
         x: this.left,
         y: this.top
@@ -132,26 +148,23 @@ export default {
       document.onmouseup = () => {
         document.onmousemove = null;
         document.onmouseup = null;
-        if (this.left === lastData.x && this.top === lastData.y) {
-          this.$emit('update:disabled', false);
-        } else {
+        if (this.left !== lastData.x || this.top !== lastData.y) {
           this.changeParent();
         }
       };
     },
     changeActionVisible(disabled) {
-      if (disabled) {
-        resizeableAction.hide();
-      } else {
-        resizeableAction.show(
-          {
-            data: this.data,
-            change: this.change,
-            changeParent: this.changeParent
-          },
-          this.container
-        );
+      if (disabled || !this.draggable) {
+        return resizeableAction.hide();
       }
+      resizeableAction.show(
+        {
+          data: this.data,
+          change: this.change,
+          changeParent: this.changeParent
+        },
+        this.container
+      );
     },
     change(data = {}) {
       this.width = data.width;
@@ -168,6 +181,9 @@ export default {
         y: this.top,
         r: this.rotate
       });
+    },
+    changeDraggable() {
+      this.$emit('update:draggable', true);
     }
   }
 };
@@ -185,5 +201,10 @@ export default {
   &:hover {
     outline-color: rgba(1, 133, 242, 0.6);
   }
+}
+.lock-icon {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
 }
 </style>

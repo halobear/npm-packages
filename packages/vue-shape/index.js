@@ -1,4 +1,4 @@
-import VueShape from './src/Shape.vue'
+import VueShape from './src/index.vue'
 
 VueShape.install = (Vue) => {
   Vue.component('vue-shape', VueShape)
