@@ -52,6 +52,7 @@
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
     "markdown-it": "^10.0.0",
+    "vue-svg-loader": "^0.16.0",
     "vue-template-compiler": "^2.6.10",
     "yorkie": "^2.0.0"
   },

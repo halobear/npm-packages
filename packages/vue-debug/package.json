@@ -36,9 +36,9 @@
     "url": "https://github.com/halobear/npm-packages/issues"
   },
   "dependencies": {
-    "core-js": "^3.4.4",
+    "core-js": "^3.6.5",
     "kuan-css": "^2.0.3",
     "vconsole": "^3.3.4",
-    "vue": "^2.6.10"
+    "vue": "^2.6.11"
   }
 }
