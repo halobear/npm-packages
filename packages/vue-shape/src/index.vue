@@ -1,0 +1,175 @@
+<template>
+  <div class="vue-shape" ref="container" :class="{disabled}" :style="style" @mousedown="mousedown">
+    <slot></slot>
+  </div>
+</template>
+
+<script>
+import resizeableAction from './utils/resizeableAction';
+
+export default {
+  props: {
+    w: {
+      type: Number,
+      default: 3
+    },
+    h: {
+      type: Number,
+      default: 3
+    },
+    x: {
+      type: Number,
+      default: 0
+    },
+    y: {
+      type: Number,
+      default: 0
+    },
+    r: {
+      type: Number,
+      default: 0
+    },
+    min: {
+      type: Number,
+      default: 3
+    },
+    disabled: {
+      type: Boolean,
+      default: true
+    },
+    container: {
+      type: Element
+    }
+  },
+  data() {
+    return {
+      width: this.w,
+      height: this.h,
+      left: this.x,
+      top: this.y,
+      rotate: this.r
+    };
+  },
+  computed: {
+    computedRotate() {
+      const r = this.rotate < -180 ? this.rotate + 360 : this.rotate;
+      return ~~r;
+    },
+    style() {
+      const { width, height, left, top, computedRotate } = this;
+      return {
+        width: `${width}px`,
+        height: `${height}px`,
+        left: `${left}px`,
+        top: `${top}px`,
+        transform: `rotate(${computedRotate}deg)`
+      };
+    },
+    data() {
+      return {
+        container: this.$refs.container,
+        width: this.width,
+        height: this.height,
+        left: this.left,
+        top: this.top,
+        rotate: this.rotate,
+        min: this.min
+      };
+    }
+  },
+  watch: {
+    x(x) {
+      this.left = x;
+      resizeableAction.changeData(this.data);
+    },
+    y(y) {
+      this.top = y;
+      resizeableAction.changeData(this.data);
+    },
+    w(w) {
+      this.width = w;
+      resizeableAction.changeData(this.data);
+    },
+    h(h) {
+      this.height = h;
+      resizeableAction.changeData(this.data);
+    },
+    r(r) {
+      this.rotate = r;
+      resizeableAction.changeData(this.data);
+    },
+    disabled(disabled) {
+      this.changeActionVisible(disabled);
+      resizeableAction.changeData({ disabled });
+    }
+  },
+  mounted() {
+    !this.disabled && this.changeActionVisible();
+  },
+  methods: {
+    async mousedown(e) {
+      if (typeof document === 'undefined') return;
+      if (this.disabled) {
+        this.$emit('update:disabled', true);
+        await this.$nextTick();
+      }
+      const lastData = {
+        x: this.left,
+        y: this.top
+      };
+      const { left, top } = this;
+      // 鼠标按下时的位置
+      const clientx = e.clientX;
+      const clienty = e.clientY;
+      document.onmousemove = e => {
+        this.top = top + e.clientY - clienty;
+        this.left = left + (e.clientX - clientx);
+      };
+      document.onmouseup = () => {
+        document.onmousemove = null;
+        document.onmouseup = null;
+        if (this.left === lastData.x && this.top === lastData.y) {
+          this.$emit('update:disabled', false);
+        } else {
+          this.changeParent();
+        }
+      };
+    },
+    changeActionVisible(disabled) {
+      if (disabled) {
+        resizeableAction.hide();
+      } else {
+        resizeableAction.show(
+          {
+            data: this.data,
+            change: this.change
+          },
+          this.container
+        );
+      }
+    },
+    change(data = {}) {
+      this.width = data.width;
+      this.height = data.height;
+      this.left = data.left;
+      this.top = data.top;
+      this.rotate = data.rotate;
+    },
+    changeParent() {
+      console.log(this.data);
+      this.$emit('change', this.data);
+    }
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.vue-shape {
+  position: absolute;
+  outline: 1px solid rgba(1, 133, 242, 0.8);
+  cursor: pointer;
+  &.disabled {
+    outline-color: transparent;
+  }
+}
+</style>
