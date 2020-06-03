@@ -6,7 +6,7 @@ let views
 
 const resizeableAction = {
   show(options = {}, body = document.body) {
-    const { data = {}, change = noop } = options
+    const { data = {}, change = noop, changeParent = noop } = options
     // 服务端渲染
     if (typeof document === 'undefined') return
 
@@ -18,6 +18,7 @@ const resizeableAction = {
     }
     views.visible = true
     views.change = change
+    views.changeParent = changeParent
     resizeableAction.changeData(data)
   },
   changeData(data = {}) {
@@ -30,6 +31,7 @@ const resizeableAction = {
     if (!views) return
     views.visible = false
     views.change = noop
+    views.changeParent = noop
   },
 }
 

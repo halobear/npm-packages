@@ -1,5 +1,6 @@
 {
   "name": "halobear",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "bootstrap": "lerna bootstrap && lerna link convert",
@@ -33,17 +34,16 @@
     "@halobear/vue-upload": "file:packages/vue-upload"
   },
   "devDependencies": {
-    "@vue/babel-preset-app": "^4.0.5",
-    "@vue/cli-plugin-babel": "^3.12.0",
-    "@vue/cli-plugin-eslint": "^3.12.0",
-    "@vue/cli-service": "^3.12.0",
+    "@vue/cli-plugin-babel": "^4.4.1",
+    "@vue/cli-plugin-eslint": "~4.4.0",
+    "@vue/cli-service": "~4.4.0",
     "axios": "^0.19.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.1.0",
     "blueimp-md5": "^2.12.0",
     "chalk": "^2.4.2",
     "cross-env": "^6.0.3",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
     "gh-pages": "^2.1.1",
     "highlight.js": "^9.18.1",
     "inquirer": "^7.0.0",
@@ -53,8 +53,7 @@
     "less-loader": "^5.0.0",
     "markdown-it": "^10.0.0",
     "vue-svg-loader": "^0.16.0",
-    "vue-template-compiler": "^2.6.10",
+    "vue-template-compiler": "^2.6.11",
     "yorkie": "^2.0.0"
-  },
-  "version": "0.0.0"
+  }
 }

@@ -110,7 +110,7 @@ export default {
     async mousedown(e) {
       if (typeof document === 'undefined') return;
       if (this.disabled) {
-        this.$emit('update:disabled', true);
+        this.$emit('update:disabled', false);
         await this.$nextTick();
       }
       const lastData = {
@@ -124,6 +124,10 @@ export default {
       document.onmousemove = e => {
         this.top = top + e.clientY - clienty;
         this.left = left + (e.clientX - clientx);
+        resizeableAction.changeData({
+          top: this.top,
+          left: this.left
+        });
       };
       document.onmouseup = () => {
         document.onmousemove = null;
@@ -142,7 +146,8 @@ export default {
         resizeableAction.show(
           {
             data: this.data,
-            change: this.change
+            change: this.change,
+            changeParent: this.changeParent
           },
           this.container
         );
@@ -156,8 +161,13 @@ export default {
       this.rotate = data.rotate;
     },
     changeParent() {
-      console.log(this.data);
-      this.$emit('change', this.data);
+      this.$emit('change', {
+        w: this.width,
+        h: this.height,
+        x: this.left,
+        y: this.top,
+        r: this.rotate
+      });
     }
   }
 };
@@ -168,8 +178,12 @@ export default {
   position: absolute;
   outline: 1px solid rgba(1, 133, 242, 0.8);
   cursor: pointer;
+  user-select: none;
   &.disabled {
     outline-color: transparent;
+  }
+  &:hover {
+    outline-color: rgba(1, 133, 242, 0.6);
   }
 }
 </style>

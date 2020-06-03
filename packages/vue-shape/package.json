@@ -6,7 +6,7 @@
     "vue"
   ],
   "scripts": {
-    "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js vue serve",
+    "dev": "BUILD_TARGET=test vue serve",
     "build": "vue-cli-service build",
     "build:lib": "vue build index.js -t lib -d lib -n vue-shape",
     "lint": "vue-cli-service lint",
@@ -36,9 +36,5 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.10.2",
-    "@babel/plugin-transform-runtime": "^7.10.1"
   }
 }

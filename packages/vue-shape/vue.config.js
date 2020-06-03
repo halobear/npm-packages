@@ -6,7 +6,7 @@ const resolve = (dir) => path.resolve(__dirname, dir)
 
 const distName = 'dist' // 项目名称
 
-module.exports = {
+const config = {
   publicPath: isDev ? '/' : `/`, // public path
   outputDir: resolve(`${distName}`), // 输入地址
   devServer: {
@@ -34,3 +34,18 @@ module.exports = {
   },
   productionSourceMap: false,
 }
+
+const testConfig = {
+  publicPath: '/', // public path
+  devServer: {
+    proxy: 'https://www.luzhongkuan.cn',
+    disableHostCheck: true,
+  },
+  configureWebpack: {
+    entry: {
+      app: path.resolve(__dirname, 'test/index.js'),
+    },
+  },
+}
+
+module.exports = process.env.BUILD_TARGET === 'test' ? testConfig : config

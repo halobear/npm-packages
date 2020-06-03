@@ -1,5 +1,10 @@
 <template>
-  <div @click="disabled = true" class="test-container" ref="container">
+  <div class="test-container" ref="container">
+    <div>
+      <button @click="disabled = !disabled">切换disabled</button>
+      <input type="text" placeholder="x" v-model.number="data.x" />
+      <input type="text" placeholder="r" v-model.number="data.r" />
+    </div>
     <div @click.stop>
       <vue-shape v-bind="data" :disabled.sync="disabled" :container="$refs.container" @change="changeData">
         <h2 class="box">测试一</h2>
@@ -31,12 +36,16 @@ export default {
   methods: {
     changeData(data = {}) {
       console.log('接收', data);
+      this.data = data;
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
+.test-container {
+  min-height: 80vh;
+}
 .box {
   width: 100%;
   height: 100%;

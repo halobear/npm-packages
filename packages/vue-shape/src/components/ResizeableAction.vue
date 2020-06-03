@@ -1,18 +1,14 @@
 <template>
   <div v-if="visible" class="resizeable-action" :style="style" @click.stop @mousedown.stop>
     <rotate-icon :rotate="computedRotate" :lockStyle="lockStyle" @mousedown="bindEvent($event, 'rotate')" />
-    <div
-      v-for="item in actions"
-      :key="item"
-      :style="actionStyle[item]"
-      :class="item"
-      @mousedown="bindEvent($event, item)"
-    ></div>
+    <div v-for="item in actions" :key="item" :style="actionStyle[item]" :class="item" @mousedown="bindEvent($event, item)"></div>
   </div>
 </template>
 
 <script>
 import RotateIcon from './RotateIcon';
+
+const noop = () => {};
 
 export default {
   components: {
@@ -29,7 +25,8 @@ export default {
       height: 0,
       rotate: 0,
       min: 3,
-      change: () => {}
+      change: noop,
+      changeParent: noop
     };
   },
   computed: {
@@ -37,8 +34,8 @@ export default {
       return {
         left: this.left,
         top: this.top,
-        width: Math.max(this.width, 3),
-        height: Math.max(this.height, 3),
+        width: Math.max(this.width, this.min),
+        height: Math.max(this.height, this.min),
         rotate: this.rotate
       };
     },
@@ -68,40 +65,40 @@ export default {
       };
     },
     actionStyle() {
-      const halfW = `${this.width / 2 - 4}px`;
-      const halfH = `${this.height / 2 - 4}px`;
+      const halfW = `${this.width / 2 - 5}px`;
+      const halfH = `${this.height / 2 - 5}px`;
       return {
         t: {
           left: halfW,
-          top: '-4px'
+          top: '-5px'
         },
         r: {
           top: halfH,
-          left: `${this.width - 4}px`
+          left: `${this.width - 5}px`
         },
         b: {
           left: halfW,
-          top: `${this.height - 4}px`
+          top: `${this.height - 5}px`
         },
         l: {
-          left: '-4px',
+          left: '-5px',
           top: halfH
         },
         tl: {
-          left: '-4px',
-          top: '-4px'
+          left: '-5px',
+          top: '-5px'
         },
         tr: {
-          left: `${this.width - 4}px`,
-          top: '-4px'
+          left: `${this.width - 5}px`,
+          top: '-5px'
         },
         bl: {
-          left: `-4px`,
-          top: `${this.height - 4}px`
+          left: `-5px`,
+          top: `${this.height - 5}px`
         },
         br: {
-          left: `${this.width - 4}px`,
-          top: `${this.height - 4}px`
+          left: `${this.width - 5}px`,
+          top: `${this.height - 5}px`
         }
       };
     }
@@ -117,6 +114,7 @@ export default {
       const min = this.min;
       const originHeight = this.height;
       const originWidth = this.width;
+      const lastData = { ...this.newData };
       document.onmousemove = e => {
         if (className === 'rotate') {
           // 旋转
@@ -162,8 +160,9 @@ export default {
         document.onmousemove = null;
         document.onmouseup = null;
         this.dragging = false;
-        if (!objectEqual(this.newData, this.lastData)) {
+        if (!objectEqual(this.newData, lastData)) {
           this.change(this.newData);
+          this.changeParent(this.newData);
         }
       };
     }
@@ -196,7 +195,17 @@ function objectEqual(a = {}, b = {}) {
   height: 8px;
   border: 1px solid rgba(153, 153, 153, 1);
   margin: auto;
-  box-sizing: border-box;
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &::after {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
 }
 .t,
 .b {
@@ -216,7 +225,17 @@ function objectEqual(a = {}, b = {}) {
   background-color: #fff;
   border: 1px solid rgba(153, 153, 153, 1);
   border-radius: 100%;
-  box-sizing: border-box;
+  box-sizing: content-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &::after {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
 }
 .tl {
   cursor: nwse-resize;
