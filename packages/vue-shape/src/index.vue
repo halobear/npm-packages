@@ -1,12 +1,18 @@
 <template>
   <div class="vue-shape" ref="container" :class="{disabled}" :style="style" @mousedown="mousedown" v-on="$listeners">
     <slot></slot>
-    <lock-icon v-if="!draggable && !disabled" class="lock-icon" :style="{transform: `rotate(${360 - this.computedRotate}deg)`}" @click="changeDraggable" />
+    <lock-icon
+      v-if="!draggable && !disabled"
+      class="lock-icon"
+      :style="{transform: `rotate(${360 - this.computedRotate}deg)`}"
+      @click="changeDraggable"
+    />
   </div>
 </template>
 
 <script>
 import resizeableAction from './utils/resizeableAction';
+
 import LockIcon from './components/LockIcon';
 
 export default {
@@ -48,6 +54,10 @@ export default {
     draggable: {
       type: Boolean,
       default: false
+    },
+    fid: {
+      type: [String, Number], // 防止直接切换
+      default: 0
     }
   },
   data() {
