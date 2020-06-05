@@ -859,8 +859,8 @@ var resizeableAction = {
     if (!views) {
       var Instance = external_commonjs_vue_commonjs2_vue_root_Vue_default.a.extend(ResizeableAction);
       views = new Instance();
-      var vm = views.$mount();
-      body.appendChild(vm.$el);
+      views.$mount();
+      body.appendChild(views.$el);
     }
 
     views.visible = true;
@@ -877,9 +877,9 @@ var resizeableAction = {
   },
   hide: function hide() {
     if (!views || new Date().getTime() - lastShowTime < 300) return;
-    views.visible = false;
-    views.change = resizeableAction_noop;
-    views.changeParent = resizeableAction_noop;
+    views.$destroy();
+    views.$el.parentElement.removeChild(views.$el);
+    views = null;
   }
 };
 /* harmony default export */ var utils_resizeableAction = (resizeableAction);

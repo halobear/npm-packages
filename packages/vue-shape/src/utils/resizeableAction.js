@@ -16,8 +16,8 @@ const resizeableAction = {
     if (!views) {
       const Instance = Vue.extend(ResizeableAction)
       views = new Instance()
-      const vm = views.$mount()
-      body.appendChild(vm.$el)
+      views.$mount()
+      body.appendChild(views.$el)
     }
     views.visible = true
     views.change = change
@@ -32,9 +32,9 @@ const resizeableAction = {
   },
   hide() {
     if (!views || new Date().getTime() - lastShowTime < 300) return
-    views.visible = false
-    views.change = noop
-    views.changeParent = noop
+    views.$destroy()
+    views.$el.parentElement.removeChild(views.$el)
+    views = null
   },
 }
 
