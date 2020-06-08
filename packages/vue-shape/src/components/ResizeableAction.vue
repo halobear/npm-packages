@@ -1,32 +1,66 @@
 <template>
-  <div v-if="visible" class="resizeable-action" :style="style" @click.stop @mousedown.stop>
-    <rotate-icon :rotate="computedRotate" :lockStyle="lockStyle" @mousedown="bindEvent($event, 'rotate')" />
-    <div v-for="item in actions" :key="item" :style="actionStyle[item]" :class="item" @mousedown="bindEvent($event, item)"></div>
+  <div>
+    <div ref="action" class="resizeable-action" :style="style" @click.stop @mousedown.stop>
+      <rotate-icon
+        :rotate="computedRotate"
+        :lockStyle="lockStyle"
+        @mousedown="bindEvent($event, 'rotate')"
+      />
+      <div
+        v-for="item in actions"
+        :key="item"
+        :style="actionStyle[item]"
+        :class="item"
+        @mousedown="bindEvent($event, item)"
+      ></div>
+    </div>
   </div>
 </template>
 
 <script>
 import RotateIcon from './RotateIcon';
 
-const noop = () => {};
-
 export default {
   components: {
     RotateIcon
   },
+  props: {
+    width: {
+      type: Number,
+      default: 0
+    },
+    height: {
+      type: Number,
+      default: 0
+    },
+    left: {
+      type: Number,
+      default: 0
+    },
+    top: {
+      type: Number,
+      default: 0
+    },
+    rotate: {
+      type: Number,
+      default: 0
+    },
+    min: {
+      type: Number,
+      default: 3
+    },
+    computedRotate: {
+      type: Number,
+      default: 0
+    },
+    container: {
+      type: Element,
+      default: () => document.body
+    }
+  },
   data() {
     return {
-      visible: false,
-      actions: ['t', 'r', 'b', 'l', 'tr', 'tl', 'br', 'bl'],
-      container: null,
-      left: 0,
-      top: 0,
-      width: 0,
-      height: 0,
-      rotate: 0,
-      min: 3,
-      change: noop,
-      changeParent: noop
+      actions: ['t', 'r', 'b', 'l', 'tr', 'tl', 'br', 'bl']
     };
   },
   computed: {
@@ -38,10 +72,6 @@ export default {
         height: Math.max(this.height, this.min),
         rotate: this.rotate
       };
-    },
-    computedRotate() {
-      const r = this.rotate < -180 ? this.rotate + 360 : this.rotate;
-      return ~~r;
     },
     centerPointer() {
       const { left, top, width, height } = this;
@@ -103,6 +133,17 @@ export default {
       };
     }
   },
+  watch: {
+    container() {
+      this.container.appendChild(this.$refs.action);
+    }
+  },
+  mounted() {
+    this.container.appendChild(this.$refs.action);
+  },
+  beforeDestroy() {
+    this.$refs.action.parentElement.removeChild(this.$refs.action);
+  },
   methods: {
     bindEvent(e, className) {
       if (typeof document === 'undefined') return;
@@ -110,7 +151,8 @@ export default {
       // 鼠标按下时的位置
       const clientx = e.clientX;
       const clienty = e.clientY;
-      const parentPos = this.container.offsetParent.getBoundingClientRect();
+      const container = this.container.offsetParent || this.container;
+      const parentPos = container.getBoundingClientRect();
       const min = this.min;
       const originHeight = this.height;
       const originWidth = this.width;
@@ -121,11 +163,7 @@ export default {
           const y = e.clientY - this.centerPointer.y - parentPos.top;
           const x = e.clientX - this.centerPointer.x - parentPos.left;
           const rotate = Math.atan2(y, x) / (Math.PI / 180) - 90;
-          this.rotate = rotate;
-        } else if (className === 's') {
-          // 拖动
-          this.top = top + e.clientY - clienty;
-          this.left = left + (e.clientX - clientx);
+          this.$emit('update:rotate', rotate);
         } else {
           let h;
           let w;
@@ -144,25 +182,23 @@ export default {
           }
           if (h && w) {
             const ratio = Math.min(h / originHeight, w / originWidth);
-            this.width = ratio * originWidth;
-            this.height = ratio * originHeight;
+            this.$emit('update:width', ratio * originWidth);
+            this.$emit('update:height', ratio * originHeight);
           } else {
-            h && (this.height = h);
-            w && (this.width = w);
+            h && this.$emit('update:height', h);
+            w && this.$emit('update:width', w);
           }
 
-          className.includes('t') && (this.top = top + originHeight - this.height);
-          className.includes('l') && (this.left = left + originWidth - this.width);
+          className.includes('t') && this.$emit('update:top', top + originHeight - this.height);
+          className.includes('l') && this.$emit('update:left', left + originWidth - this.width);
         }
-        this.change(this.newData);
       };
       document.onmouseup = () => {
         document.onmousemove = null;
         document.onmouseup = null;
         this.dragging = false;
         if (!objectEqual(this.newData, lastData)) {
-          this.change(this.newData);
-          this.changeParent(this.newData);
+          this.$emit('change', this.newData);
         }
       };
     }

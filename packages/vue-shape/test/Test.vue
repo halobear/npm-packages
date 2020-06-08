@@ -7,7 +7,13 @@
       <input type="text" placeholder="r" v-model.number="data.r" />
     </div>
     <div @click.stop>
-      <vue-shape v-bind="data" :disabled.sync="disabled" :draggable.sync="draggable" :container="$refs.container" @change="changeData">
+      <vue-shape
+        v-bind="data"
+        :disabled.sync="disabled"
+        :draggable.sync="draggable"
+        :container="container"
+        @change="changeData"
+      >
         <h2 class="box">测试一</h2>
       </vue-shape>
     </div>
@@ -30,8 +36,9 @@ export default {
         h: 200,
         r: 0
       },
-      disabled: false,
-      draggable: true
+      disabled: true,
+      draggable: true,
+      container: this.$refs.container
     };
   },
   methods: {

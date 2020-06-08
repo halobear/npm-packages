@@ -1,5 +1,12 @@
 <template>
-  <div class="vue-shape" ref="container" :class="{disabled}" :style="style" @mousedown="mousedown" v-on="$listeners">
+  <div
+    class="vue-shape"
+    ref="container"
+    :class="{disabled}"
+    :style="style"
+    @mousedown="mousedown"
+    v-on="$listeners"
+  >
     <slot></slot>
     <lock-icon
       v-if="!draggable && !disabled"
@@ -7,17 +14,29 @@
       :style="{transform: `rotate(${360 - this.computedRotate}deg)`}"
       @click="changeDraggable"
     />
+    <resizeable-action
+      v-if="visible"
+      :container="container"
+      :width.sync="width"
+      :height.sync="height"
+      :left.sync="left"
+      :top.sync="top"
+      :rotate.sync="rotate"
+      :min.sync="min"
+      :computedRotate="computedRotate"
+      @change="change"
+    />
   </div>
 </template>
 
 <script>
-import resizeableAction from './utils/resizeableAction';
-
 import LockIcon from './components/LockIcon';
+import ResizeableAction from './components/ResizeableAction';
 
 export default {
   components: {
-    LockIcon
+    LockIcon,
+    ResizeableAction
   },
   props: {
     w: {
@@ -84,52 +103,26 @@ export default {
         transform: `rotate(${computedRotate}deg)`
       };
     },
-    data() {
-      return {
-        container: this.$refs.container,
-        width: this.width,
-        height: this.height,
-        left: this.left,
-        top: this.top,
-        rotate: this.rotate,
-        min: this.min
-      };
+    visible() {
+      return !this.disabled && this.draggable;
     }
   },
   watch: {
     x(x) {
       this.left = x;
-      resizeableAction.changeData(this.data);
     },
     y(y) {
       this.top = y;
-      resizeableAction.changeData(this.data);
     },
     w(w) {
       this.width = w;
-      resizeableAction.changeData(this.data);
     },
     h(h) {
       this.height = h;
-      resizeableAction.changeData(this.data);
     },
     r(r) {
       this.rotate = r;
-      resizeableAction.changeData(this.data);
-    },
-    min(min) {
-      resizeableAction.changeData({ min });
-    },
-    disabled(disabled) {
-      this.changeActionVisible(disabled);
-      resizeableAction.changeData({ disabled });
-    },
-    draggable() {
-      this.changeActionVisible(this.disabled);
     }
-  },
-  mounted() {
-    !this.disabled && this.changeActionVisible();
   },
   methods: {
     async mousedown(e) {
@@ -150,40 +143,20 @@ export default {
       document.onmousemove = e => {
         this.top = top + e.clientY - clienty;
         this.left = left + (e.clientX - clientx);
-        resizeableAction.changeData({
-          top: this.top,
-          left: this.left
-        });
+        // resizeableAction.changeData({
+        //   top: this.top,
+        //   left: this.left
+        // });
       };
       document.onmouseup = () => {
         document.onmousemove = null;
         document.onmouseup = null;
         if (this.left !== lastData.x || this.top !== lastData.y) {
-          this.changeParent();
+          this.change();
         }
       };
     },
-    changeActionVisible(disabled) {
-      if (disabled || !this.draggable) {
-        return resizeableAction.hide();
-      }
-      resizeableAction.show(
-        {
-          data: this.data,
-          change: this.change,
-          changeParent: this.changeParent
-        },
-        this.container
-      );
-    },
-    change(data = {}) {
-      this.width = data.width;
-      this.height = data.height;
-      this.left = data.left;
-      this.top = data.top;
-      this.rotate = data.rotate;
-    },
-    changeParent() {
+    change() {
       this.$emit('change', {
         w: this.width,
         h: this.height,
