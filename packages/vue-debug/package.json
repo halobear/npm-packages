@@ -40,5 +40,6 @@
     "kuan-css": "^2.0.3",
     "vconsole": "^3.3.4",
     "vue": "^2.6.11"
-  }
+  },
+  "gitHead": "a99dfd9611c664f9ab6b1c33e5c3121515018c5a"
 }

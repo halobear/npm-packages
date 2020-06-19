@@ -37,17 +37,18 @@
     "url": "https://github.com/halobear/npm-packages/issues"
   },
   "dependencies": {
-    "@halobear/vue-amap": "file:../vue-amap",
-    "@halobear/vue-debug": "file:../vue-debug",
-    "@halobear/vue-dialog": "file:../vue-dialog",
-    "@halobear/vue-feedback": "file:../vue-feedback",
-    "@halobear/vue-qrcode": "file:../vue-qrcode",
-    "@halobear/vue-region": "file:../vue-region",
-    "@halobear/vue-request": "file:../vue-request",
-    "@halobear/vue-shape": "file:../vue-shape",
-    "@halobear/vue-upload": "file:../vue-upload",
+    "@halobear/vue-amap": "^1.0.7",
+    "@halobear/vue-debug": "^1.0.7",
+    "@halobear/vue-dialog": "^1.0.7",
+    "@halobear/vue-feedback": "^1.0.7",
+    "@halobear/vue-qrcode": "^1.0.7",
+    "@halobear/vue-region": "^1.0.7",
+    "@halobear/vue-request": "^1.0.7",
+    "@halobear/vue-shape": "^1.0.7",
+    "@halobear/vue-upload": "^1.0.7",
     "core-js": "^3.6.5",
     "vconsole": "^3.3.4",
     "vue": "^2.6.11"
-  }
+  },
+  "gitHead": "a99dfd9611c664f9ab6b1c33e5c3121515018c5a"
 }

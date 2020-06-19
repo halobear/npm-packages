@@ -1,3 +1,20 @@
+## [1.0.7](https://github.com/halobear/npm-packages/compare/v1.0.6...v1.0.7) (2020-06-19)
+
+
+### Bug Fixes
+
+* vue-upload ([0daf9e3](https://github.com/halobear/npm-packages/commit/0daf9e3fdf246c17125578d6dc9d3c603e400e4f))
+* 打包 ([d86151d](https://github.com/halobear/npm-packages/commit/d86151d04d308e667ccd976a586ed2854fd83c0d))
+* 重新vue-shape ([dd82589](https://github.com/halobear/npm-packages/commit/dd82589870b8feda9ee12a82af205fd60636f60d))
+
+
+### Features
+
+* layout-header ([00e704c](https://github.com/halobear/npm-packages/commit/00e704c3c886cf5e0642c3f7ef9734df8d6475a4))
+* 公用运营头部 ([521dc35](https://github.com/halobear/npm-packages/commit/521dc35ebfd8d21fd72861c0745bde363628b706))
+
+
+
 ## [1.0.5](https://github.com/halobear/npm-packages/compare/v1.0.4...v1.0.5) (2020-03-02)
 
 

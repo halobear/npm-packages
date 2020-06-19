@@ -37,5 +37,6 @@
     "swiper": "^5.3.6",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.0"
-  }
+  },
+  "gitHead": "a99dfd9611c664f9ab6b1c33e5c3121515018c5a"
 }
