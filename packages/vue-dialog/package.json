@@ -1,6 +1,6 @@
 {
   "name": "@halobear/vue-dialog",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "一个简单vue弹窗",
   "keywords": [
     "vue",
