@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "yarn serve",
-    "serve": "vue-cli-service serve",
+    "serve": "vue serve",
     "build": "vue-cli-service build",
     "build:lib": "vue build index.js -t lib -d lib  -n vue-feedback",
     "lint": "vue-cli-service lint",
