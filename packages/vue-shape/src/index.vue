@@ -141,8 +141,11 @@ export default {
       const clientx = e.clientX;
       const clienty = e.clientY;
       document.onmousemove = e => {
-        this.top = top + e.clientY - clienty;
-        this.left = left + (e.clientX - clientx);
+        const t = e.clientY - clienty;
+        const l = e.clientX - clientx;
+        this.top = top + t;
+        this.left = left + l;
+        this.$emit('move', { top: t, left: l });
         // resizeableAction.changeData({
         //   top: this.top,
         //   left: this.left
