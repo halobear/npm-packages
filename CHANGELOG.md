@@ -1,4 +1,8 @@
-# [0.0.0](https://github.com/halobear/npm-packages/compare/v1.0.6...v0.0.0) (2020-06-19)
+# [0.0.0](https://github.com/halobear/npm-packages/compare/v1.0.7...v0.0.0) (2020-06-19)
+
+
+
+## [1.0.7](https://github.com/halobear/npm-packages/compare/v1.0.6...v1.0.7) (2020-06-19)
 
 
 ### Bug Fixes
