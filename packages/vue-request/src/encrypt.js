@@ -20,9 +20,24 @@ export default function encrypt(params = {}, encryptKey, isDebug) {
       return collect
     }, [])
     .join('')
-  const res = sha256(`${md5(encodeURIComponent(sign))}${encryptKey}`)
+  const res = sha256(`${md5(rawurlencode(sign))}${encryptKey}`)
   if (isDebug) {
     console.log(sign, res)
   }
   return res
+}
+
+function rawurlencode(str = '') {
+  const replaceList = [
+    { reg: /!/g, value: '%21' },
+    { reg: /\*/g, value: '%2A' },
+    { reg: /\(/g, value: '%28' },
+    { reg: /\)/g, value: '%29' },
+    { reg: /'/g, value: '%21' },
+  ]
+  let resStr = encodeURIComponent(str)
+  replaceList.forEach(({ reg, value }) => {
+    resStr = resStr.replace(reg, value)
+  })
+  return resStr
 }
