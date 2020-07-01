@@ -1,6 +1,6 @@
 ### 简陋文档
 
-[文档]()
+[文档](https://halobear.github.io/npm-packages/)
 
 #### 安装使用
 
