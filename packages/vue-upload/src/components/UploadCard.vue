@@ -22,12 +22,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "../styles/variables.less";
+@import '../styles/variables.less';
 .upload-card {
   width: @outer-width;
   height: @outer-width;
   border-radius: 3px;
-  border: 1px dotted #dbdbdb;
+  border: 1px dashed #dbdbdb;
   box-sizing: border-box;
   position: relative;
   transition: border-color 0.3s;
