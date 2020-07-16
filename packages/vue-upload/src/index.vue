@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
-import upload from "./utils/upload";
+import draggable from 'vuedraggable';
+import upload from './utils/upload';
 
-import ImageCard from "./components/ImageCard";
-import UploadCard from "./components/UploadCard";
+import ImageCard from './components/ImageCard';
+import UploadCard from './components/UploadCard';
 
 export default {
   components: {
@@ -31,8 +31,8 @@ export default {
     UploadCard
   },
   model: {
-    prop: "value",
-    event: "change"
+    prop: 'value',
+    event: 'change'
   },
   props: {
     value: {
@@ -63,7 +63,7 @@ export default {
     },
     accept: {
       type: String,
-      default: "image/*"
+      default: 'image/*'
     },
     needMD5: {
       type: Boolean,
@@ -87,7 +87,7 @@ export default {
   methods: {
     changeValue(value) {
       this.dataValue = value;
-      this.$emit("change", value);
+      this.$emit('change', value);
     },
     onProgress(progress) {
       const { loaded, total } = progress;
@@ -116,10 +116,11 @@ export default {
 </script>
 
 <style lang="less">
-@import "./styles/iconfont.css";
+@import './styles/iconfont.css';
 .vue-upload-container {
   display: flex;
   flex-wrap: wrap;
+  line-height: 1.5;
 }
 .file-upload-container {
   display: block;
