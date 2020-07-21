@@ -897,20 +897,20 @@
     which "^1.3.1"
 
 "@halobear/layout-header@file:packages/layout-header":
-  version "1.0.0"
+  version "1.1.0"
   dependencies:
     swiper "^5.3.6"
     vue "^2.6.11"
     vue-awesome-swiper "^4.1.0"
 
 "@halobear/vue-amap@file:packages/vue-amap":
-  version "1.0.5"
+  version "1.1.0"
   dependencies:
     core-js "^3.6.5"
     vue "^2.6.11"
 
 "@halobear/vue-debug@file:packages/vue-debug":
-  version "1.0.5"
+  version "1.1.0"
   dependencies:
     core-js "^3.6.5"
     kuan-css "^2.0.3"
@@ -918,55 +918,55 @@
     vue "^2.6.11"
 
 "@halobear/vue-dialog@file:packages/vue-dialog":
-  version "1.0.5"
+  version "1.1.0"
   dependencies:
     core-js "^3.6.5"
     vue "^2.6.11"
 
 "@halobear/vue-editor@file:packages/vue-editor":
-  version "1.0.6"
+  version "1.1.0"
   dependencies:
     core-js "^3.6.5"
     vue "^2.6.11"
 
 "@halobear/vue-feedback@file:packages/vue-feedback":
-  version "1.0.5"
+  version "1.1.0"
   dependencies:
     core-js "^3.6.5"
     vue "^2.6.11"
 
 "@halobear/vue-qrcode@file:packages/vue-qrcode":
-  version "1.0.5"
+  version "1.1.0"
   dependencies:
     core-js "^3.6.5"
     qrcode "^1.4.2"
     vue "^2.6.11"
 
 "@halobear/vue-region@file:packages/vue-region":
-  version "1.0.5"
+  version "1.1.0"
   dependencies:
     core-js "^3.6.5"
     vue "^2.6.11"
 
 "@halobear/vue-request@file:packages/vue-request":
-  version "1.0.5"
+  version "1.1.0"
   dependencies:
-    "@halobear/vue-feedback" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-request-1.0.5-1e062a30-ea3a-413e-b7d2-0624b5bab94e-1592557194320/node_modules/@halobear/vue-feedback"
+    "@halobear/vue-feedback" "file:packages/vue-feedback"
     axios "^0.19.0"
     core-js "^3.6.5"
     js-sha256 "^0.9.0"
     vue "^2.6.11"
 
 "@halobear/vue-shape@file:packages/vue-shape":
-  version "1.0.12"
+  version "1.1.1"
   dependencies:
     core-js "^3.6.5"
     vue "^2.6.11"
 
 "@halobear/vue-upload@file:packages/vue-upload":
-  version "1.0.5"
+  version "1.1.0"
   dependencies:
-    "@halobear/vue-feedback" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-upload-1.0.5-c7dfd63c-4d5b-4cfa-b9fd-d10e948a0a93-1592557194326/node_modules/@halobear/vue-feedback"
+    "@halobear/vue-feedback" "file:packages/vue-feedback"
     axios "^0.19.0"
     core-js "^3.6.5"
     kuan-utils "^1.3.16"
@@ -976,17 +976,17 @@
     vuedraggable "^2.23.2"
 
 "@halobear/vue@file:packages/vue":
-  version "1.0.5"
+  version "1.1.0"
   dependencies:
-    "@halobear/vue-amap" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-8b2a8767-db28-41fa-9734-9eb806bcfc63-1592557194301/node_modules/@halobear/vue-amap"
-    "@halobear/vue-debug" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-8b2a8767-db28-41fa-9734-9eb806bcfc63-1592557194301/node_modules/@halobear/vue-debug"
-    "@halobear/vue-dialog" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-8b2a8767-db28-41fa-9734-9eb806bcfc63-1592557194301/node_modules/@halobear/vue-dialog"
-    "@halobear/vue-feedback" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-8b2a8767-db28-41fa-9734-9eb806bcfc63-1592557194301/node_modules/@halobear/vue-feedback"
-    "@halobear/vue-qrcode" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-8b2a8767-db28-41fa-9734-9eb806bcfc63-1592557194301/node_modules/@halobear/vue-qrcode"
-    "@halobear/vue-region" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-8b2a8767-db28-41fa-9734-9eb806bcfc63-1592557194301/node_modules/@halobear/vue-region"
-    "@halobear/vue-request" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-8b2a8767-db28-41fa-9734-9eb806bcfc63-1592557194301/node_modules/@halobear/vue-request"
-    "@halobear/vue-shape" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-8b2a8767-db28-41fa-9734-9eb806bcfc63-1592557194301/node_modules/@halobear/vue-shape"
-    "@halobear/vue-upload" "file:../../../Library/Caches/Yarn/v4/npm-@halobear-vue-1.0.5-8b2a8767-db28-41fa-9734-9eb806bcfc63-1592557194301/node_modules/@halobear/vue-upload"
+    "@halobear/vue-amap" "file:packages/vue-amap"
+    "@halobear/vue-debug" "file:packages/vue-debug"
+    "@halobear/vue-dialog" "file:packages/vue-dialog"
+    "@halobear/vue-feedback" "file:packages/vue-feedback"
+    "@halobear/vue-qrcode" "file:packages/vue-qrcode"
+    "@halobear/vue-region" "file:packages/vue-region"
+    "@halobear/vue-request" "file:packages/vue-request"
+    "@halobear/vue-shape" "file:packages/vue-shape"
+    "@halobear/vue-upload" "file:packages/vue-upload"
     core-js "^3.6.5"
     vconsole "^3.3.4"
     vue "^2.6.11"
@@ -6889,9 +6889,9 @@ lodash.uniq@^4.5.0:
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
 lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.3, lodash@^4.2.1:
-  version "4.17.15"
-  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+  version "4.17.19"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
+  integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
 
 log-symbols@^2.2.0:
   version "2.2.0"
