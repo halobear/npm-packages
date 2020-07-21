@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import TransitionView from "./TransitionView";
+import TransitionView from './TransitionView';
 
 export default {
   components: {
@@ -35,7 +35,7 @@ export default {
   props: {
     value: {
       type: [String, Number],
-      default: ""
+      default: ''
     },
     options: {
       type: Array,
@@ -43,7 +43,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: "请选择"
+      default: '请选择'
     },
     showSearch: {
       type: Boolean,
@@ -57,19 +57,19 @@ export default {
   data() {
     return {
       active: false,
-      filterText: ""
+      filterText: ''
     };
   },
   computed: {
     text() {
-      const { options = [], value = "" } = this;
+      const { options = [], value = '' } = this;
       const target = options.find(item => item.value === value);
       return target ? target.label : value;
     },
     filterOptions() {
       const { filterText } = this;
       const options = !this.autoSelect
-        ? [{ parent_id: 0, label: "不限", value: "" }, ...this.options]
+        ? [{ parent_id: 0, label: '不限', value: '' }, ...this.options]
         : this.options;
       if (!filterText) return options;
       const res = options.filter(item => item.label.includes(filterText));
@@ -81,7 +81,7 @@ export default {
       this.filterText = e.target.value;
     },
     select(value) {
-      this.$emit("input", value);
+      this.$emit('input', value);
     },
     hide() {
       setTimeout(() => {
@@ -90,7 +90,7 @@ export default {
     },
     show() {
       this.active = true;
-      this.filterText = "";
+      this.filterText = '';
     }
   }
 };
@@ -101,7 +101,7 @@ export default {
 @plain-color: #e6f7ff;
 @plain-shadow: 0 0 0 1px rgba(24, 144, 255, 0.2);
 
-@import "../styles/iconfont.css";
+@import '../styles/iconfont.css';
 .vue-select {
   max-width: 120px;
   display: inline-block;
@@ -134,6 +134,9 @@ export default {
     padding: 8px 0;
     font-size: 14px;
     background-color: transparent;
+    &::placeholder {
+      color: #999;
+    }
   }
 }
 .vue-select .select > i {
@@ -169,6 +172,7 @@ export default {
   position: absolute;
   width: 100%;
   left: 0;
+  z-index: 10;
   margin-top: 1px;
   box-shadow: 0 0 5px rgb(204, 204, 204);
 }

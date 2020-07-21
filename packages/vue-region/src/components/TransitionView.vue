@@ -1,9 +1,5 @@
 <template>
-  <div
-    @transitionend="transitionend"
-    ref="container"
-    class="transition-container"
-  >
+  <div @transitionend="transitionend" ref="container" class="transition-container">
     <div v-if="visible" @click="$emit('toggle')" class="close-bg"></div>
     <div class="transition-content">
       <slot></slot>
@@ -12,7 +8,7 @@
 </template>
 
 <script>
-import getEleSize from "../utils/getEleSize.js";
+import getEleSize from '../utils/getEleSize.js';
 
 export default {
   props: {
@@ -37,7 +33,7 @@ export default {
     hide() {
       if (this.visible) return;
       const { container } = this.$refs;
-      container.style.display = "block";
+      container.style.display = 'block';
       const { height } = getEleSize(container);
       container.style.height = `${height}px`;
       setTimeout(() => {
@@ -46,9 +42,9 @@ export default {
     },
     show() {
       const { container } = this.$refs;
-      container.style.height = "";
+      container.style.height = '';
       const { height } = getEleSize(container);
-      container.style.display = "block";
+      container.style.display = 'block';
       container.style.height = 0;
       setTimeout(() => {
         container.style.height = `${height}px`;
@@ -56,8 +52,8 @@ export default {
     },
     transitionend() {
       const { container } = this.$refs;
-      container.style.display = this.visible ? "block" : "none";
-      container.style.height = "";
+      container.style.display = this.visible ? 'block' : 'none';
+      container.style.height = '';
     }
   }
 };

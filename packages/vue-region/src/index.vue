@@ -1,22 +1,45 @@
 <template>
   <div class="region-outer">
-    <vue-select class="vue-select" placeholder="选择省份" :showSearch="showSearch" :options="province" :value="region[0]" @input="changeProvince" />
-    <vue-select v-if="isVisible(1, city)" class="vue-select" placeholder="选择城市" :showSearch="showSearch" :options="city" :value="region[1]" @input="changeCity" />
-    <vue-select v-if="isVisible(2, district)" class="vue-select" placeholder="选择区域" :showSearch="showSearch" :options="district" v-model="region[2]" />
+    <vue-select
+      class="vue-select"
+      placeholder="选择省份"
+      :showSearch="showSearch"
+      :options="province"
+      :value="region[0]"
+      @input="changeProvince"
+    />
+    <vue-select
+      v-if="isVisible(1, city)"
+      class="vue-select"
+      placeholder="选择城市"
+      :showSearch="showSearch"
+      :options="city"
+      :value="region[1]"
+      @input="changeCity"
+    />
+    <vue-select
+      v-if="isVisible(2, district)"
+      class="vue-select"
+      placeholder="选择区域"
+      :showSearch="showSearch"
+      :options="district"
+      v-model="region[2]"
+      @input="change"
+    />
   </div>
 </template>
 
 <script>
-import VueSelect from "./components/VueSelect";
-import data from "./utils/region.json";
+import VueSelect from './components/VueSelect';
+import data from './utils/region.json';
 
 export default {
   components: {
     VueSelect
   },
   model: {
-    prop: "value",
-    event: "change"
+    prop: 'value',
+    event: 'change'
   },
   props: {
     value: {
@@ -72,12 +95,12 @@ export default {
     },
     region_name() {
       return this.region
+        .filter(item => item)
         .map(value => {
           const target = data.find(item => item.value == value);
-          return target ? target.label : "";
+          return target ? target.label : '';
         })
-        .filter(item => item)
-        .join(" ");
+        .join(' ');
     }
   },
   methods: {
@@ -85,7 +108,7 @@ export default {
       if (this.level < index) return false;
       return data.length || !this.autoSelect;
     },
-    changeProvince(p = "0") {
+    changeProvince(p = '0') {
       if (p == this.region[0]) return this.change();
       this.region = [p];
       // 选中默认城市
@@ -98,7 +121,7 @@ export default {
       let c = cityValue;
       if (!c) {
         if (!this.autoSelect) {
-          this.region = [this.region[0], "", ""].slice(0, this.level);
+          this.region = [this.region[0], '', ''].slice(0, this.level);
           return this.change();
         } else {
           c = city[0].value;
@@ -116,10 +139,11 @@ export default {
     },
     change() {
       const region_name = this.region_name
-        .split(" ")
+        .split(' ')
         .filter(item => item)
         .slice(0, this.level + 1);
-      this.$emit("change", this.region, region_name);
+      console.log(this.region_name, region_name);
+      this.$emit('change', this.region, region_name);
     }
   }
 };
