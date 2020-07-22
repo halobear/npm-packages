@@ -142,7 +142,6 @@ export default {
         .split(' ')
         .filter(item => item)
         .slice(0, this.level + 1);
-      console.log(this.region_name, region_name);
       this.$emit('change', this.region, region_name);
     }
   }
