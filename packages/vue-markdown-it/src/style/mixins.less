@@ -1,0 +1,99 @@
+.balloon(
+  @direction: top, 
+  @bg: rgba(0, 0, 0, 0.7), 
+  @trangle-height: 6px, 
+  @color: #fff, 
+  @font: 14px
+) {
+  position: relative;
+  &:before,
+  &:after {
+    position: absolute;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.18s ease-out 0.18s;
+    & when (@direction = top) {
+      left: 50%;
+      bottom: 100%;
+      transform: translate(-50%, 3px);
+    }
+    & when (@direction = bottom) {
+      left: 50%;
+      top: 100%;
+      transform: translate(-50%, 3px);
+    }
+    & when (@direction = left) {
+      top: 50%;
+      right: 100%;
+      transform: translate(3px, -50%);
+    }
+    & when (@direction = right) {
+      top: 50%;
+      left: 100%;
+      transform: translate(-3px, -50%);
+    }
+  }
+  &:before {
+    content: '';
+    & when (@direction = top) {
+      margin-bottom: 5px;
+      border-left: @trangle-height solid transparent;
+      border-right: @trangle-height solid transparent;
+      border-@{direction}: @trangle-height solid @bg;
+    }
+    & when (@direction = bottom) {
+      margin-top: 5px;
+      border-left: @trangle-height solid transparent;
+      border-right: @trangle-height solid transparent;
+      border-@{direction}: @trangle-height solid @bg;
+    }
+    & when (@direction = left) {
+      margin-right: 5px;
+      border-top: @trangle-height solid transparent;
+      border-bottom: @trangle-height solid transparent;
+      border-@{direction}: @trangle-height solid @bg;
+    }
+    & when (@direction = right) {
+      margin-left: 5px;
+      border-top: @trangle-height solid transparent;
+      border-bottom: @trangle-height solid transparent;
+      border-@{direction}: @trangle-height solid @bg;
+    }
+  }
+
+  &:after {
+    content: attr(data-balloon);
+    background: @bg;
+    border-radius: 4px;
+    color: @color;
+    font-size: @font;
+    padding: 0.6em 0.8em;
+    white-space: nowrap;
+    & when (@direction = top) {
+      margin-bottom: @trangle-height + 5px;
+    }
+    & when (@direction = bottom) {
+      margin-top: @trangle-height + 5px;
+    }
+    & when (@direction = left) {
+      margin-right: @trangle-height + 5px;
+    }
+    & when (@direction = right) {
+      margin-left: @trangle-height + 5px;
+    }
+  }
+  &:hover {
+    &:after,
+    &:before {
+      opacity: 1;
+      pointer-events: auto;
+      & when (@direction = top), (@direction = bottom) {
+        transform: translate(-50%, 0);
+      }
+      & when (@direction = left), (@direction = right) {
+        transform: translate(0, -50%);
+      }
+    }
+  }
+}
