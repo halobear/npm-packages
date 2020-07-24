@@ -1,6 +1,6 @@
 {
   "name": "@halobear/vue-markdown-it",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "一个洁面的vue markdown编辑器",
   "keywords": [
     "vue",

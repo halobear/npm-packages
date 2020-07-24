@@ -33,8 +33,3 @@ yarn add @halobear/vue-markdown-it
   }
 </script>
 ```
-
-## 使用了以下开源代码
-
-- [vue-markdown](https://github.com/miaolz123/vue-markdown)
-- [Squire](https://github.com/neilj/Squire)

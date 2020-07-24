@@ -19,8 +19,8 @@
 
 <script>
 import MarkdowIt from 'markdown-it';
-import hljs from 'highlight.js';
 
+import hljs from './utils/hljs';
 import SyncScroll from './utils/SyncScroll';
 import copy from './utils/copy';
 
@@ -30,29 +30,30 @@ export default {
   props: {
     value: {
       type: String,
-      default: ''
+      default: '',
     },
     sync: {
       type: Boolean,
-      default: true
+      default: true,
     },
     multiple: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       v: this.value,
       transfer: '',
-      visible: true
+      visible: true,
     };
   },
   watch: {
     value() {
+      if (this.v == this.value) return;
       this.v = this.value;
       this.transferValue();
-    }
+    },
   },
   mounted() {
     if (this.sync) {
@@ -81,11 +82,13 @@ export default {
             }
           }
           return ''; // use external default escaping
-        }
+        },
       });
     },
     transferValue() {
-      if (!this.v) return;
+      if (!this.v) {
+        return (this.transfer = '');
+      }
       this.transfer = this.md.render(this.v);
     },
     change(e) {
@@ -98,8 +101,8 @@ export default {
       copy(this.transfer);
       this.$emit('copy', this.transfer);
       alert('复制HTML成功');
-    }
-  }
+    },
+  },
 };
 </script> 
 
