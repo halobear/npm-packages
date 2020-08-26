@@ -1,14 +1,14 @@
 {
   "name": "@halobear/vue-region",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "中国城市选择",
   "keywords": [
-    "vue"
+    "vue",
+    "Ant Design Vue"
   ],
   "scripts": {
     "dev": "BUILD_TARGET=test vue-cli-service serve",
-    "build": "vue-cli-service build -t lib -d lib -n vue-region",
-    "test": "vue-cli-service build --target lib --name test src/main.js",
+    "build": "vue-cli-service build --target lib --dest lib --name vue-region src/index.js",
     "lint": "vue-cli-service lint",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --commit-path '.'"
   },
@@ -43,7 +43,6 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
-    "babel-plugin-import": "^1.13.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "vue-template-compiler": "^2.6.11"

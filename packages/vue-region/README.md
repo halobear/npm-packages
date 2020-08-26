@@ -13,30 +13,30 @@ yarn add @halobear/vue-region
 ```html
 <template>
   <div class="test-container">
-    <vue-region v-model="region" @change="change" :level="2"></vue-region>
+    <vue-region changeOnSelect v-model="region" :simple="false" @change="change"></vue-region>
     <p>{{ region_name }}: {{ region.join("、") }}</p>
   </div>
 </template>
 
 <script>
-  import VueRegion from "@halobear/vue-region";
+  import VueRegion from '@halobear/vue-region'
 
   export default {
     components: {
-      VueRegion
+      VueRegion,
     },
     data() {
       return {
-        region: ["0"],
-        region_name: "全国"
-      };
+        region: ['0'],
+        region_name: '全国',
+      }
     },
     methods: {
       change(value, name) {
-        this.region_name = name;
-      }
-    }
-  };
+        this.region_name = name
+      },
+    },
+  }
 </script>
 ```
 
