@@ -6,10 +6,9 @@
     "vue"
   ],
   "scripts": {
-    "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js yarn serve",
-    "serve": "vue serve",
-    "build": "vue-cli-service build",
-    "build:lib": "vue build index.js -t lib -d lib -n vue-region",
+    "dev": "BUILD_TARGET=test vue-cli-service serve",
+    "build": "vue-cli-service build -t lib -d lib -n vue-region",
+    "test": "vue-cli-service build --target lib --name test src/main.js",
     "lint": "vue-cli-service lint",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 --commit-path '.'"
   },
@@ -35,8 +34,18 @@
     "url": "https://github.com/halobear/npm-packages/issues"
   },
   "dependencies": {
+    "ant-design-vue": "^1.6.5",
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
   },
-  "gitHead": "a99dfd9611c664f9ab6b1c33e5c3121515018c5a"
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-import": "^1.13.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "vue-template-compiler": "^2.6.11"
+  }
 }
