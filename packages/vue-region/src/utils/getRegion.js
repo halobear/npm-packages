@@ -1,3 +1,5 @@
+import deepClone from 'lodash.clonedeep'
+
 function groupRegion(region) {
   const groupMap = {}
   region.forEach((item) => {
@@ -11,8 +13,8 @@ function groupRegion(region) {
 function setChildren(list, groupMap, simple) {
   list.forEach((item) => {
     const children = groupMap[item.id] || []
-    item.children = children
     if (item.id && children.length) {
+      item.children = children
       groupMap[item.id] = []
       !simple && setChildren(item.children, groupMap)
     }
@@ -20,7 +22,8 @@ function setChildren(list, groupMap, simple) {
 }
 
 export default (region = [], simple) => {
-  const groupMap = groupRegion(region)
+  const list = deepClone(region)
+  const groupMap = groupRegion(list)
   const provinces = groupMap[0] || []
   setChildren(provinces, groupMap, simple)
   return provinces

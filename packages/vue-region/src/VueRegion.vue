@@ -70,7 +70,6 @@ export default {
         })
         .filter((item) => item)
         .join(' ');
-      console.log(dataValue, name);
       this.$emit('change', dataValue, name);
     },
   },
