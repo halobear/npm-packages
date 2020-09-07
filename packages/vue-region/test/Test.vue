@@ -7,6 +7,8 @@
       @change="change"
     ></vue-region>
     <p>{{ region_name }}: {{ region.join("、") }}</p>
+
+    <button @click="region = []">清空</button>
   </div>
 </template>
 

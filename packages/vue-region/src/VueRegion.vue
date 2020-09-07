@@ -1,6 +1,7 @@
 <template>
   <a-cascader
     placeholder="请选择"
+    :value="dataValue"
     :fieldNames="fieldNames"
     :changeOnSelect="changeOnSelect"
     :options="options"
