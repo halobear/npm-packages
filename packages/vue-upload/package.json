@@ -1,9 +1,9 @@
 {
   "name": "@halobear/vue-upload",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "vue上传组件",
   "keywords": [
-    "vue"
+    "vue2"
   ],
   "scripts": {
     "dev": "VUE_CLI_SERVICE_CONFIG_PATH=$PWD/test.config.js yarn serve",

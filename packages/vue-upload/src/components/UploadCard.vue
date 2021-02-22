@@ -4,7 +4,7 @@
     <span>点击上传</span>
     <div
       v-if="progress && progress !== 100"
-      :style="{width: `${progress}%`}"
+      :style="{ width: `${progress}%` }"
       class="upload-progress"
     ></div>
   </div>
@@ -15,14 +15,14 @@ export default {
   props: {
     progress: {
       type: Number,
-      default: 0
-    }
-  }
+      default: 0,
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
-@import '../styles/variables.less';
+@import "../styles/variables.less";
 .upload-card {
   width: @outer-width;
   height: @outer-width;
@@ -38,7 +38,8 @@ export default {
   flex-direction: column;
   font-size: 12px;
   cursor: pointer;
-  &:hover {
+  &:hover,
+  &.is-over {
     border-color: #1890ff;
     color: #1890ff;
     transition: 0.3s;

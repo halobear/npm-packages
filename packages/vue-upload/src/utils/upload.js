@@ -52,30 +52,24 @@ async function upload({
  * @return: Promise
  */
 export default async ({
+  files = [],
   formData = {},
   size = 20,
   limit = 1,
   width,
   height,
   needMD5 = false,
-  accept = 'image/*',
-  fetchToken = () => {},
+  fetchToken = () => { },
   onProgress
 } = {}) => {
-  // 获取文件列表
-  const fileList = await uploader.getFiles({
-    multiple: limit > 1,
-    needMD5,
-    accept
-  })
   // 获取token
   formData.token = await fetchToken()
   // 限制文件大小
-  let filterList = fileList.filter(
+  let filterList = files.filter(
     ({ file }) => file.size / 1024 / 1024 <= size
   )
-  if (filterList.length !== fileList.length) {
-    const info = `${fileList.length - filterList.length}个文件大小超出${size}M`
+  if (filterList.length !== files.length) {
+    const info = `${files.length - filterList.length}个文件大小超出${size}M`
     toast(info)
   }
   // 限制图片大小
