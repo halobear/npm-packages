@@ -1,31 +1,28 @@
 <template>
-  <div
-    @drop.prevent="drop"
-    @dragover.prevent="isOver = true"
-    @dragleave.prevent="isOver = false"
+  <draggable
+    class="vue-upload-container"
+    :class="{ 'file-upload-container': accept !== 'image/*' }"
+    draggable=".image-card"
+    :value="value"
+    @input="changeValue"
   >
-    <draggable
-      class="vue-upload-container"
-      :class="{ 'file-upload-container': accept !== 'image/*' }"
-      draggable=".image-card"
-      :value="value"
-      @input="changeValue"
-    >
-      <image-card
-        v-for="(item, key) in value"
-        :key="key"
-        :accept="accept"
-        :data="item"
-        @remove="remove(key)"
-      />
-      <upload-card
-        v-if="dataValue.length < limit"
-        :progress="progress"
-        :class="{ 'is-over': isOver }"
-        @click="upload"
-      />
-    </draggable>
-  </div>
+    <image-card
+      v-for="(item, key) in value"
+      :key="key"
+      :accept="accept"
+      :data="item"
+      @remove="remove(key)"
+    />
+    <upload-card
+      v-if="dataValue.length < limit"
+      :progress="progress"
+      :class="{ 'is-over': isOver }"
+      @drop="drop"
+      @dragover="isOver = true"
+      @dragleave="isOver = false"
+      @click="upload"
+    />
+  </draggable>
 </template>
 
 <script>
@@ -81,6 +78,9 @@ export default {
       type: Boolean,
       default: false, // 是否获取文件MD5
     },
+    beforeUpload: {
+      type: Function,
+    },
   },
   data() {
     return {
@@ -112,6 +112,7 @@ export default {
     },
     async drop(e) {
       const filesList = [...((e.dataTransfer && e.dataTransfer.files) || [])];
+      if (!filesList.length) return;
       // 获取文件列表
       const files = await filesList.map((file) => ({
         file,

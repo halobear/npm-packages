@@ -1,5 +1,11 @@
 <template>
-  <div @click="$emit('click')" class="upload-card">
+  <div
+    @click="$emit('click')"
+    @drop.prevent="$emit('drop', $event)"
+    @dragover.prevent="$emit('dragover')"
+    @dragleave.prevent="$emit('dragleave')"
+    class="upload-card"
+  >
     <i class="icon-plus iconfont"></i>
     <span>点击上传</span>
     <div
