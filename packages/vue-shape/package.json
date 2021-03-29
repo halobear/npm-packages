@@ -1,0 +1,19 @@
+{
+  "name": "@halobear/vue-shape",
+  "version": "1.1.2",
+  "description": "编辑素材形状尺寸",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "vue": "^3.0.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^1.1.5",
+    "@vue/compiler-sfc": "^3.0.5",
+    "vite": "^2.1.3"
+  }
+}
