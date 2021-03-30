@@ -1,19 +1,45 @@
 {
   "name": "@halobear/vue-shape",
   "version": "1.1.2",
+  "main": "./lib/vue-shape.umd.js",
+  "module": "./lib/vue-shape.es.js",
+  "exports": {
+    ".": {
+      "import": "./lib/vue-shape.es.js",
+      "require": "./lib/vue-shape.umd.js"
+    }
+  },
   "description": "编辑素材形状尺寸",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:lib": "BUILD_LIB=true vite build",
     "serve": "vite preview"
   },
   "license": "ISC",
+  "author": "luzhongkuan <luzhongk@126.com>",
   "dependencies": {
     "vue": "^3.0.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.1.5",
     "@vue/compiler-sfc": "^3.0.5",
+    "less": "^4.1.1",
     "vite": "^2.1.3"
+  },
+  "files": [
+    "lib"
+  ],
+  "homepage": "https://github.com/halobear/npm-packages/tree/master/packages/vue-shape",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/halobear/npm-packages.git"
+  },
+  "bugs": {
+    "url": "https://github.com/halobear/npm-packages/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }
