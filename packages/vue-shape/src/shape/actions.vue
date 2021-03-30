@@ -147,7 +147,3 @@ export default {
   transform: translate(50%, 50%);
 }
 </style>
-
-
-https://oapi.dingtalk.com/robot/send?access_token=35ddf96a1080602e2f8d44839b25b73606d4e3a73f76425e6384048516875f35
-https://oapi.dingtalk.com/robot/send?access_token=da09ceede76148e8bc8eae5dd8a6ed43109ca2f1ace0666358ea29774b1e3957
