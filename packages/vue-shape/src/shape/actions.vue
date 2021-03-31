@@ -10,10 +10,7 @@
 
     <div class="rotate-icon">
       <div class="icon"></div>
-      <div
-        class="num"
-        :style="{ transform: `rotate(${360 - this.rotate}deg)` }"
-      >
+      <div class="num" :style="{ transform: `rotate(${360 - rotate}deg)` }">
         {{ rotate }}°
       </div>
     </div>
@@ -27,10 +24,15 @@ export default {
       type: Array,
       default: () => ["tl", "tm", "tr", "mr", "br", "bm", "bl", "ml"],
     },
+    rotate: {
+      type: Number,
+      default: 0,
+    },
   },
-  setup() {
+  emits: ["actionDown"],
+  setup(_, { emit }) {
     return {
-      actionDown: () => {},
+      actionDown: () => emit("actionDown"),
     };
   },
 };
@@ -145,5 +147,41 @@ export default {
   bottom: 0;
   right: 0;
   transform: translate(50%, 50%);
+}
+
+.rotate-icon {
+  position: absolute;
+  user-select: none;
+  margin-top: 18px;
+  pointer-events: auto;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 10px);
+  cursor: pointer;
+  &:active {
+    cursor: grabbing;
+  }
+}
+.icon {
+  width: 18px;
+  height: 18px;
+  background: white url("./images/rotate_icon.png") center center no-repeat;
+  background-size: 12px 12px;
+  border: 1px solid #979797;
+  border-radius: 50%;
+  margin: 0 auto 12px;
+}
+.num {
+  width: 40px;
+  height: 28px;
+  background: rgba(34, 34, 34, 1);
+  border-radius: 2px;
+  opacity: 0.8;
+  color: white;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
 }
 </style>

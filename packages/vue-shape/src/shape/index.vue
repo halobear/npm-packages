@@ -10,11 +10,19 @@
     <slot></slot>
   </div>
 
-  <actions :style="style" />
+  <actions v-if="state.active" :style="style" />
 </template>
 
 <script>
-import { defineComponent, computed, reactive, ref, onMounted } from "vue";
+import {
+  defineComponent,
+  computed,
+  reactive,
+  ref,
+  onMounted,
+  onUnmounted,
+  onBeforeUnmount,
+} from "vue";
 
 import Actions from "./actions.vue";
 
@@ -122,15 +130,35 @@ export default defineComponent({
       }
     };
 
+    // 取消聚焦
+    const blur = () => {
+      if (props.disabled || !state.active) return;
+      state.active = false;
+      action = "";
+    };
+
     onMounted(() => {
       window.addEventListener("mousemove", move);
       window.addEventListener("mouseup", up);
       window.addEventListener("mouseleave", up);
+      window.addEventListener("mousedown", blur);
 
       window.addEventListener("touchmove", move);
       window.addEventListener("touchend", up);
       window.addEventListener("touchcancel", up);
       window.addEventListener("touchcancel", up);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mouseup", up);
+      window.removeEventListener("mouseleave", up);
+      window.removeEventListener("mousedown", blur);
+
+      window.removeEventListener("touchmove", move);
+      window.removeEventListener("touchend", up);
+      window.removeEventListener("touchcancel", up);
+      window.removeEventListener("touchcancel", up);
     });
 
     return {
