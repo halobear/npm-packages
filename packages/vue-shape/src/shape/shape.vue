@@ -20,14 +20,7 @@
 </template>
 
 <script>
-import {
-  defineComponent,
-  computed,
-  reactive,
-  ref,
-  onMounted,
-  onBeforeUnmount,
-} from "vue";
+import { computed, reactive, ref, onMounted, onBeforeUnmount } from "vue";
 
 import Actions from "./actions.vue";
 
@@ -42,7 +35,7 @@ const transformOriginMap = {
   ml: "right center",
 };
 
-export default defineComponent({
+export default {
   components: {
     Actions,
   },
@@ -294,7 +287,7 @@ export default defineComponent({
       actionDown,
     };
   },
-});
+};
 </script>
 
 <style lang="less">
