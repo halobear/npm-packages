@@ -8,7 +8,11 @@
       @touchstart.stop.prevent="actionDown($event, item)"
     ></div>
 
-    <div class="rotate-icon">
+    <div
+      class="rotate-icon"
+      @mousedown.stop.prevent="actionDown($event, 'rotate')"
+      @touchstart.stop.prevent="actionDown($event, 'rotate')"
+    >
       <div class="icon"></div>
       <div class="num" :style="{ transform: `rotate(${360 - rotate}deg)` }">
         {{ rotate }}°
@@ -32,7 +36,7 @@ export default {
   emits: ["actionDown"],
   setup(_, { emit }) {
     return {
-      actionDown: () => emit("actionDown"),
+      actionDown: (e, type) => emit("actionDown", e, type),
     };
   },
 };

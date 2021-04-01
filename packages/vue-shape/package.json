@@ -9,6 +9,12 @@
       "require": "./lib/vue-shape.umd.js"
     }
   },
+  "keywords": [
+    "vue3.0",
+    "rotate",
+    "drag",
+    "shape editor"
+  ],
   "description": "编辑素材形状尺寸",
   "scripts": {
     "dev": "vite",

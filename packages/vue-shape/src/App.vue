@@ -1,9 +1,17 @@
 <template>
-  <h2>测试vite</h2>
-  <button @click="add">点击</button>
-  <span>{{ count }}</span>
-
-  <shape :x="100" :y="300" :w="200" :h="200">
+  <h2>
+    <span>素材形状编辑组件测试</span>
+    <small>（vue3 & vite）</small>
+  </h2>
+  <div>{{ state }}</div>
+  <shape
+    :x="state.x"
+    :y="state.y"
+    :w="state.w"
+    :h="state.h"
+    :r="state.r"
+    @change="state = $event"
+  >
     <!-- <div class="card">这里是内容</div> -->
     <img
       class="card"
@@ -15,23 +23,25 @@
 
 <script>
 import { ref } from "vue";
-import shape from "./shape/index.vue";
+import shape from "./shape/index.js";
 
 export default {
   components: {
     shape,
   },
   setup() {
-    const count = ref(1);
+    const state = ref({
+      x: 300, // x方向定位
+      y: 300, // y方向定位
+      w: 210, // 宽度
+      h: 250, // 高度
+      r: 30, // 旋转角度
+    });
     return {
-      count,
-      add: () => (count.value += 1),
+      state,
     };
   },
 };
-
-// This starter template is using Vue 3 experimental <script setup> SFCs
-// Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md
 </script>
 
 <style>

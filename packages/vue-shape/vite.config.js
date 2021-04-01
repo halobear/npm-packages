@@ -6,7 +6,7 @@ const libOptions = {
   build: {
     outDir: 'lib',
     lib: {
-      entry: path.resolve(__dirname, 'src/shape/index.vue'),
+      entry: path.resolve(__dirname, 'src/shape/index.js'),
       name: 'vue-shape',
     },
     rollupOptions: {
