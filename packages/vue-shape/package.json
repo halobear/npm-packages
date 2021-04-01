@@ -1,6 +1,6 @@
 {
   "name": "@halobear/vue-shape",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "main": "./lib/vue-shape.umd.js",
   "module": "./lib/vue-shape.es.js",
   "exports": {
@@ -18,9 +18,9 @@
   "description": "vue3.0编辑素材形状尺寸组件",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:lib": "BUILD_LIB=true vite build",
-    "serve": "vite preview"
+    "build": "BUILD_LIB=true vite build",
+    "serve": "vite preview",
+    "release": "node ../../scripts/release.js"
   },
   "license": "ISC",
   "author": "luzhongkuan <luzhongk@126.com>",
