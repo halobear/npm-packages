@@ -83,6 +83,15 @@ async function main() {
   step('\nUpdating package version...')
   updateVersion(targetVersion)
 
+  const { stdout } = await run('git', ['diff'], { stdio: 'pipe' })
+  if (stdout) {
+    step('\nCommitting changes...')
+    await runIfNotDry('git', ['add', '-A'])
+    await runIfNotDry('git', ['commit', '-m', `release: ${tag}`])
+  } else {
+    console.log('No changes to commit.')
+  }
+
   step('\nBuilding package...')
   if (!skipBuild && !isDryRun) {
     await run('yarn', ['build'])
