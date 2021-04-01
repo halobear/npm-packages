@@ -4,7 +4,7 @@
 
 ## demo gif 效果
 
-![demo gif 效果](./preview.gif)
+![demo gif 效果](https://github.com/halobear/npm-packages/raw/dev/packages/vue-shape/preview.gif)
 
 ## 安装
 
