@@ -1,7 +1,16 @@
 <template>
-  <div @click="handleClick" :class="{'file-card': !isImage, 'image-card': isImage}">
-    <img v-if="data.url && isImage" class="origin-img animated fadeIn" :src="data.url" />
-    <p @click="open(data.url)" v-else-if="!isImage">{{data.path || data.url}}</p>
+  <div
+    @click="handleClick"
+    :class="{ 'file-card': !isImage, 'image-card': isImage }"
+  >
+    <img
+      v-if="data.url && isImage"
+      class="origin-img animated fadeIn"
+      :src="data.url"
+    />
+    <p @click="open(data.url)" v-else-if="!isImage">
+      {{ data.path || data.url }}
+    </p>
     <div class="action-box">
       <i v-if="isImage" @click.stop="preview" class="iconfont icon-eye"></i>
       <i @click="$emit('remove')" class="iconfont icon-delete"></i>
@@ -16,31 +25,34 @@ export default {
   props: {
     data: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
     accept: {
       type: String,
-    }
+    },
   },
   computed: {
     isImage() {
-      return this.accept === 'image/*'
-    }
+      return this.accept === "image/*";
+    },
   },
   methods: {
     open(url) {
-      window.open(url)
+      window.open(url);
     },
     handleClick() {
       this.$emit("click", this.data);
     },
     preview() {
-      const { url = "" } = this.data;
-      if (url) {
-        photoSwipe.preview(url.replace(/-300x300/, "-w750"));
+      let { url = "" } = this.data;
+      if (!url.includes("?")) {
+        url = url.replace(/-300x300/, "");
       }
-    }
-  }
+      if (url) {
+        photoSwipe.preview(url);
+      }
+    },
+  },
 };
 </script>
 
