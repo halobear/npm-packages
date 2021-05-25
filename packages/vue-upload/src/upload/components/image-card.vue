@@ -48,24 +48,28 @@ export default {
         photoSwipe.preview(url);
       }
     };
+    const open = (url) => {
+      window.open(url);
+    };
     return {
       isImage,
       click,
       remove,
       preview,
+      open,
     };
   },
 };
 </script>
 
 <style lang="less">
-.sortable-ghost {
+.image-card.sortable-ghost {
   opacity: 0.2;
   .action-box {
     opacity: 0;
   }
 }
-.sortable-chosen {
+.image-card.sortable-chosen {
   .action-box {
     opacity: 0;
   }
@@ -128,7 +132,7 @@ export default {
     margin: auto;
     width: @inner-width;
     height: @inner-width;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     align-items: center;
     justify-content: center;

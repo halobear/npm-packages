@@ -1,7 +1,11 @@
 <template>
-  <upload v-model:value="value" :limit="10" />
+  <h2>图片上传</h2>
+  <!-- <upload v-model:value="value" :limit="10" /> -->
   <hr />
   {{ value }}
+  <hr />
+  <h2>文件上传</h2>
+  <upload accept="*" v-model:value="value" :limit="10" />
 </template>
 
 <script>
