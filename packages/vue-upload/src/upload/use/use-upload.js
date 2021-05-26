@@ -49,7 +49,7 @@ export default (props, { emit }) => {
     Object.keys(params).forEach((key) => {
       f.append(key, params[key])
     })
-    return upload({ url: 'https://upload.qiniup.com', data: f, onProgress })
+    return upload({ url: props.action, data: f, onProgress })
   }
 
   // 多文件上传
