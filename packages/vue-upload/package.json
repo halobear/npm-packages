@@ -1,6 +1,6 @@
 {
   "name": "@halobear/vue-upload",
-  "version": "3.0.0",
+  "version": "3.0.0-alpha.0",
   "main": "./lib/vue-upload.umd.js",
   "module": "./lib/vue-upload.es.js",
   "exports": {
