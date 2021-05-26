@@ -47,7 +47,7 @@ export default {
     },
     size: {
       type: Number,
-      default: 20, // 限制文件大小20
+      default: 20, // 限制文件大小20M
     },
     params: {
       type: Object,
@@ -55,10 +55,6 @@ export default {
     },
     token: {
       type: [Function, String],
-    },
-    needMD5: {
-      type: Boolean,
-      default: false, // 是否获取文件MD5
     },
     beforeUpload: {
       type: Function,
