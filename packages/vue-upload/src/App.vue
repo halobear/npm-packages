@@ -1,6 +1,6 @@
 <template>
   <h2>图片上传</h2>
-  <!-- <upload v-model:value="value" :limit="10" /> -->
+  <upload v-model:value="value" :limit="10" />
   <hr />
   {{ value }}
   <hr />

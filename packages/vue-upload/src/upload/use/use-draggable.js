@@ -1,8 +1,10 @@
-import { onMounted, unref, ref, onBeforeMount } from 'vue'
+import { onMounted, unref, ref, onBeforeMount, computed, watch } from 'vue'
 import Sortable from 'sortablejs'
 
 export default (props, changeValue) => {
   const container = ref()
+
+  const disabled = computed(() => props.accept !== 'image/*')
 
   let _sortable
 
@@ -10,16 +12,19 @@ export default (props, changeValue) => {
     _sortable = new Sortable(unref(container), {
       handle: '.image-card,.file-card',
       filter: '.upload-card',
-      detectDirection: props.accept === 'images/*' ? 'horizontal' : 'vertical',
+      disabled: disabled.value,
       onMove(e) {
         return !e.related.className.includes('upload-card')
       },
       onUpdate(e) {
         props.value.splice(e.newIndex, 0, props.value.splice(e.oldIndex, 1)[0])
-        console.log(props.value.filter(Boolean))
         changeValue(props.value.filter(Boolean))
       },
     })
+  })
+
+  watch(disabled, () => {
+    _sortable && _sortable.option('disabled', disabled.value)
   })
 
   onBeforeMount(() => {
