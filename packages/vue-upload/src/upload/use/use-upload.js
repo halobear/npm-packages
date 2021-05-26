@@ -52,8 +52,17 @@ export default (props, { emit }) => {
     return upload({ url: 'https://upload.qiniup.com', data: f, onProgress })
   }
 
+  // 多文件上传
   const uploadFiles = async (files) => {
-    for (const file of files) {
+    // 文件大小检测
+    const { size } = props
+    const filterList = files.filter((file) => file.size / 1024 / 1024 <= size)
+    if (filterList.length !== files.length) {
+      const info = `${files.length - filterList.length}个文件大小超出${size}M`
+      alert(info)
+    }
+    // 文件循环上传
+    for (const file of filterList) {
       const res = await toUpload(file)
       if (!res.url) {
         const suffix = props.accept === 'image/*' ? '-300x300' : ''

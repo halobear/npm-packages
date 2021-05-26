@@ -45,6 +45,10 @@ export default {
       type: Number,
       default: 1,
     },
+    size: {
+      type: Number,
+      default: 20, // 限制文件大小20
+    },
     params: {
       type: Object,
       default: () => ({}),

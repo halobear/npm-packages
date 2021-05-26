@@ -1,6 +1,6 @@
 <template>
   <h2>图片上传</h2>
-  <upload v-model:value="images" :limit="5" :token="fetchToken" />
+  <upload v-model:value="images" :limit="5" :size="0.5" :token="fetchToken" />
   <hr />
   {{ images }}
   <hr />

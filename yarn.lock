@@ -21,10 +21,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@luzhongk/upload@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/@luzhongk/upload/download/@luzhongk/upload-1.0.0.tgz#a6039aa9c9d22f802e8d5b2b125c639841d98a00"
-  integrity sha1-pgOaqcnSL4AujVsrElxjmEHZigA=
+"@luzhongk/upload@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.nlark.com/@luzhongk/upload/download/@luzhongk/upload-1.0.1.tgz?cache=0&sync_timestamp=1622013225180&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40luzhongk%2Fupload%2Fdownload%2F%40luzhongk%2Fupload-1.0.1.tgz#8c8dfd8d4299bc02f1d01fbc6f056d740b30cfde"
+  integrity sha1-jI39jUKZvALx0B+8bwVtdAswz94=
 
 "@vitejs/plugin-vue@^1.1.5":
   version "1.2.0"

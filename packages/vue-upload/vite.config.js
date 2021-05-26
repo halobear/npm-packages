@@ -9,7 +9,6 @@ const libOptions = {
       entry: path.resolve(__dirname, 'src/upload/index.vue'),
       name: 'vue-upload',
     },
-    cssCodeSplit: true,
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
@@ -19,6 +18,8 @@ const libOptions = {
         // for externalized deps
         globals: {
           vue: 'Vue',
+          'kuan-vue-photoswipe': 'kuan-vue-photoswipe',
+          '@luzhongk/upload': 'jsUpload',
         },
       },
     },
