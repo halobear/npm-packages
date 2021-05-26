@@ -11,14 +11,18 @@
       :data="item"
       @remove="remove(key)"
     />
-    <upload-card v-if="dataValue.length < limit" />
+    <upload-card
+      v-if="dataValue.length < limit"
+      :progress="progress"
+      @click="clickUpload"
+      @drop="dropUpload"
+    />
   </div>
 </template>
 
 <script>
-import { watch, ref } from "vue";
-
 import useDraggable from "./use/use-draggable";
+import useUpload from "./use/use-upload";
 
 import ImageCard from "./components/image-card.vue";
 import UploadCard from "./components/upload-card.vue";
@@ -41,32 +45,40 @@ export default {
       type: Number,
       default: 1,
     },
+    params: {
+      type: Object,
+      default: () => ({}),
+    },
+    token: {
+      type: [Function, String],
+    },
+    needMD5: {
+      type: Boolean,
+      default: false, // 是否获取文件MD5
+    },
+    beforeUpload: {
+      type: Function,
+    },
   },
   emits: ["change", "update:value"],
-  setup(props, { emit }) {
-    const dataValue = ref(props.value || []);
-
-    watch(props.value, (value) => {
-      dataValue.value = value;
-    });
-
-    const changeValue = (value) => {
-      dataValue.value = value;
-      emit("update:value", value);
-      emit("change", value);
-    };
-
-    const { container } = useDraggable(props, changeValue);
-
-    const remove = (index) => {
-      dataValue.value.splice(index, 1);
-      changeValue(dataValue.value);
-    };
+  setup(props, context) {
+    const {
+      dataValue,
+      progress,
+      change,
+      remove,
+      clickUpload,
+      dropUpload,
+    } = useUpload(props, context);
+    const { container } = useDraggable(props, change);
 
     return {
-      container,
       dataValue,
+      progress,
       remove,
+      clickUpload,
+      dropUpload,
+      container,
     };
   },
 };

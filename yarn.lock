@@ -21,6 +21,11 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@luzhongk/upload@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/@luzhongk/upload/download/@luzhongk/upload-1.0.0.tgz#a6039aa9c9d22f802e8d5b2b125c639841d98a00"
+  integrity sha1-pgOaqcnSL4AujVsrElxjmEHZigA=
+
 "@vitejs/plugin-vue@^1.1.5":
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/@vitejs/plugin-vue/download/@vitejs/plugin-vue-1.2.0.tgz#f0a92470b74761f90afc8cda204fa3bec9df09f4"
@@ -761,11 +766,6 @@ signal-exit@^3.0.0, signal-exit@^3.0.3:
   version "3.0.3"
   resolved "https://registry.npm.taobao.org/signal-exit/download/signal-exit-3.0.3.tgz#a1410c2edd8f077b08b4e253c8eacfcaf057461c"
   integrity sha1-oUEMLt2PB3sItOJTyOrPyvBXRhw=
-
-smooth-dnd@^0.12.1:
-  version "0.12.1"
-  resolved "https://registry.npm.taobao.org/smooth-dnd/download/smooth-dnd-0.12.1.tgz#cdb44c972355659e32770368b29b6a80e0ed96f1"
-  integrity sha1-zbRMlyNVZZ4ydwNosptqgODtlvE=
 
 sortablejs@^1.13.0:
   version "1.13.0"

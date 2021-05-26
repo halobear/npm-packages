@@ -6,13 +6,14 @@ const libOptions = {
   build: {
     outDir: 'lib',
     lib: {
-      entry: path.resolve(__dirname, 'src/upload/index.js'),
+      entry: path.resolve(__dirname, 'src/upload/index.vue'),
       name: 'vue-upload',
     },
+    cssCodeSplit: true,
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external: ['vue', 'kuan-vue-photoswipe'],
+      external: ['vue', 'kuan-vue-photoswipe', '@luzhongk/upload'],
       output: {
         // Provide global variables to use in the UMD build
         // for externalized deps

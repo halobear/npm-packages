@@ -1,7 +1,7 @@
-import { onMounted, unref, ref, onBeforeMount, computed, watch } from 'vue'
+import { onMounted, ref, onBeforeMount, computed, watch } from 'vue'
 import Sortable from 'sortablejs'
 
-export default (props, changeValue) => {
+export default (props, change) => {
   const container = ref()
 
   const disabled = computed(() => props.accept !== 'image/*')
@@ -9,7 +9,7 @@ export default (props, changeValue) => {
   let _sortable
 
   onMounted(() => {
-    _sortable = new Sortable(unref(container), {
+    _sortable = new Sortable(container.value, {
       handle: '.image-card,.file-card',
       filter: '.upload-card',
       disabled: disabled.value,
@@ -18,7 +18,7 @@ export default (props, changeValue) => {
       },
       onUpdate(e) {
         props.value.splice(e.newIndex, 0, props.value.splice(e.oldIndex, 1)[0])
-        changeValue(props.value.filter(Boolean))
+        change(props.value.filter(Boolean))
       },
     })
   })
