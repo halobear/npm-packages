@@ -1,18 +1,18 @@
 ## @halobear/vue-shape
 
-> 编辑素材形状尺寸（vue3.0 组件）
+> 编辑素材形状尺寸 vue3.0 组件（vue2.0 请使用 @halobear/vue-shape@1.1.1）
 
-## demo gif 效果
+## Gif
 
 ![demo gif 效果](https://github.com/halobear/npm-packages/raw/dev/packages/vue-shape/preview.gif)
 
-## 安装
+## Install
 
 ```bash
 yarn add @halobear/vue-shape
 ```
 
-## 使用
+## Usage
 
 ```vue
 <template>
